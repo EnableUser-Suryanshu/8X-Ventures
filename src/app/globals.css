@@ -457,15 +457,34 @@
   margin-top: -0.22em;
   white-space: nowrap;
   /* `--text-stat` grows at 12vw, which outruns the column it sits in once the
-     gutters are taken off: "₹400+Cr" is about 3.9 times the type size wide, so
-     below ~340px it was broader than the stage's content box and spilled into
-     both gutters. The cap is only ever the smaller term under that width —
-     from 360 up `--text-stat` wins and nothing moves. */
-  font-size: min(var(--text-stat), 22vw);
+     gutters are taken off, so the cap is sized to the longest of the three
+     figures rather than to the first: "₹2,000+Cr" is about 4.9 times the type
+     size wide against "₹400+Cr"'s 3.9, and at the 22vw this was it spilled
+     into both gutters on every phone. The cap is only ever the smaller term —
+     above ~470px `--text-stat` wins and nothing moves. */
+  font-size: min(var(--text-stat), 17.5vw);
 }
 
 .stats-label {
   margin-top: 1.5rem;
+  /* The captions turn over with the figures and they are not the same length:
+     "Patents across portfolio companies" takes two lines on a phone where
+     "Portfolio order book" takes one. Reserving both is what stops the whole
+     composition stepping up and down as the set rotates. `leading-none`, so a
+     line is exactly 1em. */
+  min-height: 2em;
+}
+
+/* The caption's own arrival, played on each turnover — the same one the
+   rotating word in the manifesto uses, so the two read as one idea. */
+.stats-caption {
+  display: inline-block;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js-reveal .stats-caption {
+    animation: word-in 0.5s var(--ease-out-expo) both;
+  }
 }
 
 .stats-hand {
@@ -598,8 +617,11 @@
    measured in `vh` grows and shrinks as a phone's address bar comes and goes,
    and the count would drift with it. */
 @media (prefers-reduced-motion: no-preference) and (height >= 40rem) {
+  /* Three figures now share the run rather than one, so it is three times the
+     length: the same stretch of scroll per figure as before, which is what
+     keeps each count at the speed it was tuned to. */
   html.js-reveal .stats-scroll {
-    height: var(--stats-run, 260svh);
+    height: var(--stats-run, 420svh);
   }
 
   html.js-reveal .stats-pin {
@@ -646,10 +668,13 @@
 
   /* Scroll-linked flourishes. Each falls back to its finished state when
      `--p` is absent, so the still composition is what shows if the driver
-     never runs. */
-  html.js-reveal .stats-hand {
-    translate: calc((var(--p, 1) - 1) * 45%) 0;
-  }
+     never runs.
+
+     The hand is not among them. It used to slide in from the left across the
+     run; it now simply sits where the artboard draws it, which is also where
+     it ended up. It is the one element here that is a photograph rather than
+     type, and moving it made the panel read as an animation with a number in
+     it rather than a still with a figure counting on it. */
 
   html.js-reveal .stats-ghost {
     translate: -50% calc((1 - var(--p, 1)) * 0.35em);
@@ -946,10 +971,20 @@
     margin: 0;
   }
 
+  /* The artboard's ink, placed directly: 233 x 85 at x 121, y 109. That left
+     edge is the 6.25% the blurb, the rule and the copyright all sit on, so the
+     lock-up lines up with the column under it by construction rather than by
+     the file's own padding happening to land there.
+
+     The cap is the same 1920 the stage's `max-height` freezes at. Both measures
+     have to stop together: the logo is a share of the width and the positions
+     below it are shares of a height that stops growing, so on a 2560 screen the
+     logo went on swelling into type that had stopped moving down to meet it and
+     overlapped the blurb by 19px. */
   .footer-logo {
-    left: 4.512%;
-    top: 13.197%;
-    width: 15.699%;
+    left: 6.302%;
+    top: 18.891%;
+    width: min(12.135%, 14.5625rem);
   }
 
   /* Narrow enough to break on the artboard's three lines. The artboard sets
@@ -3350,56 +3385,73 @@ html.js-img img[data-img-in="fade"] {
 /* ==========================================================================
    PARALLAX BAND
 
-   `--par` is the band's position relative to the viewport, written each frame
-   by `ParallaxBand`: -1 coming in at the bottom, 0 centred, +1 leaving at the
-   top. `--par-mid` is how nearly centred it is: 0 at either end, 1 in the
-   middle. Absent — no JavaScript, or reduced motion — the fallbacks below hold
-   the band exactly as the artboard composes it.
+   The band is a window and the picture behind it is held still on screen: the
+   plate stands a screen and a fifth tall and `--par-fix` — the band's own
+   distance from the top of the viewport, negated, written each frame by
+   `ParallaxBand` — cancels the band's movement out from under it. What travels
+   is the window, so what changes is which part of the photograph is showing.
+
+   `--par` is the band's position relative to the viewport: -1 coming in at the
+   bottom, 0 centred, +1 leaving at the top, and it carries a small drift on top
+   of the hold. `--par-mid` is how nearly centred the band is — 0 at either end,
+   1 in the middle — and carries the swell.
+
+   Absent — no JavaScript, or reduced motion — the plate is simply the band's
+   own box and the band is exactly what the artboard composes.
    ========================================================================== */
 
 .parallax-plate {
   position: absolute;
-  /* Taller than the band by more than the plate travels, so the picture never
-     runs out from under its own frame: the plate stands 190% of the band and
-     moves 23% of that, which is 43.7% of the band against 45% of overhang.
+  inset: 0;
+}
 
-     The overhang is what buys the travel, and travel is what makes the effect
-     legible — at the 148% / 14% this started from, the picture moved 309px
-     while the band crossed 1967px of scroll, so it tracked the page at 84% of
-     its speed and read as very nearly pinned to it. At 190% / 23% it moves
-     776px, or 61% of scroll speed, which is the difference between a drift
-     that has to be pointed out and one that is simply seen.
+@media (prefers-reduced-motion: no-preference) {
+  html.js-reveal .parallax-plate {
+    /* Pinned to the band's top edge and given the viewport's height, because
+       that is the box `--par-fix` is written against: the plate's top lands a
+       tenth of a screen above the viewport, and the rest of the overhang falls
+       below it, which is what the drift and the swell move within without ever
+       exposing an edge.
 
-     The cost is crop: the picture and the band share an aspect ratio almost
-     exactly (2200x1017 against 1920x887), so there is no spare height to
-     travel through and every pixel of overhang has to come from scaling the
-     plate up. A taller plate therefore shows less of the photograph and
-     upscales what it does show. This particular picture takes that well — it
-     is an out-of-focus texture rather than a composition, with no subject to
-     lose and no detail sharp enough for the upscale to blur. Swapping in a
-     photograph that *is* composed means revisiting these two numbers. */
-  inset: -45% 0;
-  /* Scale first, then travel — so the swell adds coverage without touching the
-     distance moved. It runs the other way from `--par-mid`: widest as the band
-     arrives, back to nothing as it centres, so the picture settles onto the
-     artboard's own framing at the moment it is being looked at rather than
-     merely sliding through it. */
-  transform: translate3d(0, calc(var(--par, 0) * 23%), 0)
-    scale(calc(1 + (1 - var(--par-mid, 1)) * 0.09));
-  will-change: transform;
+       `lvh`, not `svh`: `--par-fix` is written off `innerHeight`, which on a
+       phone is whatever the address bar currently leaves — and that is at its
+       largest exactly when a small-viewport plate is at its shortest, which is
+       the one combination that lifts the plate's foot into view. `lvh` is the
+       tallest `innerHeight` can be, so the overhang is never spent. */
+    inset: 0 0 auto;
+    height: 130lvh;
+    /* Hold, then drift, then swell. The drift runs the picture down the screen
+       as the page comes up it — a twenty-fifth of the plate either side of the
+       hold, which is enough to keep the picture from reading as a photograph
+       glued to the glass without undoing the hold that is the whole effect.
+       The swell runs the other way from `--par-mid`: widest as the band
+       arrives, back to nothing as it centres, so the picture settles onto its
+       framing at the moment it is being looked at. */
+    transform: translate3d(
+        0,
+        calc(var(--par-fix, 0) * 1px + var(--par, 0) * 4%),
+        0
+      )
+      scale(calc(1 + (1 - var(--par-mid, 1)) * 0.05));
+    will-change: transform;
+  }
 }
 
 /* The copy moves against the picture rather than sitting still on it, and the
    two together are what is actually read as depth: the eye measures the
-   picture's drift against the heading in front of it, not against the band's
-   edges. So the copy earns its keep at a fraction of the plate's travel —
-   a ninth of it, the other way — and adds 137px of separation on top of the
-   plate's 776. Small enough that the traced composition still lands where it
+   picture against the heading in front of it, not against the band's edges. So
+   the copy travels the other way from the drift, by a fraction of the band's
+   own height — small enough that the traced composition still lands where it
    was measured while the band is the thing being looked at. */
 .parallax-fore {
   position: relative;
-  transform: translate3d(0, calc(var(--par, 0) * -8%), 0);
-  will-change: transform;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html.js-reveal .parallax-fore {
+    transform: translate3d(0, calc(var(--par, 0) * -8%), 0);
+    will-change: transform;
+  }
 }
 
 /* --------------------------------------------------------------------------
