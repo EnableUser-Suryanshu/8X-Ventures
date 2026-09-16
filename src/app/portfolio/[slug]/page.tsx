@@ -1,17 +1,16 @@
 import { Metadata } from "next";
 import { PortfolioDetail } from "@/components/portfolio/PortfolioDetail";
+import { portfolioCards } from "@/content/portfolio";
 
 export function generateStaticParams() {
-  const { portfolioCards } = require("@/content/portfolio");
-  return portfolioCards.map((company: { id: string }) => ({
+  return portfolioCards.map((company) => ({
     slug: company.id,
   }));
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const { portfolioCards } = require("@/content/portfolio");
   const { slug } = await params;
-  const company = portfolioCards.find((c: { id: string; name: string; sector: string }) => c.id === slug);
+  const company = portfolioCards.find((c) => c.id === slug);
 
   if (!company) {
     return {
