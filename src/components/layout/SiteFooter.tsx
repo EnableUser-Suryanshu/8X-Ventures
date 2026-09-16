@@ -38,14 +38,25 @@ export function SiteFooter() {
   return (
     <footer className="bg-white">
       <div className="footer-stage">
-        {/* --- Identity --- */}
-        <Reveal className="footer-logo max-lg:w-[15.6rem]">
+        {/* --- Identity ---
+            The artwork is cropped to its own ink. It used to carry the
+            artboard's whitespace inside the file — 11.4% of the width down the
+            left, 21.8% of the height off the top — which put the lock-up a
+            painted 28px inside a gutter every other block in the footer sits
+            flush against, and made the gap under it 27px larger than the one
+            the stylesheet asks for. Worse on the desktop stage, where the box
+            is a share of the width and the stage's height stops growing at
+            1920: past that the invisible padding grew with the logo until the
+            ink reached down into the blurb and the two overlapped. Cropping the
+            file is what lets the element's box *be* the logo, so it can be
+            placed and measured like anything else here. */}
+        <Reveal className="footer-logo max-lg:w-[12.1rem]">
           <Link href="/" aria-label={`${siteConfig.name} — home`} className="block">
             <Image suppressHydrationWarning
               src="/images/logo-footer.png"
               alt=""
-              width={1000}
-              height={500}
+              width={774}
+              height={283}
               className="h-auto w-full"
             />
           </Link>

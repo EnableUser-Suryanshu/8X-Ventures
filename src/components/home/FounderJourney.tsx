@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
-import Image from "next/image";
 import { CarouselControls } from "@/components/ui/CarouselControls";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
@@ -120,18 +119,17 @@ export function FounderJourney() {
   const active = journey[index];
   const centre = Math.floor(journey.length / 2);
   const reduced = useReducedMotion();
-  const [paused, setPaused] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  /* `autoPlay` is what actually starts the loop; this is the retry for the
+     browsers that decline it on first paint and then allow it once the
+     element has settled. `catch` because a refused play() rejects, and a
+     decorative ribbon that will not start is not worth an unhandled error. */
   useEffect(() => {
     const video = videoRef.current;
     if (!video || reduced) return;
-    if (paused) {
-      video.pause();
-    } else {
-      video.play().catch(() => {});
-    }
-  }, [paused, reduced]);
+    video.play().catch(() => {});
+  }, [reduced]);
 
   /* The arc has one slot per stage, so advancing recycles the node that falls
      off one end round to the other. Animating `left` across that wrap would
