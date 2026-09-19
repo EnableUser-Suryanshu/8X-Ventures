@@ -140,9 +140,12 @@ export function SiteFooter() {
                       BODY_SIZE,
                     )}
                   >
-                    <span className="bg-[linear-gradient(currentColor,currentColor)] bg-[length:0%_1px] bg-[position:0_100%] bg-no-repeat transition-[background-size] duration-400 ease-[var(--ease-out-expo)] group-hover:bg-[length:100%_1px]">
-                      {link.label}
-                    </span>
+                    {/* The rule is `.u-line`, the same one the navigation
+                        wears — see "UNDERLINE LINK" in globals.css. It sits on
+                        the label rather than the anchor so it stops at the
+                        word and does not run on under the arrow's reserved
+                        space. */}
+                    <span className="u-line">{link.label}</span>
                     {/* Space is reserved at rest, so the column does not
                         reflow when the arrow arrives. */}
                     <svg

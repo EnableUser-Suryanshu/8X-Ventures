@@ -13,13 +13,9 @@ import { cn } from "@/lib/cn";
  *  the featured position. */
 const SLOT_LEFT = [6.406, 23.021, 39.74, 61.562, 78.385];
 
-function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4 shrink-0">
-      <path d="M6.94 8.5H4.06V20h2.88zM5.5 3.6a1.67 1.67 0 1 0 0 3.34 1.67 1.67 0 0 0 0-3.34M20 13.44c0-2.9-1.55-4.25-3.62-4.25a3.12 3.12 0 0 0-2.84 1.56h-.04V8.5H10.7V20h2.88v-5.69c0-1.5.29-2.95 2.15-2.95 1.83 0 1.86 1.71 1.86 3.05V20H20z" />
-    </svg>
-  );
-}
+/** The card's own width, as a percentage of the stage — the featured card's,
+ *  since every card is laid out at that box and scaled down from it. */
+const CARD_WIDTH = 20.208;
 
 export function TeamCarousel() {
   const centre = Math.floor(team.length / 2);
@@ -78,59 +74,63 @@ export function TeamCarousel() {
               <div
                 key={member.id}
                 data-featured={featured}
-                /* Passed as a custom property, not `left`, so the slot only
-                   applies where the traced composition does — an inline
-                   `left` would also shift the relatively-positioned card on
-                   narrow screens. */
-                style={{ "--slot-left": `${left}%` } as React.CSSProperties}
+                /* How far this card sits from the featured slot, signed. The
+                   stylesheet reads it to drain the colour and the light out of
+                   a card by its distance from the centre, so the strip carries
+                   the eye inwards without anything having to move. */
+                data-offset={offsetOf(i)}
+                /* The slot as a multiple of the card's own width, so the
+                   stylesheet can carry it on `translate` — a percentage
+                   translate resolves against the element, not the stage, and
+                   the card is exactly `CARD_WIDTH` of the stage wide. Passed
+                   as a custom property rather than as `left` so the slot only
+                   applies where the traced composition does: an inline `left`
+                   would also shift the relatively-positioned card on narrow
+                   screens. */
+                style={
+                  { "--slot-k": left / CARD_WIDTH } as React.CSSProperties
+                }
                 className={cn(
                   "team-card w-[min(78vw,320px)]",
                   featured ? "bg-gradient-to-b from-[#6FBEE6] to-[#3FA3D8]" : "bg-[#4f4f4f]",
                 )}
               >
-                <div className="px-[6%] pt-[5%] pb-[3%]">
-                  <h3 className="text-[length:clamp(1.125rem,1.719vw,2.0625rem)] leading-tight font-normal text-white">
-                    {member.name}
-                  </h3>
-                  <p className="mt-[0.35em] text-[length:clamp(0.625rem,0.625vw,0.75rem)] tracking-[0.07em] whitespace-nowrap text-white/85 uppercase">
-                    {member.role}
-                  </p>
-                </div>
-
                 <div className="relative min-h-0 flex-1">
                   <Image suppressHydrationWarning
                     src={member.image}
                     alt=""
-                    /* Carries its own grayscale, which a keyframed arrival
-                       would override and then snap back on. */
+                    /* A keyframed arrival would fight the card's own fade, so
+                       the picture only ever crossfades in. */
                     data-img-in="fade"
                     fill
                     sizes="(max-width: 1024px) 78vw, 21vw"
-                    className={cn(
-                      "object-cover object-top transition-[filter] duration-700",
-                      !featured && "grayscale",
-                    )}
+                    className="object-cover object-top"
                   />
                 </div>
 
-                {/* Bio + LinkedIn, revealed on hover or keyboard focus */}
-                {/* Type sizes come from `.team-bio` in globals.css, in `cqw`
-                    so they scale with the card rather than the viewport. */}
-                <div className="team-bio">
-                  <p className="text-white/95">{member.bio}</p>
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noreferrer noopener"
-                    className="mt-[4cqw] inline-flex items-center gap-2 rounded-full border border-white/50 px-[4cqw] py-[2cqw] font-semibold text-white transition-colors duration-300 hover:bg-white/15"
-                  >
-                    <LinkedInIcon />
-                    LinkedIn
-                    <span className="sr-only-8x">
-                      {` profile for ${member.name} (opens in a new tab)`}
-                    </span>
-                  </a>
-                </div>
+                {/* Only the featured card carries a panel. The side cards are
+                    photographs and nothing else, which is what leaves the
+                    centre of the strip the only thing with anything to read on
+                    it. The panel is the one the person cards on /team wear —
+                    see "The panel" in globals.css; its type is sized in `cqw`,
+                    so it scales with the card and not the window. */}
+                {featured && (
+                  <div className="tm-card-overlay">
+                    <h3 className="tm-card-name">{member.name}</h3>
+                    <p className="tm-card-role">{member.role}</p>
+                    <p className="tm-card-highlight">{member.bio}</p>
+                    <div className="tm-card-actions">
+                      <UnderlineLink href={`/team/${member.id}`} tone="light">
+                        Know More
+                        <span className="sr-only-8x">{` about ${member.name}`}</span>
+                      </UnderlineLink>
+                      <UnderlineLink href={member.linkedin} tone="light">
+                        LinkedIn
+                        <span className="sr-only-8x">{` profile for ${member.name}`}</span>
+                      </UnderlineLink>
+                    </div>
+                  </div>
+                )}
               </div>
             );
           })}

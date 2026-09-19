@@ -101,7 +101,10 @@ export function CarouselControls({
                 <span
                   aria-hidden="true"
                   className={cn(
-                    "block w-full rounded-full transition-all duration-500 ease-[var(--ease-out-expo)]",
+                    /* Named rather than `all`, so the bar animates the two
+                       things its state actually changes and nothing else it
+                       happens to inherit. */
+                    "block w-full rounded-full transition-[height,background-color] duration-500 ease-[var(--ease-out-expo)]",
                     /* Active state is carried by thickness as well as colour,
                        so it does not depend on colour alone (WCAG 1.4.1). */
                     active

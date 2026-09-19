@@ -118,14 +118,22 @@ export function ParallaxBand({ src, labelledBy, className, children }: ParallaxB
       aria-labelledby={labelledBy}
       className={cn("parallax-band relative isolate overflow-hidden", className)}
     >
-      {/* The plate is a screenful tall and `object-cover` scales the picture to
-          fill it, which on anything but a very wide window means scaling by
-          height — so the picture is laid out a good deal wider than the
-          viewport and `100vw` here would ask the browser for an image a
-          fraction of the size it is about to paint. The upscale that follows
-          from that is the whole of the softness this band used to have. */}
+      {/* `object-cover` scales the picture to fill the plate, and on anything
+          but a very wide window that means scaling by height — so the picture
+          is laid out wider than the viewport and `100vw` would ask the browser
+          for a fraction of what it is about to paint. The two figures are the
+          two plates: near the band's own height below the artboard's width,
+          and a screen and a third of it above, where the picture is painted
+          about 1.74 times the window's height across. */}
       <div aria-hidden="true" className="parallax-plate -z-10">
-        <Image suppressHydrationWarning src={src} alt="" fill sizes="200vw" className="object-cover" />
+        <Image
+          suppressHydrationWarning
+          src={src}
+          alt=""
+          fill
+          sizes="(max-width: 1023px) 140vw, 175vw"
+          className="object-cover"
+        />
       </div>
 
       <div className="parallax-fore">{children}</div>

@@ -160,6 +160,12 @@ export const stats: Stat[] = [
   { value: 400, prefix: "₹", suffix: "+Cr", label: "Portfolio revenue generated" },
   { value: 70, suffix: "+", label: "Patents across portfolio companies" },
   { value: 2000, prefix: "₹", suffix: "+Cr", label: "Portfolio order book" },
+  /* Not from the copy deck's "Proof" figures like the three above — it is the
+     length of `portfolio` below, which is the same twelve companies the
+     carousel and the portfolio grid are built from. Kept as a literal because
+     the panel publishes a figure and a figure should not quietly change when
+     a company is added: adding the thirteenth means saying so here. */
+  { value: 12, label: "Deep-tech companies backed" },
 ];
 
 /* --- Portfolio ----------------------------------------------------------- */
@@ -380,8 +386,9 @@ export type JourneyStage = {
   id: string;
   title: string;
   description: string;
-  /** Key into the icon map in `FounderJourney.tsx`. */
-  icon: "search" | "beaker" | "chip" | "brain" | "factory" | "chart" | "globe";
+  /** Key into `GLYPHS` in `StageIcon.tsx`. The three the client supplied
+   *  artwork for are named for what they depict. */
+  icon: "search" | "beaker" | "chip" | "access" | "governance" | "chart" | "globe";
 };
 
 export const journeyIntro = {
@@ -417,7 +424,7 @@ export const journey: JourneyStage[] = [
     title: "Customer Access",
     description:
       "We open doors — to customers, corporates, research institutions and the wider ecosystem.",
-    icon: "factory",
+    icon: "access",
   },
   {
     id: "capital-strategy",
@@ -431,7 +438,7 @@ export const journey: JourneyStage[] = [
     title: "Governance",
     description:
       "Board discipline, compliance and reporting built for institutional scale from the start.",
-    icon: "brain",
+    icon: "governance",
   },
   {
     id: "long-term-scale",

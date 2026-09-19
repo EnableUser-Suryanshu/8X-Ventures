@@ -111,6 +111,10 @@
      the lower the front-loading, the less it reads as a movement that has
      already happened by the time you notice it. */
   --ease-out-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* An ease-in-out cubic, used where a property changes rather than travels —
+     a colour, a fill. It leaves and arrives at the same rate, which is what a
+     change of state wants; the out-eases above are for things that move. */
+  --ease-power3: cubic-bezier(0.215, 0.61, 0.355, 1);
 }
 
 /* ==========================================================================
@@ -177,6 +181,181 @@
   clip-path: inset(50%);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* ==========================================================================
+   UNDERLINE LINK — the site's call to action
+
+   A label sitting on a rule, with an arrow that arrives on hover and focus.
+
+   The thing worth understanding is where the rule ends. At rest it is exactly
+   as wide as the label, because the arrow is taken out of flow and hung off
+   the label's right edge (`left: 100%`) — so it adds nothing to the link's
+   width and nothing to the rule's. The arrow carries a rule of its own,
+   scaled to nothing and anchored at its left, and hover grows it to full.
+   What the eye sees is one line extending to the right to meet the arrow as
+   it fades in, rather than a line that merely gets longer or thicker.
+
+   `left: -1px` on that second rule closes the hairline between the two.
+
+   Three things move together on hover, so the state never rests on colour
+   alone (WCAG 1.4.1): the rule deepens, the rule extends, and the arrow
+   arrives. `:focus-visible` on the anchor does all of it, so the keyboard sees
+   what the pointer sees.
+   ========================================================================== */
+
+.ul-link {
+  --ul-rest: var(--color-brand-rule);
+  --ul-active: var(--color-brand-deep);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  /* The rule hangs this far below the label, and the link reserves it, so the
+     line sits inside the link's box rather than over whatever follows it. */
+  padding-bottom: 0.55em;
+  transition: color 0.25s var(--ease-power3);
+}
+
+/* On navy and on photographs. */
+.ul-link[data-tone="light"] {
+  --ul-rest: rgba(255, 255, 255, 0.7);
+  --ul-active: #ffffff;
+}
+
+.ul-seg {
+  position: relative;
+}
+
+.ul-seg::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: -0.55em;
+  left: 0;
+  height: 2px;
+  background: var(--ul-rest);
+  transition:
+    transform 0.4s var(--ease-out-expo),
+    background-color 0.25s var(--ease-power3);
+}
+
+/* Out of flow, so the label alone sets the link's width — and with it the
+   width of the rule at rest. `height` drops the label's own reserved
+   padding so the arrow's rule lands on the label's line. */
+.ul-arrow {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  display: inline-flex;
+  align-items: center;
+  height: calc(100% - 0.55em);
+  padding-left: 0.4em;
+}
+
+.ul-arrow::after {
+  left: -1px;
+  transform: scaleX(0);
+  transform-origin: 0 center;
+}
+
+.ul-arrow svg {
+  width: 0.8em;
+  height: 0.8em;
+  opacity: 0;
+  /* Each arrow comes in along the way it points. */
+  translate: -0.25em;
+  transition:
+    opacity 0.4s var(--ease-out-expo),
+    translate 0.4s var(--ease-out-expo);
+}
+
+.ul-arrow[data-icon="external"] svg {
+  translate: -0.25em 0.25em;
+}
+
+.group:is(:hover, :focus-visible) .ul-seg::after {
+  background: var(--ul-active);
+}
+
+.group:is(:hover, :focus-visible) .ul-arrow::after {
+  transform: scaleX(1);
+}
+
+.group:is(:hover, :focus-visible) .ul-arrow svg {
+  opacity: 1;
+  translate: 0;
+}
+
+.group:active .ul-link {
+  scale: 0.98;
+}
+
+/* --------------------------------------------------------------------------
+   The quieter underline, for links that sit in a row of their own kind: the
+   navigation and the footer's columns. Same idea as the call to action above,
+   stripped to one rule and no arrow.
+
+   It is wiped rather than drawn. The origin flips between the two states — 0
+   while it is arriving, 100% while it is leaving — so the rule enters from
+   the left and carries on out to the right. A rule that retracted the way it
+   came reads as being taken back; one that goes on through reads as the
+   pointer having passed over it, which is the whole difference between this
+   and a line that merely appears.
+
+   Three variables, so a caller sets weight, distance and colour without
+   restating any of the mechanic.
+   -------------------------------------------------------------------------- */
+
+.u-line {
+  position: relative;
+}
+
+.u-line::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: var(--u-offset, -0.12em);
+  left: 0;
+  height: var(--u-size, 1px);
+  border-radius: 9999px;
+  background: var(--u-color, currentColor);
+  /* The rule is decoration under a target that is already the right size; it
+     must not widen what the pointer can hit. */
+  pointer-events: none;
+  transform: scaleX(0);
+  transform-origin: 100% center;
+  transition:
+    transform 0.4s var(--ease-out-expo),
+    background-color 0.25s var(--ease-power3);
+}
+
+:is(
+    .u-line:hover,
+    .u-line:focus-visible,
+    .group:hover .u-line,
+    .group:focus-visible .u-line
+  )::after {
+  transform: scaleX(1);
+  transform-origin: 0 center;
+}
+
+/* The navigation's own weight, and the only place the rule means something
+   at rest: the current page keeps its drawn, so which page you are on is
+   never carried by colour alone (WCAG 1.4.1). Hovering it deepens that rule
+   rather than drawing one, since there is nothing left to draw. */
+.nav-link {
+  --u-size: 2px;
+  --u-offset: 0.1rem;
+  --u-color: var(--color-brand-deep);
+}
+
+.nav-link[aria-current="page"]::after {
+  background: var(--color-brand-rule);
+  transform: scaleX(1);
+}
+
+.nav-link[aria-current="page"]:hover::after {
+  background: var(--color-brand-deep);
 }
 
 /* ==========================================================================
@@ -415,46 +594,47 @@
    of it, so the composition holds at any width.
 
      headline   ink x 407-1513, y 165-244   90px bold, centred
-     ghost 70+  ink x 700-1249, y 328-507   same size as the figure, faded
      figure     ink x 374-1477, y 541-757   266.9px bold
      label      ink x 615-1304, y 798-846   55.7px
      hand       visible x 0-448, y 736-1023 (runs off the left edge)
 
-   The artboard shows this as a still composition — no controls, no rotation.
+   The headline and the figures are one centred stack rather than three placed
+   percentages. The artboard draws a single figure and the section now carries
+   all three, so what is traced is the composition's proportions — the panel
+   centred, the headline above, the figure at the artboard's size — and not a
+   set of stops that only one of the three could ever land on.
    ========================================================================== */
 
-/* --- Small screens: ordinary centred flow -------------------------------
-   The traced composition below is sized for the 1920 artboard; scaled to a
-   phone its stage is only ~215px tall while the type has readable minimums,
-   so the elements would collide. Narrow viewports stack instead. */
 .stats-stage {
   position: relative;
-  padding: 4.5rem var(--spacing-gutter) 8rem;
+  /* The foot is the hand's. It stands at the bottom of the stage and the copy
+     is in ordinary flow above it, so this padding is what keeps the caption
+     off it — and it has to clear the capped hand below, not the 52% one: at
+     8rem, which is what this was while a ghost figure was padding the stack
+     out, "Patents across portfolio companies" ran straight through the
+     fingers. */
+  padding: 4.5rem var(--spacing-gutter) 12rem;
   text-align: center;
   /* The band's whole colour is the photograph, and every word on it is white,
      so until the photograph arrives the section reads as a blank white gap —
-     the headline, the figure and the label are all there, all invisible. This
-     is the photograph's own mean colour, sampled off the file, and it is
-     covered the moment the picture paints. */
+     the headline and the figures are all there, all invisible. This is the
+     photograph's own mean colour, sampled off the file, and it is covered the
+     moment the picture paints. */
   background-color: #1c72b4;
 }
 
+.stats-content {
+  display: grid;
+  justify-items: center;
+}
+
 .stats-headline,
-.stats-ghost,
 .stats-figure,
 .stats-label {
   margin: 0;
 }
 
-.stats-ghost {
-  margin-top: 2rem;
-  font-size: clamp(2.5rem, 14vw, 9rem);
-  letter-spacing: 0.1156em;
-  white-space: nowrap;
-}
-
 .stats-figure {
-  margin-top: -0.22em;
   white-space: nowrap;
   /* `--text-stat` grows at 12vw, which outruns the column it sits in once the
      gutters are taken off, so the cap is sized to the longest of the three
@@ -466,24 +646,32 @@
 }
 
 .stats-label {
-  margin-top: 1.5rem;
-  /* The captions turn over with the figures and they are not the same length:
-     "Patents across portfolio companies" takes two lines on a phone where
-     "Portfolio order book" takes one. Reserving both is what stops the whole
-     composition stepping up and down as the set rotates. `leading-none`, so a
-     line is exactly 1em. */
-  min-height: 2em;
+  margin-top: 0.45em;
+  text-wrap: balance;
 }
 
-/* The caption's own arrival, played on each turnover — the same one the
-   rotating word in the manifesto uses, so the two read as one idea. */
-.stats-caption {
-  display: inline-block;
+/* --- The conveyor -------------------------------------------------------
+   Unpinned this is an ordinary list and every figure is on the panel at once,
+   which is what reduced motion, a short viewport and a page without
+   JavaScript all get. Pinned, the gap closes, the blocks are stacked in one
+   grid cell and `--o` / `--y` — written per block each frame by
+   `StatsSection` — carry one through at a time. */
+.stats-blocks {
+  display: grid;
+  gap: 3rem;
+  margin-top: 2.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html.js-reveal .stats-caption {
-    animation: word-in 0.5s var(--ease-out-expo) both;
+@media (prefers-reduced-motion: no-preference) and (height >= 40rem) {
+  html.js-reveal .stats-blocks {
+    gap: 0;
+  }
+
+  html.js-reveal .stats-block {
+    grid-area: 1 / 1;
+    translate: 0 calc(var(--y, 0) * 40%);
+    opacity: var(--o, 1);
+    will-change: transform, opacity;
   }
 }
 
@@ -491,89 +679,51 @@
   position: absolute;
   bottom: 0;
   left: -8%;
-  width: 52%;
+  /* Capped, because 52% of a tablet is a 400px hand reaching into the middle
+     of the panel where the caption is. The share is what the artboard draws;
+     the ceiling is what keeps it a flourish in the corner. */
+  width: min(52%, 17rem);
 }
 
-/* --- The artboard composition ------------------------------------------- */
+/* --- The artboard composition -------------------------------------------
+   The stack is centred on the stage rather than hung off traced stops. The
+   stops were the right answer while one figure was drawn at one size; with
+   three of different lengths passing through the same place, what has to hold
+   is the relationship between the headline and the figure under it, and that
+   is a centred grid with a row gap.
+
+   The gap is in `svh` because the stage is cover-fitted to the pinned viewport
+   — its width is `max(100%, 100svh * 1920/1067)` — so its height answers to the
+   window's height while the type on it answers to the window's width. A gap in
+   percent would open and close as those two disagree; one in `svh` tracks the
+   height the panel actually has. */
 @media (width >= 64rem) {
   .stats-stage {
     aspect-ratio: 1920 / 1067;
     padding: 0;
-
-    /* Hoisted so the figure and the label can be placed off it rather than off
-       the stage. This section is cover-fitted to the pinned viewport — its
-       width is `max(100%, 100svh * 1920/1067)` — so its height answers to the
-       window's height while the type on it answers to the window's width, and
-       nothing traced as a percentage of the stage keeps its place when the two
-       disagree. Measured before this: the ghost overlapped the figure by 63px
-       at 1920, as drawn, but cleared it by 32px at 1024 and 6px at 2560, and
-       the label sat anywhere from 40px to 135px under the numeral. */
-    --stats-ghost-size: clamp(2.75rem, 1.979rem + 10.2vw, 14.22rem);
-    /* The traced 46.44%, expressed as the ghost's own top plus 0.8369 of its
-       size — which is that same distance at 1920, and stays that distance. */
-    --stats-figure-top: calc(28.586% + 0.8369 * var(--stats-ghost-size));
   }
 
-  /* Centred on the standalone `translate` property. This was written when the
-     scroll-reveal ran on `transform` and reset it to `none` on arrival, which
-     would have wiped the centring; the two properties kept it apart. */
-  .stats-headline,
-  .stats-ghost,
+  .stats-content {
+    position: absolute;
+    inset: 0;
+    align-content: center;
+    row-gap: clamp(1.5rem, 4.5svh, 3.5rem);
+    /* The centre of the stack sits above the centre of the stage, which is
+       where the artboard puts it — the hand occupies the foot. */
+    padding-top: 6.5rem;
+  }
+
   .stats-figure,
   .stats-label {
-    position: absolute;
     white-space: nowrap;
-    translate: -50% 0;
-    margin: 0;
   }
 
-  /* The reveal has since moved the other way — it animates `translate` now, so
-     that a card can rise on scroll and lean under the pointer on `transform` at
-     the same time. Which leaves the headline, the only one of these four
-     wrapped in `Reveal`, having its centring overwritten the moment the block
-     arrives: `[data-reveal].is-visible` wins on specificity and lands
-     `translate: 0 0`, so the line sits with its left edge on the centre line
-     instead of straddling it and runs off the right of the stage. The other
-     three are plain paragraphs and centre correctly, which is why it is this
-     line alone that overhangs.
-
-     So the centring moves to `transform`, which nothing in this section is
-     using — no part of it leans under the pointer. The reveal keeps `translate`
-     for its rise, the centring holds on `transform`, and the two compose. */
-  .stats-headline {
-    top: 14.21%;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  /* The ghost is not simply the figure faded: it is set smaller (157px cap
-     height against the figure's 182) and tracked much wider — measured by
-     high-pass filtering the artboard to lift it off the graded background. */
-  .stats-ghost {
-    top: 28.586%;
-    /* Nudged right of the ink centre because the trailing letter-space is
-       part of the layout box that `translate: -50%` centres. */
-    left: 51.302%;
-    font-size: var(--stats-ghost-size);
-  }
-
-  .stats-figure {
-    top: var(--stats-figure-top);
-    left: 50%;
-  }
-
-  /* Tied to the figure rather than placed on its own percentage. `--text-stat`
-     caps at 16.68rem and floors at 3.25rem while the stage's height follows
-     the viewport, so a fixed 74.05% meant 40px under the numeral at 1920, 120
-     at 1024 and 135 on a 2560 screen. The figure is `leading-none`, so its box
-     is exactly one `--text-stat` tall: the label sits that far below the
-     figure's own top, plus the traced 40px, which is 0.15 of the numeral. */
-  /* The figure is `leading-none`, so its box is exactly one `--text-stat`
-     tall: the label sits that far below the figure, plus the traced 40px,
-     which is 0.105 of the numeral. */
-  .stats-label {
-    top: calc(var(--stats-figure-top) + 1.105 * var(--text-stat));
-    left: 49.974%;
+  /* Three captions of very different lengths pass through this slot, and
+     "Patents across portfolio companies" is the one that decides: held on one
+     line it is 1.6 times the width of the shortest, and the panel would step
+     sideways as the set went by. It wraps, and balances when it does. */
+  .stats-block .stats-label {
+    white-space: normal;
   }
 
   /* The artboard mirrors this render; the asset file has been flipped to
@@ -586,20 +736,44 @@
   }
 }
 
+/* Wide but not tall enough to pin, or wide with motion turned down: the stage
+   gives up its traced ratio and the three simply list down the panel, since
+   there is no run to carry them through one at a time. */
+@media (width >= 64rem) and (height < 40rem),
+  (width >= 64rem) and (prefers-reduced-motion: reduce) {
+  .stats-stage {
+    aspect-ratio: auto;
+    padding: 7rem 0 16rem;
+  }
+
+  .stats-content {
+    position: static;
+    padding-top: 0;
+  }
+
+  .stats-blocks {
+    margin-top: 3.5rem;
+  }
+
+  .stats-hand {
+    top: auto;
+    bottom: 0;
+  }
+}
+
 /* --- The pinned scroll stage ---------------------------------------------
    The section is given spare height and its panel sticks to the top, so the
-   composition holds still while the page scrolls past it and the figure counts
-   with the scroll. The last stretch of the run holds the finished number, so
-   the result is read before the next section arrives.
+   composition holds still while the page scrolls through it and the figures
+   are carried past one at a time.
 
    This is native `position: sticky` — no scroll handler intercepts anything,
    so the scrollbar, Page Down, Home/End and the keyboard all still move the
    page at their usual rate, and the section can always be scrolled past. The
-   only thing JavaScript does is publish `--p` and write the digits.
+   only thing JavaScript does is publish `--p` and write each block's place.
 
-   Gated on scripting (`js-reveal`), on `prefers-reduced-motion` and on the
-   width where the traced composition applies. Without any of the three the
-   section is its ordinary height with the final figure already in place. */
+   Gated on scripting (`js-reveal`), on `prefers-reduced-motion` and on a
+   viewport tall enough to hold a screenful. Without any of the three the
+   section is its ordinary height with all three figures listed on it. */
 .stats-scroll {
   position: relative;
 }
@@ -610,16 +784,16 @@
 
 /* The pin itself, on the same height gate the other held sections use — see
    "Where the pin applies". What is held still here is whichever composition
-   the width has already chosen: the artboard's below, the stacked one above.
-   Neither needs the screen to be wide, only tall enough to hold a screenful,
-   so counting ₹400+Cr against the reader's own scroll is no longer something
-   only a desktop gets. `svh` for the same reason as the others: a runway
-   measured in `vh` grows and shrinks as a phone's address bar comes and goes,
-   and the count would drift with it. */
+   the width has already chosen: the artboard's above 64rem, the stacked one
+   below. Neither needs the screen to be wide, only tall enough to hold a
+   screenful, so the conveyor is not something only a desktop gets. `svh` for
+   the same reason as the others: a runway measured in `vh` grows and shrinks
+   as a phone's address bar comes and goes, and the handovers would drift with
+   it. */
 @media (prefers-reduced-motion: no-preference) and (height >= 40rem) {
-  /* Three figures now share the run rather than one, so it is three times the
-     length: the same stretch of scroll per figure as before, which is what
-     keeps each count at the speed it was tuned to. */
+  /* One screenful and a bit per figure — enough that each holds still long
+     enough to be read before the next arrives, and not so much that the page
+     feels stuck. */
   html.js-reveal .stats-scroll {
     height: var(--stats-run, 420svh);
   }
@@ -649,11 +823,6 @@
   }
 }
 
-/* The flourishes stay on the artboard's own breakpoint, because each is
-   written in the traced composition's terms: the two `-50%` translates are
-   what centre an absolutely placed line, and above this width those lines are
-   in ordinary centred flow, where the same translate would shove them half
-   their own width off to the left. */
 @media (prefers-reduced-motion: no-preference) and (width >= 64rem) {
   /* The field is cut to the stage's exact 1920x1067 ratio, so the stage is
      what gets cover-fitted to the pinned viewport — never the background on
@@ -666,25 +835,21 @@
     width: max(100%, calc(100svh * 1920 / 1067));
   }
 
-  /* Scroll-linked flourishes. Each falls back to its finished state when
-     `--p` is absent, so the still composition is what shows if the driver
-     never runs.
-
-     The hand is not among them. It used to slide in from the left across the
-     run; it now simply sits where the artboard draws it, which is also where
-     it ended up. It is the one element here that is a photograph rather than
-     type, and moving it made the panel read as an animation with a number in
-     it rather than a still with a figure counting on it. */
-
-  html.js-reveal .stats-ghost {
-    translate: -50% calc((1 - var(--p, 1)) * 0.35em);
-    opacity: calc(0.35 + var(--p, 1) * 0.65);
-  }
-
-  html.js-reveal .stats-label {
-    translate: -50% calc((1 - var(--p, 1)) * 0.6em);
+  /* Cover-fitting by width means the stage overhangs the viewport on a tall
+     window, and it is centred by pulling both margins in by half the
+     overhang — so the composition stays on the middle of the screen rather
+     than being cropped from the right. Nought once the stage is no wider
+     than the panel. */
+  html.js-reveal .stats-pin .stats-stage {
+    margin-inline: min(0px, calc(50vw - 50svh * 1920 / 1067));
   }
 }
+
+/* The hand does not move. It used to slide in from the left across the run; it
+   now sits where the artboard draws it, which is also where it ended up. It is
+   the one element here that is a photograph rather than type, and moving it
+   made the panel read as an animation with a figure on it rather than a still
+   that figures are carried through. */
 
 /* ==========================================================================
    TEAM SECTION — "Operators. Investors."
@@ -741,60 +906,46 @@
   flex-direction: column;
   overflow: hidden;
   border-radius: 18px;
-  /* Lets the bio scale with the card, so it stays readable on the small side
+  /* Lets the panel scale with the card, so it stays readable on the small side
      cards and grows on the featured one. */
   container-type: inline-size;
-  /* Only the slot animates here. Size is deliberately NOT transitioned on a
-     card that is losing the featured position: while both cards were animating
-     symmetrically the outgoing one stayed taller than the incoming one for the
-     first half of the swap, and its lower edge showed beneath. Snapping the
-     outgoing card to the small size keeps the incoming card fully covering. */
-  transition: left 0.7s var(--ease-out-expo);
+  cursor: pointer;
+  /* Read off `data-offset` below. Defaulted here so a card with no offset —
+     the featured one — is simply itself. */
+  --team-dim: 1;
+  --team-grey: 0;
+  opacity: var(--team-dim);
+  filter: grayscale(var(--team-grey));
+  transition:
+    opacity 0.7s var(--ease-out-expo),
+    filter 0.7s var(--ease-out-expo);
+}
+
+/* The strip's depth. A card loses light and colour with every slot it stands
+   from the centre, so the featured member is the only one in full colour and
+   the two behind each shoulder read as a receding row rather than as four
+   photographs competing with the one being shown. The two steps are the
+   design's: most of the drop happens at the first, so the immediate
+   neighbours already sit clearly behind. */
+.team-card:is([data-offset="1"], [data-offset="-1"]) {
+  --team-dim: 0.62;
+  --team-grey: 0.85;
+}
+
+.team-card:is([data-offset="2"], [data-offset="-2"]) {
+  --team-dim: 0.38;
+  --team-grey: 1;
 }
 
 .team-card[data-featured="true"] {
-  transition:
-    left 0.7s var(--ease-out-expo),
-    top 0.7s var(--ease-out-expo),
-    width 0.7s var(--ease-out-expo),
-    height 0.7s var(--ease-out-expo);
+  /* Already the one being read, so there is nowhere for a click to take you. */
+  cursor: default;
 }
 
-/* The bio panel: revealed on hover and on keyboard focus. Kept in flow and
-   merely transparent rather than `display:none`, so the LinkedIn link inside
-   stays focusable — tabbing to it fires :focus-within, which reveals it. */
-.team-bio {
-  position: absolute;
-  inset: auto 0 0 0;
-  padding: 6cqw 6cqw 7cqw;
-  background: linear-gradient(
-    to top,
-    rgba(4, 26, 58, 0.97) 66%,
-    rgba(4, 26, 58, 0)
-  );
-  opacity: 0;
-  translate: 0 18%;
-  transition:
-    opacity 0.45s var(--ease-out-soft),
-    translate 0.45s var(--ease-out-expo);
-}
-
-/* Sized against the card, not the viewport: 4.6cqw is ~13px on a side card and
-   ~18px on the featured one, so it reads at both sizes. */
-.team-bio p {
-  font-size: clamp(0.8125rem, 4.6cqw, 1.15rem);
-  line-height: 1.42;
-}
-
-.team-bio a {
-  font-size: clamp(0.75rem, 4cqw, 1rem);
-}
-
-.team-card:hover .team-bio,
-.team-card:focus-within .team-bio {
-  opacity: 1;
-  translate: 0 0;
-}
+/* The featured card carries the same panel as the person cards on /team —
+   see "The panel" in the TEAM PAGE block below. It is one card of one kind at
+   two sizes, so it is one implementation, and the `cqw` type inside it does
+   the adapting. */
 
 @media (width >= 64rem) {
   .team-stage {
@@ -847,22 +998,52 @@
     display: block;
   }
 
+  /* Every card is laid out at the featured card's box and differs from it only
+     by a transform, so the swap animates on the compositor. It used to move by
+     `left` and resize by `width` / `height`, which are layout properties: each
+     frame of the 0.7s swap re-laid-out and repainted all five cards and the
+     photographs inside them.
+
+     `--slot-k` is the traced slot left as a multiple of the card's own width,
+     so `100%` of the card is exactly the 20.208% of the stage it occupies and
+     the left edges land on the traced percentages unchanged. With the origin
+     on the left edge, scaling keeps that edge where the translate put it and
+     the card shrinks in place.
+
+     0.74871 is 15.13 / 20.208 — the traced side width over the featured one —
+     so a side card measures the traced 15.13% exactly. Its height comes out
+     23.97% against the traced 24.01, and its top 42.16% against 42.20: half a
+     pixel each at 1440, which is the price of scaling one box uniformly
+     instead of sizing two. */
   .team-card {
     position: absolute;
-    left: var(--slot-left);
-    top: 42.201%;
-    width: 15.13%;
-    height: 24.01%;
-  }
-
-  /* Height measured to the card's rounded bottom edge (section y 1192), not to
-     where its blue fill stops — the lower third of the card is covered by the
-     portrait, so a fill-colour measurement reads 28px short and leaves the
-     artboard's own card peeking out from the background plate underneath. */
-  .team-card[data-featured="true"] {
-    top: 38.14%;
+    top: 38.139%;
+    left: 0;
     width: 20.208%;
     height: 32.019%;
+    transform-origin: left center;
+    translate: calc(var(--slot-k, 0) * 100%) 0;
+    scale: 0.74871;
+    /* The five cards are a fixed, small set and are on screen together, which
+       is what this is for: promoting them once is cheaper than the layer
+       churn of promoting and dropping them on every swap. */
+    will-change: translate, scale, opacity, filter;
+    transition:
+      translate 0.7s var(--ease-out-expo),
+      scale 0.7s var(--ease-out-expo),
+      opacity 0.7s var(--ease-out-expo),
+      filter 0.7s var(--ease-out-expo);
+  }
+
+  /* The box above is already this card's — height measured to its rounded
+     bottom edge (section y 1192), not to where its blue fill stops, because
+     the lower third is covered by the portrait and a fill-colour measurement
+     reads 28px short. So the featured card is the one that is simply not
+     scaled, and the panel it carries is laid out at its final size rather
+     than rendered small and magnified: the only type in the strip stays
+     crisp. */
+  .team-card[data-featured="true"] {
+    scale: 1;
     z-index: 10;
   }
 }
@@ -1300,14 +1481,19 @@
      steps. The artboard can only show a still frame — it parks the segment in
      the middle of the rail — so it is drawn here as what it depicts, a
      position indicator: 1/n tall, n being the number of years. */
+  /* On `translate` rather than `top`, for the reason given at
+     `.tm-rail-thumb`: the thumb is one year tall, so a step of `100%` of
+     itself is the same distance `top` was being given, and the track stops
+     re-laying-out on every frame of the step. */
   .ab-jr-thumb {
     position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
     height: calc(100% / var(--jr-count));
-    top: calc(100% * var(--jr-index) / var(--jr-count));
+    translate: 0 calc(var(--jr-index) * 100%);
     background: #ffffff;
-    transition: top 0.55s var(--ease-out-expo);
+    transition: translate 0.55s var(--ease-out-expo);
   }
 
   /* --- cta --- */
@@ -1420,53 +1606,73 @@
   background: linear-gradient(212deg, #2196dc 0%, #0d78bd 48%, #004e8c 100%);
 }
 
-/* Deliberately unpositioned. `.tm-card-open::after` is stretched from here to
-   make the whole card navigate, and it takes its box from the nearest
-   positioned ancestor — so a `position: relative` on this element silently
-   shrinks the click target to the name. The photo goes behind instead. */
-.tm-card-head {
-  padding: 5.2cqw 7cqw 0;
-}
-
-/* Floored, the way the bio below already is. These sizes are a share of the
-   card's own width, and the card is a quarter of the row once the grid has
-   four across — 209px at 1024 against the 392 they were drawn on — so the type
-   halved with it: the role bottomed out at 8.6px, and it was under 12px from
-   640 all the way to 1280. The ceiling is the traced size, so nothing moves at
-   the width this was drawn at; the floor only catches the sizes in between. */
+/* Floored as well as capped. These sizes are a share of the card's own width,
+   and the card is a quarter of the row once the grid has four across — 209px
+   at 1024 against the 392 they were drawn on — so the type halved with it: the
+   role bottomed out at 8.6px, and it was under 12px from 640 all the way to
+   1280. The ceiling is the traced size, so nothing moves at the width this was
+   drawn at; the floor only catches the sizes in between. */
 .tm-card-name {
-  font-size: clamp(1.125rem, 8.27cqw, 2.025rem); /* 32.4px on a 392 card */
+  font-size: clamp(1.125rem, 8cqw, 2rem);
   line-height: 1.2;
   font-weight: 700;
   color: #ffffff;
+  /* The panel is over a photograph, and the top of one is not reliably dark. */
+  text-shadow: 0 1px 12px rgba(0, 0, 0, 0.25);
 }
 
 .tm-card-role {
-  margin-top: 0.35em;
-  font-size: clamp(0.75rem, 4.13cqw, 1.0125rem); /* 16.2px */
+  margin-top: 0.5em;
+  font-size: clamp(0.75rem, 3.4cqw, 0.875rem);
   line-height: 1.2;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* The smaller cards, and the homepage's featured one, are narrower than the
+   partner cards they share this panel with. */
+.tm-card-sm .tm-card-name,
+.team-card .tm-card-name {
+  font-size: clamp(1.0625rem, 7cqw, 1.75rem);
+}
+
+.tm-card-highlight {
+  margin-top: 4.5cqw;
+  font-size: clamp(0.8125rem, 4.3cqw, 1.125rem);
+  line-height: 1.42;
+  font-weight: 300;
   color: #ffffff;
 }
 
-.tm-card-sm .tm-card-name {
-  font-size: clamp(1.0625rem, 6.89cqw, 1.6875rem); /* 27px */
-  font-weight: 400;
+.tm-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em 2.4em;
+  margin-top: 6cqw;
 }
 
-.tm-card-sm .tm-card-role {
-  font-size: clamp(0.75rem, 3.67cqw, 0.9rem); /* 14.4px */
+/* `UnderlineLink` sets its own size off the viewport. On a card that has to
+   hold its proportions at several widths that is the wrong ruler, and this
+   rule is unlayered, so it wins over the utility without the class lists
+   having to be merged. */
+.tm-card-actions > a {
+  font-size: clamp(0.875rem, 4.4cqw, 1.0625rem);
 }
 
 .tm-card-photo {
   position: absolute;
   inset: auto 0 0 0;
-  /* Behind the head's text, which is now in flow, and still above the card's
-     gradient because the card isolates. */
+  /* Still above the card's gradient, because the card isolates. */
   z-index: -1;
-  height: 82%;
+  /* The portrait grows 4% under the pointer and this is what it grows
+     inside. The card clips too, but at the card's edge — which is above the
+     plate's top, so the portrait's head climbed out of its panel. */
+  overflow: hidden;
+  /* 88, not the 82 it was: the head that used to take the top of the card has
+     moved into the panel, so the portrait has that space back. */
+  height: 88%;
 }
 
 /* The other half of the card language: the artwork inside the card grows
@@ -1489,68 +1695,97 @@
   transition: scale 0.7s var(--ease-out-soft);
 }
 
-/* The bio panel, on the same terms as the homepage team cards: revealed on
-   hover *and* on keyboard focus, and kept in flow at zero opacity rather than
-   `display:none`, so the LinkedIn link inside stays focusable — tabbing to it
-   fires `:focus-within`, which is what reveals the panel. */
-.tm-card-bio {
-  position: absolute;
-  inset: auto 0 0 0;
-  z-index: 3;
-  padding: 7cqw 7cqw 8cqw;
-  background: linear-gradient(
-    to top,
-    rgba(2, 26, 58, 0.97) 70%,
-    rgba(2, 26, 58, 0)
-  );
-  opacity: 0;
-  translate: 0 16%;
-  transition:
-    opacity 0.45s var(--ease-out-soft),
-    translate 0.45s var(--ease-out-expo);
-}
-
-.tm-card-bio p {
-  font-size: clamp(0.8125rem, 4.3cqw, 1.125rem);
-  line-height: 1.42;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.95);
-}
-
-/* The name's anchor, stretched over the whole card so the card navigates.
-   Sits above the portrait and the bio panel, and below the LinkedIn link. */
-.tm-card-open::after {
-  content: "";
+/* The whole card as a pointer target. Hidden from assistive tech and out of
+   the tab order on purpose: the same destination is already reachable as
+   "Know More" inside the panel, and two links to one place is one more than a
+   screen reader or a keyboard wants to hear about. Under the panel, so the
+   panel's own links take the click where they overlap it. */
+.tm-card-hit {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 2;
+  border-radius: inherit;
 }
 
-/* Raised over the stretched link so it stays separately clickable. */
-.tm-card-link {
-  position: relative;
-  z-index: 5;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 4cqw;
-  padding: 2cqw 4cqw;
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-radius: 9999px;
-  font-size: clamp(0.75rem, 3.8cqw, 1rem);
-  font-weight: 600;
+/* --- The panel ----------------------------------------------------------
+   One implementation for every card of this kind: the person cards on /team
+   and the featured card in the homepage strip. They are the same card at
+   different sizes, so they get the same panel and the `cqw` sizes above do the
+   adapting.
+
+   It covers the whole card rather than sitting along its foot, so what arrives
+   reads as the card turning over to its written side rather than as a caption
+   sliding up. Kept in flow and merely transparent rather than `display: none`,
+   so the links inside stay focusable: tabbing to one fires `:focus-within`,
+   which brings the panel up around it. */
+.tm-card-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 8cqw 7cqw 13cqw;
+  background: linear-gradient(rgba(6, 40, 88, 0.78), rgba(3, 26, 62, 0.92));
+  text-align: left;
   color: #ffffff;
-  transition: background-color 0.3s var(--ease-out-soft);
+  opacity: 0;
+  /* The panel itself never takes the pointer, so the card underneath keeps
+     `:hover` the whole time it is up — a panel that took it would swallow the
+     hover that summoned it and flicker. Only the links take it back, and only
+     once the panel has arrived. */
+  pointer-events: none;
+  transition: opacity 0.5s var(--ease-out-soft);
 }
 
-.tm-card-link:hover {
-  background: rgba(255, 255, 255, 0.15);
+/* The contents settle the last few pixels after the panel has faded, which is
+   what stops the whole block reading as one flat thing being switched on. */
+.tm-card-overlay > * {
+  translate: 0 6px;
+  transition: translate 0.5s var(--ease-out-soft);
 }
 
-.tm-card:hover .tm-card-bio,
-.tm-card:focus-within .tm-card-bio {
+.tm-card:is(:hover, :focus-within) .tm-card-overlay,
+.team-card[data-featured="true"]:is(:hover, :focus-within) .tm-card-overlay {
   opacity: 1;
-  translate: 0 0;
+}
+
+.tm-card:is(:hover, :focus-within) .tm-card-overlay > *,
+.team-card[data-featured="true"]:is(:hover, :focus-within)
+  .tm-card-overlay
+  > * {
+  translate: 0;
+}
+
+.tm-card:is(:hover, :focus-within) .tm-card-actions,
+.team-card[data-featured="true"]:is(:hover, :focus-within) .tm-card-actions {
+  pointer-events: auto;
+}
+
+/* Without a hover there is nothing to summon the panel with, and the card
+   would be an unnamed photograph — so on touch it is simply up, reduced to a
+   gradient along the foot so the face is still the card. The biography is the
+   one thing that goes: it is the longest part and the least of what a reader
+   needs in order to know who they are looking at. */
+@media not ((hover: hover) and (pointer: fine)) {
+  .tm-card-overlay {
+    top: auto;
+    padding-top: 22cqw;
+    background: linear-gradient(rgba(3, 26, 62, 0), rgba(3, 26, 62, 0.88) 45%);
+    opacity: 1;
+  }
+
+  .tm-card-overlay > * {
+    translate: 0;
+  }
+
+  .tm-card-highlight {
+    display: none;
+  }
+
+  .tm-card-actions {
+    pointer-events: auto;
+  }
 }
 
 /* --- the mentor list and its rule --- */
@@ -1612,20 +1847,28 @@
    the bottom exactly as the last name reaches the lit centre — and the easing
    comes off, because a transition on a scroll-driven value reads as the thumb
    dragging along behind the page. */
+/* Moved on `translate`, not `top`. The thumb is exactly one name tall, so a
+   step of `100%` of itself is a step of `100% / count` of the rail — the same
+   distance the offset used to be written as, and the same arithmetic — but
+   `top` is a layout property and this one is repainted off `--pin-u` every
+   frame the section is held. On `translate` it is a compositor transform and
+   the rail never re-lays-out at all. */
 .tm-rail-thumb {
   position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
   height: calc(100% / var(--rail-count));
-  top: calc(100% * var(--rail-index) / var(--rail-count));
+  translate: 0 calc(var(--rail-index) * 100%);
   border-radius: 3px;
   background: #ffffff;
-  transition: top 0.5s var(--ease-out-expo);
+  transition: translate 0.5s var(--ease-out-expo);
 }
 
 @media (height >= 40rem) {
   [data-pinned] .tm-rail-thumb {
-    top: calc(var(--pin-u, 0) * (100% - 100% / var(--rail-count)));
+    /* The rail less the thumb's own height, in thumb-heights: `count - 1`. */
+    translate: 0 calc(var(--pin-u, 0) * (var(--rail-count) - 1) * 100%);
     transition: none;
   }
 }
@@ -2120,6 +2363,11 @@
 
 .pf-card-photo {
   position: relative;
+  /* The mark grows 4% under the pointer, and without this the plate is not
+     what it grows inside: the card clips at the card's edge, which is a long
+     way below the plate's, so the white ground came down over the blue body
+     and the panel appeared to bulge. The plate has to do its own clipping. */
+  overflow: hidden;
   /* 536.7 x 331 in the artboard */
   aspect-ratio: 536 / 331;
   /* The client supplied logos, not photography, and every file is a square
@@ -2969,18 +3217,22 @@ button.md-ins-card {
   margin-top: clamp(1.5rem, 3.385vw, 4.06rem);
 }
 
-/* `UnderlineLink` sets its label at `--text-body-lg` (35) and its rule to the
-   label's own width. This frame sets both links at the copy size and runs the
-   rule 38 wider at either end — measured 255 of rule under 184 of ink on
-   "Get the Book". Scoped here so the component is untouched elsewhere. */
+/* `UnderlineLink` sets its label at `--text-body-lg` (35); this frame sets both
+   of its links at the copy size instead. Scoped here so the component is
+   untouched elsewhere.
+
+   The frame also used to run the rule 38 wider than the ink at either end —
+   measured 255 of rule under 184 of ink on "Get the Book" — by putting
+   `margin-inline` on the label. That worked while the rule was a separate
+   element spanning the whole link, and broke the moment the rule became the
+   label's own `::after` and the arrow was hung off the label's right edge: the
+   margin pushed the arrow 19px clear of the ink, so the line arrived in two
+   pieces with a gap between them. The widening is gone rather than rebuilt —
+   these links now read exactly as every other call to action on the site,
+   which is the point of there being one component. */
 .md-book-cta a,
 .md-cta-link a {
   font-size: var(--md-body);
-}
-
-.md-book-cta a > span > span:first-child,
-.md-cta-link a > span > span:first-child {
-  margin-inline: 1.19em;
 }
 
 /* ==========================================================================
@@ -3331,6 +3583,64 @@ html.js-img img[data-img-in="fade"] {
 
    The stops hug the artwork, measured across the loop: it spans 13.4%–90.2%
    horizontally and 8.2%–77.1% vertically, so nothing here clips the ribbon. */
+/* --------------------------------------------------------------------------
+   FOUNDER JOURNEY — the arc and its nodes
+
+   A node's place on the arc is a percentage of the strip, and it is carried on
+   `translate` rather than on `left` / `top`. `container-type: size` on the arc
+   is what makes that possible: `cqw` and `cqh` resolve against the strip, so a
+   percentage of the strip can be written as a translate, which a percentage
+   translate cannot be — that resolves against the element.
+
+   The half of itself each node is pulled back by is the centring `left: 50%`
+   used to need a `-50%` translate for, folded into the same declaration.
+
+   It matters because the nodes move on every step and there are seven of them
+   over an arc that spans the page: on `left` / `top` / `width` that was a
+   layout and a repaint of the whole strip for each of the 42 frames of the
+   0.7s glide. On `translate` and `scale` it is the compositor's work.
+   -------------------------------------------------------------------------- */
+
+.journey-arc {
+  container-type: size;
+}
+
+/* The line is drawn corner to corner and faded out at both ends, so it reads
+   as an arc the stages sit on rather than one that stops at the strip's
+   edges. */
+.journey-arc > svg {
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+}
+
+.journey-node {
+  translate: calc(var(--node-x) * 1cqw - 50%) calc(var(--node-y) * 1cqh - 50%);
+  scale: var(--node-scale, 1);
+  transition:
+    translate 0.7s var(--ease-out-expo),
+    scale 0.7s var(--ease-out-expo),
+    background-color 0.7s var(--ease-out-expo);
+  will-change: translate, scale;
+}
+
+/* Recycled round the ring rather than moved along it — it is put in its new
+   place, not flown there across the whole arc. */
+.journey-node[data-wrapped] {
+  transition: none;
+}
+
 .journey-ribbon {
   -webkit-mask-image:
     linear-gradient(to right, transparent 0%, #000 12%, #000 92%, transparent 100%),
@@ -3385,16 +3695,19 @@ html.js-img img[data-img-in="fade"] {
 /* ==========================================================================
    PARALLAX BAND
 
-   The band is a window and the picture behind it is held still on screen: the
-   plate stands a screen and a fifth tall and `--par-fix` — the band's own
-   distance from the top of the viewport, negated, written each frame by
-   `ParallaxBand` — cancels the band's movement out from under it. What travels
-   is the window, so what changes is which part of the photograph is showing.
+   On the artboard's own width the band is a window and the picture behind it
+   is held still on screen: the plate stands a screen and a third tall and
+   `--par-fix` — the band's own distance from the top of the viewport, negated,
+   written each frame by `ParallaxBand` — cancels the band's movement out from
+   under it. What travels is the window, so what changes is which part of the
+   photograph is showing. Narrower than that the plate stays near the band's
+   own size and drifts, for the reason given at the rule.
 
    `--par` is the band's position relative to the viewport: -1 coming in at the
-   bottom, 0 centred, +1 leaving at the top, and it carries a small drift on top
-   of the hold. `--par-mid` is how nearly centred the band is — 0 at either end,
-   1 in the middle — and carries the swell.
+   bottom, 0 centred, +1 leaving at the top. It carries the drift — the whole
+   of it on narrow screens, a small one on top of the hold on wide ones.
+   `--par-mid` is how nearly centred the band is — 0 at either end, 1 in the
+   middle — and carries the swell.
 
    Absent — no JavaScript, or reduced motion — the plate is simply the band's
    own box and the band is exactly what the artboard composes.
@@ -3406,6 +3719,28 @@ html.js-img img[data-img-in="fade"] {
 }
 
 @media (prefers-reduced-motion: no-preference) {
+  /* Narrow screens keep the plate close to the band's own size and simply
+     drift it. The window below is a screenful tall whatever the band is, and
+     on a phone the band is a 270px slot: covering a plate that tall with a
+     4:3 photograph paints it about four times the width of the screen, so
+     nearly every pixel downloaded is off to the side of the one place anybody
+     is looking. Asking for that many is a megabyte to keep a decorative band
+     sharp; not asking is the band rendered at a third of its painted size,
+     which on a photograph this sharp reads as a fault rather than as grain.
+     Neither is worth it for an effect that wants a tall window to be seen at
+     all. Travel is 12% of a plate standing 136% of the band — 16% of the
+     band's height against 18% of overhang either side. */
+  html.js-reveal .parallax-plate {
+    inset: -18% 0;
+    transform: translate3d(0, calc(var(--par, 0) * 12%), 0);
+    will-change: transform;
+  }
+}
+
+/* The window itself, on the artboard's own width — where the band is deep
+   enough that holding the picture still behind it is legible, and where the
+   plate's extra height is not most of what gets downloaded. */
+@media (prefers-reduced-motion: no-preference) and (width >= 64rem) {
   html.js-reveal .parallax-plate {
     /* Pinned to the band's top edge and given the viewport's height, because
        that is the box `--par-fix` is written against: the plate's top lands a
@@ -5071,6 +5406,10 @@ html.js-img img[data-img-in="fade"] {
 .ro-office-plate {
   position: relative;
   display: block;
+  /* Same reason as `.pf-card-photo`: the picture grows under the pointer and
+     the office card clips only at its own edge, so without this the still
+     came down over the city name beneath it. */
+  overflow: hidden;
   aspect-ratio: 437 / 350;
   background: #dce8f2;
 }

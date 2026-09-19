@@ -13,8 +13,9 @@ import { sectors } from "@/content/home";
  * holds still and the pointer cannot have the control drift out from under it.
  * Both, in other words, not either.
  *
- * The reveal itself follows `.team-bio`: hover *and* focus, with the panel kept
- * in the DOM and transitioned rather than mounted, so it can animate.
+ * The reveal itself follows `.team-card-overlay`: hover *and* focus, with the
+ * panel kept in the DOM and transitioned rather than mounted, so it can
+ * animate.
  *
  * WCAG notes:
  *   2.1.1  hotspots are real buttons, so they are reachable and operable by

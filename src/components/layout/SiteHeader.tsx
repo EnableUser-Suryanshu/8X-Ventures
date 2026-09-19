@@ -138,8 +138,13 @@ export function SiteHeader() {
                 <Link
                   href={item.href}
                   aria-current={isCurrent(item.href) ? "page" : undefined}
+                  /* The rule is `.u-line`'s pseudo-element now, and the
+                     current-page state is `.nav-link[aria-current]` reading
+                     the attribute that is already there — so the marker that
+                     keeps this off colour alone (WCAG 1.4.1) no longer needs
+                     a span of its own. See "UNDERLINE LINK" in globals.css. */
                   className={cn(
-                    "group relative inline-block py-2 text-[length:var(--text-nav)] tracking-[0.04em] uppercase transition-colors duration-300",
+                    "nav-link u-line relative inline-block py-2 text-[length:var(--text-nav)] tracking-[0.04em] uppercase transition-colors duration-300",
                     item.emphasis
                       ? "font-bold text-brand-cyan"
                       : "font-light text-ink-600 hover:text-brand-deep",
@@ -147,18 +152,6 @@ export function SiteHeader() {
                   )}
                 >
                   {item.label}
-                  {/* Underline doubles as the current-page marker so state is
-                      never carried by colour alone (WCAG 1.4.1). */}
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "absolute inset-x-0 -bottom-0.5 h-[2px] origin-left rounded-full bg-brand-rule transition-[transform,height,background-color] duration-400 ease-[var(--ease-out-expo)]",
-                      "group-hover:h-[3px] group-hover:bg-brand-deep group-focus-visible:h-[3px] group-focus-visible:scale-x-100",
-                      isCurrent(item.href)
-                        ? "scale-x-100"
-                        : "scale-x-0 group-hover:scale-x-100",
-                    )}
-                  />
                 </Link>
               </li>
             ))}
