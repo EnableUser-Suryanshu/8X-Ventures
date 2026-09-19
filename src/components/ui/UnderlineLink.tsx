@@ -30,13 +30,18 @@ const ARROW_PATH = {
 } as const;
 
 /**
- * The design's signature call-to-action: a plain label sitting on a short
- * brand-blue rule that sweeps on hover.
+ * The design's signature call to action: a plain label sitting on a short
+ * brand-blue rule, with an arrow that arrives on hover and on focus.
  *
- * Hover and focus are carried by four things at once — the label lifts and
- * deepens in colour, the rule thickens and widens, and an arrow slides
- * forward — so the state never depends on colour alone (WCAG 1.4.1). The
- * arrow's space is reserved at rest, so nothing reflows when it appears.
+ * The rule is two segments rather than one. The label carries the first, which
+ * is all that shows at rest; the arrow is hung off the label's right edge, out
+ * of flow, and carries the second, scaled to nothing. Hover grows it, so the
+ * line runs to the right to meet the arrow as it fades in. See "UNDERLINE
+ * LINK" in `globals.css` for why the arrow being out of flow is the whole
+ * trick — it is what makes the rule at rest exactly the label's width.
+ *
+ * `.group` on the anchor is what both states hang off, so hovering anywhere on
+ * the link and tabbing to it do the same thing.
  */
 export function UnderlineLink({
   href,
@@ -48,27 +53,12 @@ export function UnderlineLink({
   /* Anchors and internal routes are both a move onward through the site, so
      they share one glyph and one direction of travel. */
   const glyph = kind === "external" ? "external" : "forward";
-  const light = tone === "light";
 
   const content = (
-    <span className="relative inline-flex flex-col items-center gap-[0.55em]">
-      <span className="inline-flex items-center gap-[0.4em] transition-transform duration-500 ease-[var(--ease-out-soft)] group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5">
-        <span>{children}</span>
-        <svg
-          viewBox="0 0 24 24"
-          fill="none"
-          aria-hidden="true"
-          focusable="false"
-          className={cn(
-            "h-[0.8em] w-[0.8em] shrink-0 opacity-0 transition-[opacity,transform] duration-500 ease-[var(--ease-out-expo)]",
-            "group-focus-visible:opacity-100 group-hover:opacity-100",
-            /* Each arrow travels the way it points, and every in-site arrow
-               points forward. */
-            glyph === "external"
-              ? "translate-y-1 -translate-x-1 group-hover:translate-x-0 group-hover:translate-y-0 group-focus-visible:translate-x-0 group-focus-visible:translate-y-0"
-              : "-translate-x-1 group-hover:translate-x-0 group-focus-visible:translate-x-0",
-          )}
-        >
+    <span className="ul-link" data-tone={tone}>
+      <span className="ul-seg">{children}</span>
+      <span aria-hidden="true" className="ul-seg ul-arrow" data-icon={glyph}>
+        <svg viewBox="0 0 24 24" fill="none" focusable="false">
           <path
             d={ARROW_PATH[glyph]}
             stroke="currentColor"
@@ -78,23 +68,13 @@ export function UnderlineLink({
           />
         </svg>
       </span>
-      <span
-        aria-hidden="true"
-        className={cn(
-          "block h-[2px] w-full origin-center scale-x-100 rounded-full transition-[transform,height,background-color] duration-500 ease-[var(--ease-out-expo)]",
-          "group-hover:h-[3px] group-hover:scale-x-110 group-focus-visible:h-[3px] group-focus-visible:scale-x-110",
-          light
-            ? "bg-white/70 group-hover:bg-white group-focus-visible:bg-white"
-            : "bg-brand-rule group-hover:bg-brand-deep group-focus-visible:bg-brand-deep",
-        )}
-      />
     </span>
   );
 
   const classes = cn(
     "group inline-flex text-[length:var(--text-body-lg)] font-light",
-    "transition-[color,transform] duration-300 ease-[var(--ease-out-soft)] active:scale-[0.98]",
-    light
+    "transition-colors duration-300 ease-[var(--ease-out-soft)]",
+    tone === "light"
       ? "text-white"
       : "text-ink-900 hover:text-brand-deep focus-visible:text-brand-deep",
     className,

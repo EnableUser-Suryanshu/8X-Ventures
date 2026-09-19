@@ -84,6 +84,24 @@ function flushUnreachable() {
   }
 }
 
+/**
+ * `flushUnreachable` measures every block still waiting, and it is wired to
+ * `scroll`. Scroll fires more often than the screen is painted, so straight
+ * through it that is a forced layout per event for the whole of the first pass
+ * down a long page — work whose answer cannot change between two events in the
+ * same frame. Coalesced to one run per frame, it is measured once for each
+ * picture the reader actually sees.
+ */
+let flushScheduled = 0;
+
+function scheduleFlush() {
+  if (flushScheduled) return;
+  flushScheduled = requestAnimationFrame(() => {
+    flushScheduled = 0;
+    flushUnreachable();
+  });
+}
+
 function reveal(el: Element, step: number) {
   if (step > 0 && !staged.has(el)) {
     (el as HTMLElement).style.setProperty("--reveal-delay", `${step}ms`);
@@ -182,12 +200,12 @@ export function Reveal({
 
     if (!bottomWatched) {
       bottomWatched = true;
-      window.addEventListener("scroll", flushUnreachable, { passive: true });
-      window.addEventListener("resize", flushUnreachable, { passive: true });
+      window.addEventListener("scroll", scheduleFlush, { passive: true });
+      window.addEventListener("resize", scheduleFlush, { passive: true });
       /* Lazy media settling changes the document height after the last
          scroll event, which moves what "maximum scroll" means. */
-      new ResizeObserver(flushUnreachable).observe(document.documentElement);
-      requestAnimationFrame(flushUnreachable);
+      new ResizeObserver(scheduleFlush).observe(document.documentElement);
+      scheduleFlush();
     }
 
     return () => {

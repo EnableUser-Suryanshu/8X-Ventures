@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { Reveal } from "@/components/ui/Reveal";
 import { stats, statsHeadline } from "@/content/home";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
@@ -9,29 +9,23 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
 const format = (n: number, prefix = "", suffix = "") =>
   `${prefix}${n.toLocaleString("en-IN")}${suffix}`;
 
-const final = (i: number) =>
-  format(stats[i].value, stats[i].prefix, stats[i].suffix);
-
-/** The one behind the live figure: the next in the set, so the two never
- *  read as the same number printed twice. */
-const ghostOf = (i: number) => (i + 1) % stats.length;
-
-/** How much of the run each figure gets, including its hold. */
-const SEGMENT = 1 / stats.length;
-
 /**
- * Where in a figure's own segment its count resolves. The rest of the segment
- * holds the finished number, so it is read before the set moves on.
+ * How much of a block's own segment each handover takes.
+ *
+ * A block leaves over the last `HANDOVER` of its segment and the next arrives
+ * over the same stretch, so the two cross rather than following one another —
+ * without the overlap there is a moment with nothing on the panel at all. The
+ * rest of the segment is a hold, which is what gives each figure time to be
+ * read rather than merely seen going past.
  */
-const COUNT_ENDS_AT = 0.72;
+const HANDOVER = 0.22;
 
-/** The unpinned fallback's length per figure — count, then hold. */
-const COUNT_MS = 1600;
-const SEGMENT_MS = COUNT_MS / COUNT_ENDS_AT;
+/** How far a block sits from its resting place while it is off. */
+const OFFSET = 1;
 
 /**
- * How hard the painted value chases the scroll, per second. Higher tracks the
- * scroll more tightly; lower glides longer after it stops. 9 lands close
+ * How hard the painted position chases the scroll, per second. Higher tracks
+ * the scroll more tightly; lower glides longer after it stops. 9 lands close
  * enough to feel attached to the wheel while still smoothing a notch out.
  */
 const CHASE_RATE = 9;
@@ -39,104 +33,92 @@ const CHASE_RATE = 9;
 const clamp01 = (n: number) => (n < 0 ? 0 : n > 1 ? 1 : n);
 
 /**
- * The value to paint at `e` of the way through the count.
- *
- * Floored at 1, because zero is not a figure. At the head of a segment the
- * count has not started, and rounding straight off the progress left the panel
- * resting on "₹0+Cr" with "0+" ghosted behind it — read as a published number
- * rather than as a count waiting to begin, which is the one thing this panel
- * must not say. The run is otherwise untouched: it still starts at the bottom
- * and lands exactly on the figure.
- */
-const count = (e: number, value: number) => Math.max(1, Math.round(e * value));
-const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
-/**
- * "Early signals. Serious scale." — the artboard's composition, played out
- * against the scroll.
+ * "Early signals. Serious scale." — 8X's three published figures, carried past
+ * on the reader's own scrolling.
  *
  * The section is given spare height and its panel sticks to the top, so the
- * composition holds still while the page scrolls past it and 8X's three
- * published figures count up under the reader's own scrolling. See "The pinned
- * scroll stage" in `globals.css` for the layout, and for why this is native
- * `position: sticky` rather than an intercepted scroll: the page never stops
- * responding normally to the scrollbar, the keyboard, or Page Down.
+ * composition holds still while the page scrolls through it. The figures are
+ * stacked in one grid cell and run as a conveyor: each rises into place from
+ * below, holds while it is read, and carries on up and out as the next one
+ * arrives. Nothing counts — the numbers are set as published and it is the
+ * block that moves, which is what keeps the panel a thing being read rather
+ * than a meter being watched.
  *
- * The run is split evenly between the figures, and the caption under the
- * numeral turns over with it — each figure is a different claim, so the number
- * alone does not say what has been counted.
+ * See "The pinned scroll stage" in `globals.css` for the layout, and for why
+ * this is native `position: sticky` rather than an intercepted scroll: the
+ * page never stops responding normally to the scrollbar, the keyboard, or
+ * Page Down.
  *
- * Below the traced composition's height there is no pin, so the set falls back
- * to stepping through itself once on view, on a timer.
+ * Without the pin — reduced motion, no JavaScript, or a viewport too short to
+ * hold a screenful still — the conveyor does not apply and the three simply
+ * list down the panel, which is the whole set at once and needs no scrolling
+ * to reach. A screen reader gets that list either way: the blocks are an
+ * ordinary `<ul>` and stay in the accessibility tree whatever the panel is
+ * doing, so nothing here is announced twice or hidden from it.
  *
- * The digits are written straight to the DOM rather than held in state: the
- * server renders the first figure resolved, so it is correct before hydration,
- * with JavaScript disabled and under `prefers-reduced-motion` — and there is no
- * render-per-frame while the page scrolls. Only the caption is React state,
- * which changes twice in a pass rather than every frame.
- *
- * The whole rotating block is hidden from assistive tech and a static line
- * carrying all three figures with their captions is exposed instead, so a
- * screen reader hears the set once rather than every intermediate frame of it.
+ * Positions are written to the elements rather than held in state, so the
+ * conveyor tracks the scroll every frame without re-rendering the section.
  */
 export function StatsSection() {
   const reduced = useReducedMotion();
   const wrapRef = useRef<HTMLElement>(null);
-  const figureRef = useRef<HTMLSpanElement>(null);
-  const ghostRef = useRef<HTMLSpanElement>(null);
-
-  /* Which figure is live. Mirrored in a ref so the frame loop can tell whether
-     the caption actually needs a render without reading state through a stale
-     closure. */
-  const [index, setIndex] = useState(0);
-  const indexRef = useRef(0);
+  const blocksRef = useRef<(HTMLLIElement | null)[]>([]);
 
   useEffect(() => {
     const wrap = wrapRef.current;
     if (!wrap) return;
 
-    const show = (i: number) => {
-      if (indexRef.current === i) return;
-      indexRef.current = i;
-      setIndex(i);
-    };
-
+    /** Back to the artboard's composition: the first figure, in place. */
     const settle = () => {
-      show(0);
-      if (figureRef.current) figureRef.current.textContent = final(0);
-      if (ghostRef.current) ghostRef.current.textContent = final(ghostOf(0));
+      blocksRef.current.forEach((el, i) => {
+        if (!el) return;
+        el.style.setProperty("--o", i === 0 ? "1" : "0");
+        el.style.setProperty("--y", i === 0 ? "0" : String(OFFSET));
+      });
     };
 
     /**
-     * Paint the set at `p`, its 0..1 progress through the whole run.
+     * Paint the conveyor at `p`, its 0..1 progress through the whole run.
      *
-     * `eased` curves each figure's own count — wanted for the timed fallback,
-     * which has no other shape, and not wanted when the scroll is already
-     * supplying the motion.
+     * `d` is a block's progress through its own segment: 0 as it settles, 1 as
+     * it has finished leaving. The first block never plays its arrival and the
+     * last never plays its exit — the panel opens on one figure and rests on
+     * another, rather than fading up from nothing and out to nothing.
      */
-    const paint = (p: number, eased = true) => {
-      const i = Math.min(Math.floor(clamp01(p) / SEGMENT), stats.length - 1);
-      const within = clamp01((clamp01(p) - i * SEGMENT) / SEGMENT);
-      const c = clamp01(within / COUNT_ENDS_AT);
-      const e = eased ? easeOutCubic(c) : c;
+    const paint = (p: number) => {
+      const n = stats.length;
+      const last = n - 1;
 
-      const live = stats[i];
-      const behind = stats[ghostOf(i)];
-      if (figureRef.current) {
-        figureRef.current.textContent = format(
-          count(e, live.value),
-          live.prefix,
-          live.suffix,
-        );
-      }
-      if (ghostRef.current) {
-        ghostRef.current.textContent = format(
-          count(e, behind.value),
-          behind.prefix,
-          behind.suffix,
-        );
-      }
-      show(i);
+      blocksRef.current.forEach((el, i) => {
+        if (!el) return;
+        let d = clamp01(p) * n - i;
+        if (i === 0) d = Math.max(d, 0);
+        if (i === last) d = Math.min(d, 1 - HANDOVER);
+
+        let o: number;
+        let y: number;
+        if (d < -HANDOVER) {
+          o = 0;
+          y = OFFSET;
+        } else if (d < 0) {
+          const t = (d + HANDOVER) / HANDOVER;
+          o = t;
+          y = (1 - t) * OFFSET;
+        } else if (d < 1 - HANDOVER) {
+          o = 1;
+          y = 0;
+        } else if (d < 1) {
+          const t = (d - (1 - HANDOVER)) / HANDOVER;
+          o = 1 - t;
+          y = -t * OFFSET;
+        } else {
+          o = 0;
+          y = -OFFSET;
+        }
+
+        el.style.setProperty("--o", o.toFixed(3));
+        el.style.setProperty("--y", y.toFixed(3));
+      });
     };
 
     if (reduced) {
@@ -145,12 +127,13 @@ export function StatsSection() {
       return;
     }
 
-    /* --- Pinned: the scroll position is the animation's clock -----------
+    /* --- The scroll position is the animation's clock --------------------
        Rather than paint the raw scroll offset, a rendered value chases the
        target a fixed fraction per frame. Scroll events arrive in coarse,
        uneven jumps -- a wheel notch is tens of pixels -- and painting them
-       straight through makes the figure stutter in steps. Chasing turns those
-       jumps into a continuous glide that still settles exactly on target.
+       straight through makes the handover stutter in steps. Chasing turns
+       those jumps into a continuous glide that still settles exactly on
+       target.
 
        Frame-rate corrected, so the glide takes the same time on a 60Hz and a
        144Hz display instead of running twice as fast on the latter. */
@@ -182,9 +165,7 @@ export function StatsSection() {
         }
 
         wrap.style.setProperty("--p", shown.toFixed(4));
-        /* Linear against the scroll: the reader's own movement is the easing,
-           and a curve on top of it reads as the number lagging behind. */
-        paint(shown, false);
+        paint(shown);
 
         raf = requestAnimationFrame(frame);
       };
@@ -216,54 +197,25 @@ export function StatsSection() {
       };
     };
 
-    /* --- Not pinned: step through the set once, on a timer, when it comes
-       into view. One pass and then a stop, not a loop: nothing here updates
-       itself for as long as the reader is on the page, so there is no
-       auto-playing content to give a pause control to. */
-    const stepOnce = () => {
-      if (typeof IntersectionObserver === "undefined") return () => {};
-
-      let raf = 0;
-      let cancelled = false;
-      const run = SEGMENT_MS * stats.length;
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          if (!entries.some((e) => e.isIntersecting)) return;
-          observer.disconnect();
-
-          const start = performance.now();
-          const tick = (now: number) => {
-            if (cancelled) return;
-            const p = Math.min((now - start) / run, 1);
-            paint(p);
-            if (p < 1) raf = requestAnimationFrame(tick);
-          };
-          raf = requestAnimationFrame(tick);
-        },
-        { threshold: 0.4 },
-      );
-
-      observer.observe(wrap);
-
-      return () => {
-        cancelled = true;
-        cancelAnimationFrame(raf);
-        observer.disconnect();
-      };
-    };
-
     /* The driver has to follow the pin exactly, so this is the same condition
        the stylesheet gates it on — a viewport tall enough to hold a screenful
        still, whatever its width. Read the query rather than a copy of the
-       number: if the two ever disagree, the figures either count against a
-       scroll that is not being held or sit frozen while the section is. */
+       number: if the two ever disagree, the conveyor either runs against a
+       scroll that is not being held or sits frozen while the section is.
+
+       Unpinned there is nothing to drive: the blocks are an ordinary list and
+       every figure is already on the panel. */
     const pinned = window.matchMedia("(min-height: 40rem)");
     let stop = () => {};
     const attach = () => {
       stop();
       wrap.style.removeProperty("--p");
-      stop = pinned.matches ? driveByScroll() : stepOnce();
+      if (pinned.matches) {
+        stop = driveByScroll();
+      } else {
+        stop = () => {};
+        settle();
+      }
     };
 
     attach();
@@ -296,47 +248,42 @@ export function StatsSection() {
             sizes="100vw"
             className="-z-10 object-cover"
           />
-          <Reveal
-            as="h2"
-            id="stats-heading"
-            /* No tracking: the artboard sets these at their natural widths, and
-               any negative tracking measurably narrows them against it. */
-            className="stats-headline text-[length:var(--text-display)] leading-none font-bold text-white"
-          >
-            {statsHeadline}
-          </Reveal>
 
-          {/* The outgoing figure, carried over from the artboard as a flourish.
-              It has no caption, so it is decoration rather than information. */}
-          <p
-            aria-hidden="true"
-            className="stats-ghost leading-none font-bold text-white/35 select-none"
-          >
-            <span ref={ghostRef}>{final(ghostOf(0))}</span>
-          </p>
+          <div className="stats-content">
+            <Reveal
+              as="h2"
+              id="stats-heading"
+              /* No tracking: the artboard sets these at their natural widths,
+                 and any negative tracking measurably narrows them against it. */
+              className="stats-headline text-[length:var(--text-display)] leading-none font-bold text-white"
+            >
+              {statsHeadline}
+            </Reveal>
 
-          <p
-            aria-hidden="true"
-            className="stats-figure text-[length:var(--text-stat)] leading-none font-bold text-white"
-          >
-            <span ref={figureRef}>{final(0)}</span>
-          </p>
-
-          <p
-            aria-hidden="true"
-            className="stats-label text-[length:clamp(1.125rem,0.841rem+2.2vw,3.48rem)] leading-none font-bold text-white"
-          >
-            {/* Keyed, so each caption plays the same arrival the rotating word
-                in the manifesto does rather than swapping in place. */}
-            <span key={index} className="stats-caption">
-              {stats[index].label}
-            </span>
-          </p>
-
-          {/* The whole set, at once and in order — see the note above. */}
-          <p className="sr-only-8x">
-            {stats.map((s, i) => `${final(i)}: ${s.label}.`).join(" ")}
-          </p>
+            {/* A list, and left as one. Pinned, the blocks are stacked in a
+                single grid cell and only one is on screen at a time — but
+                opacity is not `visibility`, so all three stay in the
+                accessibility tree and the set is read in full however the
+                panel happens to be behaving. */}
+            <ul role="list" className="stats-blocks">
+              {stats.map((stat, i) => (
+                <li
+                  key={stat.label}
+                  ref={(el) => {
+                    blocksRef.current[i] = el;
+                  }}
+                  className="stats-block"
+                >
+                  <p className="stats-figure text-[length:var(--text-stat)] leading-none font-bold text-white">
+                    {format(stat.value, stat.prefix, stat.suffix)}
+                  </p>
+                  <p className="stats-label text-[length:clamp(1.125rem,0.841rem+2.2vw,3.48rem)] leading-none font-bold text-white">
+                    {stat.label}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </div>
 
           <div aria-hidden="true" className="stats-hand pointer-events-none">
             <Image suppressHydrationWarning

@@ -5,8 +5,9 @@ import { useEffect, useRef } from "react";
 import { CarouselControls } from "@/components/ui/CarouselControls";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
-import { journey, journeyIntro, type JourneyStage } from "@/content/home";
+import { journey, journeyIntro } from "@/content/home";
 import { useCarousel } from "@/hooks/useCarousel";
+import { StageIcon } from "@/components/home/StageIcon";
 import { cn } from "@/lib/cn";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 
@@ -30,6 +31,11 @@ const NODES = NODE_X.map((x) => ({
   topPct: ((arcY(x) - VIEW.top) / VIEW.h) * 100,
 }));
 
+/** A resting node against the featured one: the artboard's 3.45% over 7.2%.
+ *  Every node is laid out at the larger size and scaled to this, so the size
+ *  change is a transform rather than a width and costs no layout. */
+const NODE_SCALE = 3.45 / 7.2;
+
 const ARC_PATH = `M 0 ${arcY(0).toFixed(1)} Q 960 ${(4 * 232 - 2 * arcY(0)) / 2} 1920 ${arcY(0).toFixed(1)}`;
 
 /** Shortest signed distance from `from` to `to` around a ring of `length`. */
@@ -40,74 +46,6 @@ const ringOffset = (from: number, to: number, length: number) => {
   return d;
 };
 
-/* --------------------------------------------------------------------------
-   Stage icons
-   -------------------------------------------------------------------------- */
-
-const ICONS: Record<JourneyStage["icon"], React.ReactNode> = {
-  search: (
-    <>
-      <circle cx="10.5" cy="10.5" r="6.5" />
-      <path d="m15.5 15.5 4.5 4.5" />
-    </>
-  ),
-  beaker: (
-    <>
-      <path d="M9 3v6.2L4.6 17.4A2 2 0 0 0 6.35 20.4h11.3a2 2 0 0 0 1.75-3L15 9.2V3" />
-      <path d="M8 3h8M7.5 14h9" />
-    </>
-  ),
-  chip: (
-    <>
-      <rect x="7" y="7" width="10" height="10" rx="1.5" />
-      <path d="M10.5 10.5h3v3h-3zM12 3v4M12 17v4M3 12h4M17 12h4M7.5 3v4M16.5 3v4M7.5 17v4M16.5 17v4M3 7.5h4M3 16.5h4M17 7.5h4M17 16.5h4" />
-    </>
-  ),
-  brain: (
-    <>
-      <path d="M12 6.5a3 3 0 0 0-5.7-1.3A2.8 2.8 0 0 0 4 8a2.8 2.8 0 0 0 .9 2 2.8 2.8 0 0 0 .6 4.4A3 3 0 0 0 9 19a3 3 0 0 0 3-2.6z" />
-      <path d="M12 6.5a3 3 0 0 1 5.7-1.3A2.8 2.8 0 0 1 20 8a2.8 2.8 0 0 1-.9 2 2.8 2.8 0 0 1-.6 4.4A3 3 0 0 1 15 19a3 3 0 0 1-3-2.6z" />
-      <path d="M12 6.5v10" />
-    </>
-  ),
-  factory: (
-    <>
-      <path d="M3 20V11l5.5 3.5V11L14 14.5V7l7 4v9z" />
-      <path d="M3 20h18M7 17h1.5M11.5 17H13M16 17h1.5" />
-    </>
-  ),
-  chart: (
-    <>
-      <path d="M4 20V4M4 20h16" />
-      <path d="m7.5 15.5 3.5-4 3 2.5 5-6.5" />
-      <path d="M19.5 7.5H16M19.5 7.5V11" />
-    </>
-  ),
-  globe: (
-    <>
-      <circle cx="12" cy="12" r="8.5" />
-      <path d="M3.5 12h17M12 3.5c2.3 2.4 3.5 5.3 3.5 8.5S14.3 18.2 12 20.5c-2.3-2.3-3.5-5.3-3.5-8.5S9.7 5.9 12 3.5" />
-    </>
-  ),
-};
-
-function StageIcon({ icon, className }: { icon: JourneyStage["icon"]; className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-      focusable="false"
-      className={className}
-    >
-      {ICONS[icon]}
-    </svg>
-  );
-}
 
 /* -------------------------------------------------------------------------- */
 
@@ -186,7 +124,7 @@ export function FounderJourney() {
               The curve itself is decorative; the buttons layered over it are
               the real controls and carry the accessible names. --- */}
           <div
-            className="relative -mt-10 hidden w-full lg:block"
+            className="journey-arc relative -mt-10 hidden w-full lg:block"
             style={{ aspectRatio: `${VIEW.w} / ${VIEW.h}` }}
           >
             <svg
@@ -212,20 +150,27 @@ export function FounderJourney() {
                   type="button"
                   onClick={() => goTo(i)}
                   aria-current={isActive ? "true" : undefined}
+                  /* A node that wrapped round the ring is put in its new place
+                     without a transition; see `step` above. */
+                  data-wrapped={wrapped ? "" : undefined}
                   className={cn(
-                    "absolute grid -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full",
-                    wrapped
-                      ? "transition-none"
-                      : "transition-[left,top,width,background-color] duration-700 ease-[var(--ease-out-expo)]",
-                    "[will-change:left,top]",
-                    /* Width is a share of the strip; aspect-square keeps the
-                       nodes circular regardless of the strip's aspect ratio. */
-                    "aspect-square",
+                    "journey-node absolute top-0 left-0 grid place-items-center rounded-full",
+                    /* Every node is laid out at the featured size and the
+                       smaller ones are scaled down, so the size change rides
+                       the same transform as the move. `aspect-square` keeps
+                       them circular whatever the strip's ratio. */
+                    "aspect-square w-[7.2%]",
                     isActive
-                      ? "w-[7.2%] bg-[radial-gradient(circle_at_32%_28%,#7fc0f8_0%,#4b95e5_62%,#3b84d6_100%)] text-white"
-                      : "w-[3.45%] bg-[radial-gradient(circle_at_32%_28%,#a9d4ff_0%,#5aa8f0_55%,#3f8fdd_100%)] hover:ring-4 hover:ring-brand/35",
+                      ? "bg-[radial-gradient(circle_at_32%_28%,#7fc0f8_0%,#4b95e5_62%,#3b84d6_100%)] text-white"
+                      : "bg-[radial-gradient(circle_at_32%_28%,#a9d4ff_0%,#5aa8f0_55%,#3f8fdd_100%)] hover:ring-4 hover:ring-brand/35",
                   )}
-                  style={{ left: `${pos.leftPct}%`, top: `${pos.topPct}%` }}
+                  style={
+                    {
+                      "--node-x": pos.leftPct,
+                      "--node-y": pos.topPct,
+                      "--node-scale": isActive ? 1 : NODE_SCALE,
+                    } as React.CSSProperties
+                  }
                 >
                   {isActive && <StageIcon icon={stage.icon} className="w-[52%]" />}
                   <span className="sr-only-8x">

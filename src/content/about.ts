@@ -37,14 +37,20 @@ export type JourneyEntry = {
 };
 
 /**
- * Timeline entries from the profile copy on 8xventures.co/about. The artboard
- * shows 2022, so the rail opens there; the arrows step through all four.
+ * Timeline entries from the profile copy on 8xventures.co/about.
+ *
+ * The rail opens on the first year and the arrows step through all four. The
+ * artboard draws 2022 in this slot, which is what this used to open on, but a
+ * timeline that starts in its second year reads as one the reader has already
+ * scrolled — and the down arrow is the only one live, so there is nothing to
+ * say the first year is behind them. Opening at 2021 is the client's call
+ * over the artboard's.
  */
 export const aboutJourney = {
   eyebrow: "Our Journey",
   line1: "From Conviction",
   line2: "To Institution",
-  initialIndex: 1,
+  initialIndex: 0,
   entries: [
     {
       year: "2021",

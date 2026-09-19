@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { MentorRail } from "@/components/team/MentorRail";
 import { ScrollPin } from "@/components/ui/ScrollPin";
-import { CardArrow } from "@/components/ui/CardArrow";
 import { Reveal } from "@/components/ui/Reveal";
 import { PointerField } from "@/components/ui/PointerField";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
@@ -16,29 +15,23 @@ const EYEBROW = "text-[length:var(--ab-eyebrow)]";
 const BODY = "text-[length:var(--ab-body)]";
 const DISPLAY = "text-[length:var(--ab-display)] leading-[1.2] font-bold tracking-normal";
 
-function LinkedInIcon() {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="h-4 w-4 shrink-0">
-      <path d="M6.94 8.5H4.06V20h2.88zM5.5 3.6a1.67 1.67 0 1 0 0 3.34 1.67 1.67 0 0 0 0-3.34M20 13.44c0-2.9-1.55-4.25-3.62-4.25a3.12 3.12 0 0 0-2.84 1.56h-.04V8.5H10.7V20h2.88v-5.69c0-1.5.29-2.95 2.15-2.95 1.83 0 1.86 1.71 1.86 3.05V20H20z" />
-    </svg>
-  );
-}
-
 /**
- * A portrait card: name and role at the top, the cut-out portrait below, and
- * the person's bio and LinkedIn on hover.
+ * A portrait card: the cut-out portrait, and a panel carrying the name, the
+ * role, a line of biography and the two ways on, which arrives on hover and on
+ * keyboard focus. It is the same panel the featured card in the homepage strip
+ * wears — see "The panel" in `globals.css`.
  *
  * The card is the grid's own item, not wrapped in one — the grids size their
  * children with `.tm-pt-grid .tm-card { width: ... }`, so an intermediate
  * element takes that width instead and the card, which has only an aspect
  * ratio, collapses to nothing.
  *
- * The whole card navigates to the profile, but the anchor is the name and it
- * is stretched over the card rather than the card being a `div` with a click
- * handler: that keeps real link semantics — a URL to open in a new tab, a
- * context menu, and keyboard support without reimplementing Enter and Space.
- * LinkedIn sits above the stretched link and is a sibling of it, so the two
- * anchors never nest.
+ * Two links go to the profile and only one of them is real. The card-sized one
+ * is there so that clicking anywhere works, and is hidden from assistive tech
+ * and taken out of the tab order; "Know More" in the panel is the one a screen
+ * reader and a keyboard find. That way the card is wholly clickable without
+ * announcing the same destination twice, and without an anchor nested inside
+ * another.
  */
 function PersonCard({
   person,
@@ -55,19 +48,18 @@ function PersonCard({
       as="article"
       variant="card"
       delay={Math.min(index, 5) * 90}
-      data-card-arrow=""
       className={cn("tm-card", variant === "team" && "tm-card-sm")}
     >
-      <CardArrow />
-
-      <div className="tm-card-head">
-        <h3 className="tm-card-name">
-          <Link href={`/team/${person.id}`} className="tm-card-open">
-            {person.name}
-          </Link>
-        </h3>
-        <p className="tm-card-role">{person.role}</p>
-      </div>
+      {/* The whole card, as a target for the pointer only. See `.tm-card-hit`
+          in globals.css for why it is hidden from assistive tech and out of
+          the tab order: "Know More" below goes to the same place, and is the
+          one a screen reader and a keyboard should find. */}
+      <Link
+        href={`/team/${person.id}`}
+        aria-hidden="true"
+        tabIndex={-1}
+        className="tm-card-hit"
+      />
 
       <div className="tm-card-photo">
         <Image suppressHydrationWarning
@@ -79,18 +71,20 @@ function PersonCard({
         />
       </div>
 
-      <div className="tm-card-bio">
-        <p>{person.bio}</p>
-        <a
-          href={person.linkedin}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="tm-card-link"
-        >
-          <LinkedInIcon />
-          LinkedIn
-          <span className="sr-only-8x">{` profile for ${person.name} (opens in a new tab)`}</span>
-        </a>
+      <div className="tm-card-overlay">
+        <h3 className="tm-card-name">{person.name}</h3>
+        <p className="tm-card-role">{person.role}</p>
+        <p className="tm-card-highlight">{person.bio}</p>
+        <div className="tm-card-actions">
+          <UnderlineLink href={`/team/${person.id}`} tone="light">
+            Know More
+            <span className="sr-only-8x">{` about ${person.name}`}</span>
+          </UnderlineLink>
+          <UnderlineLink href={person.linkedin} tone="light">
+            LinkedIn
+            <span className="sr-only-8x">{` profile for ${person.name}`}</span>
+          </UnderlineLink>
+        </div>
       </div>
     </Reveal>
   );
@@ -121,7 +115,7 @@ export function TeamPage() {
           {/* Runs on down into the band below, as in the artboard */}
           <div
             aria-hidden="true"
-            className="tm-at tm-hero-engine pointer-events-none z-10 max-lg:absolute max-lg:-top-6 max-lg:right-0 max-lg:w-[52%] max-lg:opacity-30"
+            className="tm-at tm-hero-engine pointer-events-none z-10 max-lg:absolute max-lg:-top-6 max-lg:right-0 max-lg:w-[52%]"
           >
             <Image suppressHydrationWarning
               src="/images/team-engine.png"

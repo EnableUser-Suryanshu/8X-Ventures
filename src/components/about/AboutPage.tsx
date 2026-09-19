@@ -75,7 +75,7 @@ export function AboutPage() {
           {/* Overflows into the band below, as in the artboard */}
           <div
             aria-hidden="true"
-            className="ab-at ab-hero-head pointer-events-none z-10 max-lg:absolute max-lg:-top-4 max-lg:right-0 max-lg:w-[46%] max-lg:opacity-25"
+            className="ab-at ab-hero-head pointer-events-none z-10 max-lg:absolute max-lg:-top-4 max-lg:right-0 max-lg:w-[46%]"
           >
             <Image suppressHydrationWarning
               src="/images/about-head.png"

@@ -67,17 +67,31 @@ const REACH = 300;
 const SIGMA = 170;
 const BOW = 0.82;
 
-/** Peak opacity of a filament, where it passes closest to the pointer. */
-const LINE_ALPHA = 0.92;
-const LINE_WIDTH = 2.1;
+/**
+ * Peak opacity of a filament, where it passes closest to the pointer.
+ *
+ * Held well below the plate's own contrast on purpose. This band is carried by
+ * the words on it, and several of the sections that take this field set white
+ * type over a pale blue — a combination with little contrast to spare before
+ * anything is drawn behind it at all. At 0.92, which is what this was, a
+ * near-white filament passing behind a line of white text took most of what
+ * was left: the effect read first and the sentence second. It is atmosphere,
+ * so it is set to be noticed after the reading rather than during it.
+ */
+const LINE_ALPHA = 0.34;
+const LINE_WIDTH = 1.5;
 
 /** How finely a filament is sampled along its length, in px. Small enough that
  *  the bend is a curve rather than a series of corners. */
 const STEP = 9;
 
+/* The pool of light. Drawn additively, so it only has room to show on the
+   darker bands — but those are also where a pale wash sits closest to white
+   type, so it comes down with the filaments rather than being left to carry
+   the effect on its own. */
 const LENS_RADIUS = 380;
-const LENS_CORE = 0.2;
-const LENS_MID = 0.12;
+const LENS_CORE = 0.1;
+const LENS_MID = 0.06;
 
 export function PointerField() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
