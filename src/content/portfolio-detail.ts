@@ -279,7 +279,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     why: {
       line1: "Autonomy will move beyond",
       line2: "controlled environments.",
-      body: "The next generation of robotics will not operate only in warehouses, labs, or predictable factory floors. It will need to work where.",
+      body: "The next generation of robotics will not operate only in warehouses, labs, or predictable factory floors. It will need to work where the ground is uneven, the light is poor and the map runs out.",
       environments: ["FIELDS", "MINES", "INFRASTRUCTURE SITES", "INDUSTRIAL FACILITIES", "UNSTRUCTURED TERRAIN"],
       close: "Neuralzome is building for that world.",
     },
@@ -319,7 +319,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       close: "Trishul Space is building for that world.",
     },
     snapshot: {
-      technologyArea: "Liquid Rocket Propulsion",
+      technologyArea: "Liquid And Cryogenic Rocket Propulsion",
       useCase: "Integration-Ready Engines For Launch Vehicles",
       marketRelevance: "Commercial Space, Satellite Launch, Defence, Aerospace",
     },

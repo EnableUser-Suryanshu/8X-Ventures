@@ -69,7 +69,7 @@ export type PortfolioCard = PortfolioCompany & {
 const DETAILS: Record<string, { founded: string; note: string; status?: string; investedAt?: string }> = {
   pantherun: {
     founded: "Founded 2019 · Bengaluru",
-    note: "Real-time, hardware-assisted encryption for defence, telecom, industrial and IoT systems.",
+    note: "Real-time, hardware-assisted encryption for defence, telecom, industrial and IoT systems, on the Pepper chip-and-software platform.",
   },
   "tiea-connectors": {
     founded: "Founded 2020 · Bengaluru",
@@ -93,13 +93,13 @@ const DETAILS: Record<string, { founded: string; note: string; status?: string; 
   },
   neuralzome: {
     founded: "Founded 2023 · Bengaluru",
-    note: "Autonomous AI for off-road robotics in complex real-world environments.",
+    note: "Autonomous AI for off-road robotics, including the Chitti autonomous ATV for field operations and material movement.",
     status: "Scaling from product validation to commercial deployment.",
     investedAt: "Seed Stage",
   },
   "trishul-space": {
     founded: "Founded 2022 · New Delhi",
-    note: "Indigenous liquid rocket engines, including the Harpy-1 staged-combustion programme.",
+    note: "Indigenous liquid and cryogenic rocket engines, including the high-performance Harpy-1 programme.",
   },
   enerzi: {
     founded: "Founded 2007 · Belagavi",
@@ -111,7 +111,7 @@ const DETAILS: Record<string, { founded: string; note: string; status?: string; 
   },
   armory: {
     founded: "Founded 2024 · Gurugram",
-    note: "Counter-drone detection, jamming and interception systems, designed and built in India.",
+    note: "Counter-drone detection, jamming and interception systems, including the handheld Surge, designed and built in India.",
   },
   thermistance: {
     founded: "Founded 2020 · Pune",
