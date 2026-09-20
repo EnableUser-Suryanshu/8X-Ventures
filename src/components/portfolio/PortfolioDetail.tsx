@@ -205,10 +205,14 @@ export function PortfolioDetail({ id }: { id: string }) {
         ))}
       </section>
 
-      {/* ======================================================== FIGURE */}
+      {/* ======================================================== FIGURE
+          The company's own photograph, out of its brief — its people, its
+          hardware, its site. `detailArt.team` is the fallback for a company
+          added without one, and is a stock shot of strangers in an office,
+          so it should stay a fallback. */}
       <Reveal as="figure" variant="scale" className="pd-band pd-figure">
         <Image suppressHydrationWarning
-          src={detailArt.team}
+          src={detail.art?.figure ?? detailArt.team}
           alt=""
           fill
           sizes="(max-width: 1024px) 92vw, 60vw"

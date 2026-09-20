@@ -54,15 +54,17 @@ export type CompanyDetail = {
   };
 
   /**
-   * The frame's own artwork for this company, lifted from the Figma file's
-   * image fills.
+   * This company's artwork.
    *
-   * Only Neuralzome's exists: the frame was drawn for Neuralzome and the
-   * other eleven have never been art-directed. Anything missing falls back to
-   * the company's mark on the designed bloom, and to the navy field the
-   * environment photograph is graded to — so a page without artwork is still
-   * the design, just without its photography. Filling these in later is a
-   * four-line edit per company.
+   * `figure` every company has — see the note on it below. The other three
+   * are the frame's own fills, lifted from the Figma file, and only
+   * Neuralzome's exist: the frame was drawn for Neuralzome and the other
+   * eleven have never been art-directed to that depth. Anything missing falls
+   * back to the company's mark on the designed bloom, and to the navy field
+   * the environment photograph is graded to — so a page without them is still
+   * the design, just without that photography. Filling them in is a
+   * three-line edit per company; the briefs carry between three and nine
+   * usable photographs each.
    */
   art?: {
     /** The product shot beside the name. */
@@ -73,6 +75,15 @@ export type CompanyDetail = {
     why?: string;
     /** The product shot beside the snapshot rows. */
     snapshot?: string;
+    /**
+     * The wide plate under the intro. Unlike the four above, every company
+     * has one: they are the photographs embedded in the briefs themselves —
+     * the company's own people, hardware and sites — and they replace the
+     * stock photograph of strangers in an office that used to stand on all
+     * twelve pages. `detailArt.team` is still the fallback for a company
+     * added without one.
+     */
+    figure?: string;
   };
 };
 
@@ -114,6 +125,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       useCase: "AES-Based Data Protection For Embedded And Networked Systems",
       marketRelevance: "Defence, Aerospace, Telecom, Industrial Automation, IoT",
     },
+    art: {
+      figure: "/images/portfolio-detail/pantherun/figure.jpg",
+    },
   },
 
   "tiea-connectors": {
@@ -142,6 +156,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       technologyArea: "Interconnect Engineering And Precision Manufacturing",
       useCase: "Connectors, Cable Harnesses And Custom Interconnect Assemblies",
       marketRelevance: "Automotive, EV, Aerospace, Defence, Industrial Equipment",
+    },
+    art: {
+      figure: "/images/portfolio-detail/tiea-connectors/figure.jpg",
     },
   },
 
@@ -172,6 +189,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       useCase: "Inspection, Cleaning And Monitoring Of Underground Assets",
       marketRelevance: "Municipal Utilities, Industrial Operators, Urban Sanitation",
     },
+    art: {
+      figure: "/images/portfolio-detail/solinas-integrity/figure.jpg",
+    },
   },
 
   "xyma-analytics": {
@@ -200,6 +220,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       technologyArea: "Waveguide Ultrasonic Sensing And Analytics",
       useCase: "Multi-Parameter Process And Condition Monitoring",
       marketRelevance: "Process Industries, Energy, Metals, Industrial IoT",
+    },
+    art: {
+      figure: "/images/portfolio-detail/xyma-analytics/figure.jpg",
     },
   },
 
@@ -230,6 +253,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       useCase: "Near-Chip, High-Bandwidth Data Movement",
       marketRelevance: "AI Compute, HPC, Data Centres, Cloud Infrastructure",
     },
+    art: {
+      figure: "/images/portfolio-detail/lightspeed-photonics/figure.jpg",
+    },
   },
 
   sanchiconnect: {
@@ -258,6 +284,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       technologyArea: "Deep-Tech Enablement Platform",
       useCase: "Accelerator Programmes, Fundraising And Ecosystem Access",
       marketRelevance: "Startups, Investors, Corporates, Institutions, Government",
+    },
+    art: {
+      figure: "/images/portfolio-detail/sanchiconnect/figure.jpg",
     },
   },
 
@@ -289,6 +318,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       marketRelevance: "Industrial Automation, Infrastructure, Agriculture, Mobility, Defense-Adjacent Systems",
     },
     art: {
+      figure: "/images/portfolio-detail/neuralzome/figure.jpg",
       hero: "/images/portfolio-detail/neuralzome/vehicle.png",
       lockup: "/images/portfolio-detail/neuralzome/lockup.jpg",
       why: "/images/portfolio-detail/neuralzome/why.jpg",
@@ -323,6 +353,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       useCase: "Integration-Ready Engines For Launch Vehicles",
       marketRelevance: "Commercial Space, Satellite Launch, Defence, Aerospace",
     },
+    art: {
+      figure: "/images/portfolio-detail/trishul-space/figure.jpg",
+    },
   },
 
   enerzi: {
@@ -351,6 +384,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       technologyArea: "Microwave Heating And Microwave-Plasma Systems",
       useCase: "High-Temperature Processing, Drying And Clean-Hydrogen Production",
       marketRelevance: "Industrial Manufacturing, ClimateTech, Advanced Materials, Energy",
+    },
+    art: {
+      figure: "/images/portfolio-detail/enerzi/figure.jpg",
     },
   },
 
@@ -381,6 +417,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       useCase: "Customised Biocatalysts For Industrial Processes",
       marketRelevance: "Chemicals, Pharmaceuticals, Food, Materials, Sustainability",
     },
+    art: {
+      figure: "/images/portfolio-detail/kcat-enzymatic/figure.jpg",
+    },
   },
 
   armory: {
@@ -410,6 +449,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       useCase: "Detection, Jamming And Interception Of Rogue Drones",
       marketRelevance: "Defence, Homeland Security, Critical Infrastructure, Public Safety",
     },
+    art: {
+      figure: "/images/portfolio-detail/armory/figure.jpg",
+    },
   },
 
   thermistance: {
@@ -438,6 +480,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       technologyArea: "Passive Thermal Management",
       useCase: "Heat Pipes, Thermosyphons, Vapour Chambers And Loop Heat Pipes",
       marketRelevance: "EVs, Space, Electronics, High-Performance Computing, Industrial OEMs",
+    },
+    art: {
+      figure: "/images/portfolio-detail/thermistance/figure.jpg",
     },
   },
 };
