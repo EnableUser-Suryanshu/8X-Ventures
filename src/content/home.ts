@@ -545,22 +545,27 @@ export const mentorsIntro = {
  *
  * The photographs arrived from six different cameras — a studio headshot, a
  * conference snap with a microphone in it, a 225px thumbnail, a portrait
- * taken in an office. In `public/images/mentors/` each has been cut off its
- * ground, greyscaled, and set on a canvas that is already the card's shape
- * with the head at the same size on the same eye line, because scaling to
- * the face rather than to the frame is the only thing that makes a row of
- * six such different files read as one set.
+ * taken in an office — and in colour, which is how they are shown. Three
+ * things in `public/images/mentors/` bring them to one set:
  *
- * Four of the grounds keyed. Two did not and were cut to a drawn outline:
- * Virendra Somwanshi's office, which has a wood panel on one side and a
- * picture on the other, and Bony Niranjan Dalal's stage.
+ *   - one framing. Each is cropped so the head is the same size on the same
+ *     eye line. Scaling to the face rather than to the frame is the thing
+ *     that reads first; the alternative is six photographs at six distances.
+ *   - one exposure and one white balance, both measured across the face
+ *     rather than the whole frame — a white studio card and a warm office
+ *     wall pull the same face two different ways — and both corrected
+ *     towards the median face of the set, so nobody is pushed far from how
+ *     they actually look.
+ *   - one ground. Each keeps its own out to about 58% of the radius and is
+ *     blended into a single pale tint by 93%, so the part of a photograph
+ *     that differs from the others is the part that goes. The two shot on
+ *     location — an office with a picture on the wall, a stage — start
+ *     blending earlier, because in colour those grounds are much louder than
+ *     a studio card.
  *
- * Three of the files want replacing, and nothing in the code would change if
+ * Two of the files want replacing, and nothing in the code would change if
  * they were: Dr. Ashok Jhunjhunwala's is 225px square and Suresh Nanda's
- * 301px, so both are soft at card size; Bony Niranjan Dalal's is a
- * conference close-up with a microphone in his hand, framed so tightly that
- * there is no torso to put under the head, so his card ends higher than the
- * rest. A plain headshot for each would settle all three.
+ * 301px, so both are soft. A plain headshot for each would settle it.
  */
 export const mentors: Mentor[] = [
   {
