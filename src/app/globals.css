@@ -2148,17 +2148,15 @@
     --at-tail-gap: 0.99;
   }
 
-  /* The grids: one row, 37 apart, as the prototype measures.
+  /* The grids: four columns, 37 apart, as the prototype measures.
 
-     The prototype draws four across and the width was written as a quarter to
-     match, which is right only while a grid holds exactly four. The team grid
-     holds five, so the fifth dropped to a line of its own and sat centred
-     under the other four — a row and an orphan rather than a row.
-
-     `--grid-count` is the number of cards, published by the component, so the
-     width is a share of however many there are and a grid is always one line.
-     Four still resolves to the traced quarter, so the partners grid is
-     unchanged to the pixel. */
+     A share of the number of cards was tried here, so that a grid of any size
+     came out as one row. It does, but the card is only as wide as the row
+     divided by however many people are in it — seven across put the team at
+     156px a card at 1440 and 111px at 1024, which is a thumbnail, not a
+     portrait. The quarter is the traced width and it is the one that holds
+     the face at a readable size, so the grids keep it and wrap: four, then
+     the rest centred under them. */
   .tm-pt-grid,
   .tm-gp-grid {
     display: flex;
@@ -2168,9 +2166,7 @@
   }
   .tm-pt-grid .tm-card,
   .tm-gp-grid .tm-card {
-    width: calc(
-      (100% - (var(--grid-count, 4) - 1) * 1.927vw) / var(--grid-count, 4)
-    );
+    width: calc((100% - 3 * 1.927vw) / 4);
   }
 }
 
