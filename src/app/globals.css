@@ -1900,6 +1900,79 @@
   line-height: 1.25;
 }
 
+/* --- the mentors themselves --------------------------------------------
+   A wall of six faces under the band that says what mentorship brings. It is
+   not in the artboard — the client asked for it afterwards — so it has no
+   traced box to be placed in and is an ordinary stage in flow, taking its
+   type, its margins and its column gap from the bands either side of it.
+
+   The portraits do their own unifying in `public/images/mentors/`: each is
+   cropped to put the head at the same size on the same eye line, pulled to
+   the same grey, and blended into one pale tint at the rim. What the CSS has
+   to do is hold them all at exactly one size, because that is the other half
+   of six photographs looking like one set. */
+.tm-mb-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem 1.5rem;
+}
+
+.tm-mb-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1em;
+}
+
+.tm-mb-disc {
+  display: block;
+  width: 100%;
+  /* Square, so a disc is a disc whatever the column comes out as. */
+  aspect-ratio: 1;
+  /* The lift the rest of the site's artwork has under the pointer. These are
+     not links and have nothing to open, so it stays small: enough to say the
+     row is alive, not enough to promise a click. */
+  transition: scale 0.7s var(--ease-out-soft);
+}
+
+.tm-mb-item:hover .tm-mb-disc {
+  scale: 1.04;
+}
+
+.tm-mb-disc img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.tm-mb-name {
+  font-size: clamp(0.9375rem, 1.04vw, 1.25rem); /* 20px @1920 */
+  line-height: 1.3;
+  font-weight: 700;
+  text-align: center;
+  text-wrap: balance;
+  color: #ffffff;
+}
+
+@media (width >= 48rem) {
+  .tm-mb-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (width >= 64rem) {
+  .tm-mb-copy {
+    --at-eyebrow-gap: 0.024em;
+    --at-tail-gap: 0.8;
+  }
+  .tm-mb-grid {
+    /* Six across, on the column gap the card grids above already use. */
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1.927vw;
+    margin-inline: 6.25%;
+  }
+}
+
 .tm-cta-title {
   font-size: var(--ab-display);
 }
@@ -1992,6 +2065,14 @@
   }
   .tm-mentor-band {
     aspect-ratio: 1920 / 1091;
+  }
+  /* The traced bands take their height from an artboard ratio. The mentor
+     wall has no traced box, so it takes a share of the width instead, which
+     is the same ruler and keeps it in proportion with them at every size.
+     It sits here, after `.tm-stage`'s reset, because that reset is the
+     shorthand and would otherwise win on source order. */
+  .tm-mentor-board {
+    padding-block: 6.5%;
   }
   .tm-cta {
     aspect-ratio: 1920 / 528;
