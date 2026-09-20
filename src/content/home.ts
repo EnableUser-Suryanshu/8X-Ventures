@@ -512,6 +512,92 @@ export const team: TeamMember[] = [
   },
 ];
 
+/* --- Mentors ------------------------------------------------------------- */
+
+export type Mentor = {
+  id: string;
+  name: string;
+  /**
+   * The client's Fund II teaser lists all eight of its advisory board as
+   * "External Advisor", which says nothing about any one of them and the same
+   * nothing six times over. So this carries the position the same page states
+   * beside the name, and `bio` carries the rest of what it says. Where the
+   * deck gives no position — Bony Niranjan Dalal — the line it does give
+   * stands. Nothing here is written about a mentor from outside that deck.
+   */
+  role: string;
+  bio: string;
+  image: string;
+};
+
+export const mentorsIntro = {
+  eyebrow: "Our Mentors",
+  line1: "The People Who",
+  line2: "Bring That Expertise",
+} as const;
+
+/**
+ * 8X's advisory board, less the two who already appear above as partners.
+ *
+ * Photographs from the client's "Photos of Mentors" folder on Drive; roles
+ * and biographies from the Advisory Board page of their "8X Ventures Fund
+ * II — India DeepTech Fund" teaser.
+ *
+ * The photographs arrived from six different cameras — a studio headshot, a
+ * conference snap with a microphone in it, a 225px thumbnail, a portrait
+ * taken in an office. See `public/images/mentors/`: each is cropped to put
+ * the head at the same size on the same eye line, pulled to the same grey,
+ * and blended into one pale tint at the rim, so the card holds a portrait
+ * rather than someone else's background. Two of the files — Dr. Ashok
+ * Jhunjhunwala's at 225px and Suresh Nanda's at 301px — are small enough
+ * that they are soft at this size; better originals would fix that and
+ * nothing else needs to change.
+ */
+export const mentors: Mentor[] = [
+  {
+    id: "ashok-jhunjhunwala",
+    name: "Dr. Ashok Jhunjhunwala",
+    role: "Chairman, ITEL",
+    bio: "Padma Shri, 2002, for distinguished service in science, engineering and telecommunications. Lifetime achievement awards from TiE and from the India Energy Storage Alliance.",
+    image: "/images/mentors/ashok-jhunjhunwala.png",
+  },
+  {
+    id: "suresh-nanda",
+    name: "Suresh Nanda",
+    role: "Former MD, ING Private Bank (Dubai)",
+    bio: "Former Head of International Banking at Bank One, Mauritius, and an Independent Director at Multiples Private Equity. Holds a doctorate from IIM Calcutta and an AMP from The Wharton School.",
+    image: "/images/mentors/suresh-nanda.png",
+  },
+  {
+    id: "deepak-chitnis",
+    name: "Deepak Chitnis",
+    role: "Chief Designer, Lodha Group",
+    bio: "Leads a team of more than 200. Since 2007 he has driven end-to-end design and championed organisational growth by mentoring leaders and building cross-functional collaboration.",
+    image: "/images/mentors/deepak-chitnis.png",
+  },
+  {
+    id: "virendra-somwanshi",
+    name: "Virendra Somwanshi",
+    role: "Group President & Head of Wealth, Federal Bank",
+    bio: "25+ years in retail and private banking, with leadership and board roles across global and Indian financial institutions.",
+    image: "/images/mentors/virendra-somwanshi.png",
+  },
+  {
+    id: "bony-niranjan-dalal",
+    name: "Bony Niranjan Dalal",
+    role: "External Advisor",
+    bio: "An accomplished businessman in Surat whose work spans real estate development and management, asset management and franchising, and an active investor across sectors and stages.",
+    image: "/images/mentors/bony-niranjan-dalal.png",
+  },
+  {
+    id: "ankit-agarwal",
+    name: "Ankit Agarwal",
+    role: "Head of Fund Management, Globe Capital",
+    bio: "A CA and CFA. He oversees PMS, research, institutional advisory and FII services, along with the firm's proprietary investment and arbitrage strategy.",
+    image: "/images/mentors/ankit-agarwal.png",
+  },
+];
+
 /* --- LP Day -------------------------------------------------------------- */
 
 export const lpDay = {

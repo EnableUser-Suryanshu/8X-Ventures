@@ -225,34 +225,6 @@ export const teamMentors = {
   closing2: "become great businesses.",
 } as const;
 
-/**
- * The mentors themselves, from the client's "Photos of Mentors" folder on
- * Drive. That folder is six photographs and six names and nothing else — no
- * title, no firm, no biography — so that is what the section carries.
- *
- * The six photographs arrived from six different cameras: a studio headshot,
- * a conference snap with a microphone in it, a 225px thumbnail, a portrait
- * shot in an office. See `public/images/mentors/` — each is cropped to put
- * the head at the same size on the same eye line, pulled to the same grey,
- * and blended into one tint at the rim, so a row of them reads as one set
- * rather than six files.
- */
-export type Mentor = { id: string; name: string; image: string };
-
-export const teamMentorBoard = {
-  eyebrow: "Our Mentors",
-  line1: "The People Who",
-  line2: "Bring That Expertise",
-  people: [
-    { id: "ashok-jhunjhunwala", name: "Dr. Ashok Jhunjhunwala", image: "/images/mentors/ashok-jhunjhunwala.png" },
-    { id: "suresh-nanda", name: "Suresh Nanda", image: "/images/mentors/suresh-nanda.png" },
-    { id: "deepak-chitnis", name: "Deepak Chitnis", image: "/images/mentors/deepak-chitnis.png" },
-    { id: "virendra-somwanshi", name: "Virendra Somwanshi", image: "/images/mentors/virendra-somwanshi.png" },
-    { id: "bony-niranjan-dalal", name: "Bony Niranjan Dalal", image: "/images/mentors/bony-niranjan-dalal.png" },
-    { id: "ankit-agarwal", name: "Ankit Agarwal", image: "/images/mentors/ankit-agarwal.png" },
-  ] as Mentor[],
-} as const;
-
 export const teamCta = {
   line1: "Founders do not need noise.",
   line2: "They need useful partners.",

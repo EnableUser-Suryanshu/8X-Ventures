@@ -947,7 +947,90 @@
    two sizes, so it is one implementation, and the `cqw` type inside it does
    the adapting. */
 
+/* --- the mentors, under the team ----------------------------------------
+   The advisory board, on the site's own card: `.tm-card` with
+   `.tm-card-overlay`, so it reveals, lifts, grows its artwork and turns over
+   exactly as the cards above and on /team do. Only the artwork inside it is
+   the mentors' own, and only because of what the client sent — see
+   `MentorStrip.tsx`. This band is not in the artboard, so it is an ordinary
+   stage in flow rather than a traced box. */
+.mn-stage {
+  position: relative;
+  padding: 3.5rem var(--spacing-gutter) 4rem;
+  max-width: 120rem;
+  margin-inline: auto;
+}
+
+.mn-heading {
+  margin-top: clamp(0.5rem, 1.7vw, 2.25rem);
+}
+
+.mn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 3.2vw, 3.5rem);
+}
+
+/* The card carries an aspect ratio and no width of its own, so in a flex row
+   it collapses to nothing unless the row says how wide it is — the same trap
+   the person cards on /team are sized out of. One up, then two, three, four. */
+.mn-card {
+  width: 100%;
+}
+
+@media (width >= 30rem) {
+  .mn-card {
+    width: calc((100% - 1.5rem) / 2);
+  }
+}
+
+/* The disc sits in the card rather than filling it, so the card's blue is
+   still the card: a portrait placed on it, not a hole punched in it.
+   Qualified by `.tm-card-photo` because that rule is a plate pinned to the
+   foot of the card at 88% of its height, and it is declared further down the
+   sheet — one class each and it would win on order alone. */
+.tm-card-photo.mn-card-disc {
+  inset: 13% 10% auto;
+  height: auto;
+  aspect-ratio: 1;
+  /* The disc is feathered into nothing at its rim, so there is no edge for
+     the plate to clip and nothing for `overflow` to do. */
+  overflow: visible;
+}
+
+.mn-card-disc img {
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 48rem) {
+  .mn-grid {
+    gap: 1.927vw;
+  }
+  .mn-card {
+    width: calc((100% - 2 * 1.927vw) / 3);
+  }
+}
+
 @media (width >= 64rem) {
+  .mn-stage {
+    /* The stage above ends a little under its own CTA, so this one only
+       needs enough air to read as a band of its own. A share of the width,
+       like every traced band, capped where the stage itself is. */
+    padding: min(4.5%, 5.4rem) 0 min(6.5%, 7.8rem);
+  }
+  /* Four across on the traced quarter, as every other card grid on the site,
+     with the last two under them on the same left edge. */
+  .mn-grid {
+    justify-content: flex-start;
+    margin-inline: 6.25%;
+  }
+  .mn-card {
+    width: calc((100% - 3 * 1.927vw) / 4);
+  }
+
   .team-stage {
     aspect-ratio: 1920 / 1699;
     /* The eyebrow, headline and body were each pinned to their own percentage
@@ -1900,79 +1983,6 @@
   line-height: 1.25;
 }
 
-/* --- the mentors themselves --------------------------------------------
-   A wall of six faces under the band that says what mentorship brings. It is
-   not in the artboard — the client asked for it afterwards — so it has no
-   traced box to be placed in and is an ordinary stage in flow, taking its
-   type, its margins and its column gap from the bands either side of it.
-
-   The portraits do their own unifying in `public/images/mentors/`: each is
-   cropped to put the head at the same size on the same eye line, pulled to
-   the same grey, and blended into one pale tint at the rim. What the CSS has
-   to do is hold them all at exactly one size, because that is the other half
-   of six photographs looking like one set. */
-.tm-mb-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2rem 1.5rem;
-}
-
-.tm-mb-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.1em;
-}
-
-.tm-mb-disc {
-  display: block;
-  width: 100%;
-  /* Square, so a disc is a disc whatever the column comes out as. */
-  aspect-ratio: 1;
-  /* The lift the rest of the site's artwork has under the pointer. These are
-     not links and have nothing to open, so it stays small: enough to say the
-     row is alive, not enough to promise a click. */
-  transition: scale 0.7s var(--ease-out-soft);
-}
-
-.tm-mb-item:hover .tm-mb-disc {
-  scale: 1.04;
-}
-
-.tm-mb-disc img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-
-.tm-mb-name {
-  font-size: clamp(0.9375rem, 1.04vw, 1.25rem); /* 20px @1920 */
-  line-height: 1.3;
-  font-weight: 700;
-  text-align: center;
-  text-wrap: balance;
-  color: #ffffff;
-}
-
-@media (width >= 48rem) {
-  .tm-mb-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (width >= 64rem) {
-  .tm-mb-copy {
-    --at-eyebrow-gap: 0.024em;
-    --at-tail-gap: 0.8;
-  }
-  .tm-mb-grid {
-    /* Six across, on the column gap the card grids above already use. */
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 1.927vw;
-    margin-inline: 6.25%;
-  }
-}
-
 .tm-cta-title {
   font-size: var(--ab-display);
 }
@@ -2065,14 +2075,6 @@
   }
   .tm-mentor-band {
     aspect-ratio: 1920 / 1091;
-  }
-  /* The traced bands take their height from an artboard ratio. The mentor
-     wall has no traced box, so it takes a share of the width instead, which
-     is the same ruler and keeps it in proportion with them at every size.
-     It sits here, after `.tm-stage`'s reset, because that reset is the
-     shorthand and would otherwise win on source order. */
-  .tm-mentor-board {
-    padding-block: 6.5%;
   }
   .tm-cta {
     aspect-ratio: 1920 / 528;

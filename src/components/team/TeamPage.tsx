@@ -7,15 +7,7 @@ import { ScrollPin } from "@/components/ui/ScrollPin";
 import { Reveal } from "@/components/ui/Reveal";
 import { PointerField } from "@/components/ui/PointerField";
 import { UnderlineLink } from "@/components/ui/UnderlineLink";
-import {
-  teamCta,
-  teamGroup,
-  teamHero,
-  teamMentorBoard,
-  teamMentors,
-  teamPartners,
-  type Person,
-} from "@/content/team";
+import { teamCta, teamGroup, teamHero, teamMentors, teamPartners, type Person } from "@/content/team";
 import { cn } from "@/lib/cn";
 
 /* The inner pages' scale — 27 / 32 / 82 at 1920. */
@@ -278,60 +270,6 @@ export function TeamPage() {
           </div>
         </div>
       </ScrollPin>
-
-      {/* ================= THE MENTORS =================
-          The band above says what mentorship brings; this says who brings it.
-          It carries the same blue so the two read as one movement, and the
-          closing section's brighter blue below is what ends it.
-
-          Names, no roles: the client's folder is six photographs and six
-          names, and nothing about a mentor is written here that they did not
-          send. */}
-      <section aria-labelledby="mentor-board-heading" className="on-dark relative bg-[#023363]">
-        <div className="tm-stage tm-mentor-board">
-          <div className="tm-mb-copy at-col text-center">
-            <Reveal>
-              <p className={cn("font-bold tracking-[0.02em] text-brand-sky uppercase", EYEBROW)}>
-                {teamMentorBoard.eyebrow}
-              </p>
-            </Reveal>
-
-            <Reveal
-              as="h2"
-              id="mentor-board-heading"
-              className={cn("at-title text-white", DISPLAY)}
-            >
-              {teamMentorBoard.line1}{" "}
-              <span className="block text-brand-sky">{teamMentorBoard.line2}</span>
-            </Reveal>
-
-            <ul role="list" className="at-tail tm-mb-grid">
-              {teamMentorBoard.people.map((m, i) => (
-                <Reveal
-                  as="li"
-                  key={m.id}
-                  variant="scale"
-                  delay={Math.min(i, 5) * 90}
-                  className="tm-mb-item"
-                >
-                  {/* The portrait is decoration beside the name, which is the
-                      content — so the name is the only thing announced. */}
-                  <span aria-hidden="true" className="tm-mb-disc">
-                    <Image suppressHydrationWarning
-                      src={m.image}
-                      alt=""
-                      width={480}
-                      height={480}
-                      sizes="(max-width: 48rem) 38vw, (max-width: 64rem) 25vw, 13vw"
-                    />
-                  </span>
-                  <p className="tm-mb-name">{m.name}</p>
-                </Reveal>
-              ))}
-            </ul>
-          </div>
-        </div>
-      </section>
 
       {/* ================= CLOSING ================= */}
       <section aria-labelledby="team-cta-heading" className="on-dark relative isolate overflow-hidden bg-[#0096d0]">
