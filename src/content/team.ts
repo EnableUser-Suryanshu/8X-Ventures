@@ -52,6 +52,21 @@ export const teamPartners = {
   body: "Our partners and board advisors bring experience across venture capital, industry, technology, global markets, and governance.",
   people: [
     {
+      id: "chirag-gupta",
+      email: "chirag.gupta@8xventures.co",
+      name: "Chirag Gupta",
+      role: "Managing Partner",
+      image: "/images/team/chirag-gupta.png",
+      bio: "Leadership positions at 500 Global, Careem (acquired by Uber at $3.1bn), McKinsey, PwC and Korn Ferry, across 11 countries.",
+      linkedin: "https://www.linkedin.com/in/chirag-gupta/",
+      /* Verbatim from the prototype's member frame (node 311-514). */
+      profile: [
+        "Chirag has held leadership positions at 500 Global, a venture capital firm with over $2bn in assets under management, Careem, acquired by Uber at $3.1bn, McKinsey, PwC and Korn Ferry. Across those roles he has worked in eleven countries.",
+        "He began his journey as the “youngest coder in India” and has represented India in global DeepTech forums. He built proprietary simulation AI models to address Saudi Arabia's civil defence challenges and is now part of the advisory board of the innovation committee at IIT Chennai.",
+        "He holds an MBA from Chicago Booth and NTU Singapore and a BBS from Delhi University. He also received a scholarship to attend the Harvard Business Analytics Program.",
+      ],
+    },
+    {
       id: "vinod-agarwal",
       email: "vinod.agarwal@8xventures.co",
       name: "Vinod Agarwal",
@@ -86,21 +101,6 @@ export const teamPartners = {
       profile: [
         "Esha is the Vice-Chairman of JBM Group, a $2.7bn global conglomerate with operations across 10 countries. At JBM Group she is involved in executive decision-making for the manufacturing and deployment of automotive, sustainable technologies, AgriTech and DeepTech solutions. She led the development and deployment of manufacturing facilities for steel, automotive, textiles and many more industries, and has been a keynote speaker for NASSCOM and led multiple CII Tech discussions.",
         "She is actively mentoring early-stage DeepTech startups and is part of advisory boards across the USA, India, the UK and Singapore. She holds an MBA from INSEAD and a BBA from Boston University.",
-      ],
-    },
-    {
-      id: "chirag-gupta",
-      email: "chirag.gupta@8xventures.co",
-      name: "Chirag Gupta",
-      role: "Managing Partner",
-      image: "/images/team/chirag-gupta.png",
-      bio: "Leadership positions at 500 Global, Careem (acquired by Uber at $3.1bn), McKinsey, PwC and Korn Ferry, across 11 countries.",
-      linkedin: "https://www.linkedin.com/in/chirag-gupta/",
-      /* Verbatim from the prototype's member frame (node 311-514). */
-      profile: [
-        "Chirag has held leadership positions at 500 Global, a venture capital firm with over $2bn in assets under management, Careem, acquired by Uber at $3.1bn, McKinsey, PwC and Korn Ferry. Across those roles he has worked in eleven countries.",
-        "He began his journey as the “youngest coder in India” and has represented India in global DeepTech forums. He built proprietary simulation AI models to address Saudi Arabia's civil defence challenges and is now part of the advisory board of the innovation committee at IIT Chennai.",
-        "He holds an MBA from Chicago Booth and NTU Singapore and a BBS from Delhi University. He also received a scholarship to attend the Harvard Business Analytics Program.",
       ],
     },
   ] as Person[],
