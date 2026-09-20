@@ -545,13 +545,22 @@ export const mentorsIntro = {
  *
  * The photographs arrived from six different cameras — a studio headshot, a
  * conference snap with a microphone in it, a 225px thumbnail, a portrait
- * taken in an office. See `public/images/mentors/`: each is cropped to put
- * the head at the same size on the same eye line, pulled to the same grey,
- * and blended into one pale tint at the rim, so the card holds a portrait
- * rather than someone else's background. Two of the files — Dr. Ashok
- * Jhunjhunwala's at 225px and Suresh Nanda's at 301px — are small enough
- * that they are soft at this size; better originals would fix that and
- * nothing else needs to change.
+ * taken in an office. In `public/images/mentors/` each has been cut off its
+ * ground, greyscaled, and set on a canvas that is already the card's shape
+ * with the head at the same size on the same eye line, because scaling to
+ * the face rather than to the frame is the only thing that makes a row of
+ * six such different files read as one set.
+ *
+ * Four of the grounds keyed. Two did not and were cut to a drawn outline:
+ * Virendra Somwanshi's office, which has a wood panel on one side and a
+ * picture on the other, and Bony Niranjan Dalal's stage.
+ *
+ * Three of the files want replacing, and nothing in the code would change if
+ * they were: Dr. Ashok Jhunjhunwala's is 225px square and Suresh Nanda's
+ * 301px, so both are soft at card size; Bony Niranjan Dalal's is a
+ * conference close-up with a microphone in his hand, framed so tightly that
+ * there is no torso to put under the head, so his card ends higher than the
+ * rest. A plain headshot for each would settle all three.
  */
 export const mentors: Mentor[] = [
   {
