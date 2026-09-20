@@ -19,9 +19,15 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   }
 
+  /* Four of the team are on file as a photograph and a name only, so the
+     description is built from whatever of the two is actually there. */
+  const description = [person.role, person.bio && `${person.bio.slice(0, 120)}...`]
+    .filter(Boolean)
+    .join(" — ");
+
   return {
     title: `${person.name} | 8X Ventures`,
-    description: `${person.role} — ${person.bio.slice(0, 120)}...`,
+    description: description || `${person.name} at 8X Ventures.`,
   };
 }
 

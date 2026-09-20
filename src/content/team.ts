@@ -2,20 +2,42 @@
  * Team page content, traced from artboard page 4 (1920 × 5947) and the Figma
  * prototype of the same frame.
  *
- * The people are 8X's own, from 8xventures.co/team — four partners and board
- * advisors, then five in the team — with their portraits from the same source.
- * The artboard fills its team grid with eight cards by repeating four
+ * The people are 8X's own — four partners and board advisors, then seven in
+ * the team. The partners and the three longest-standing of the team come from
+ * 8xventures.co/team with their portraits from the same source; the rest of
+ * the roster is the client's "Photos of Team Members" folder on Drive, which
+ * is where the four newest arrived and where the two who left stopped being
+ * listed. The artboard fills its team grid with eight cards by repeating four
  * placeholder names ("Akash Patel", "Karan Wadhwani"); these are the real ones.
  */
 
 export type Person = {
   id: string;
   name: string;
-  role: string;
   image: string;
+  /**
+   * How the portrait meets the card.
+   *
+   * "cutout" is the house style and the default: the subject keyed off its
+   * ground, standing on the card's blue. "plate" is for the photographs whose
+   * ground will not key — a cafe behind one, a soft wall the same value as the
+   * face in front of it against another — where the choice is a photograph
+   * filling the card or no portrait at all. See `.tm-card-photo` in
+   * globals.css for the top fade that keeps a plate from reading as a
+   * rectangle dropped on the card.
+   */
+  portrait?: "cutout" | "plate";
+  /**
+   * Everything below is optional, and four people are missing all of it. Drive
+   * supplied them as a photograph and a name and nothing else; the card and
+   * the member page leave out what is not there rather than render an empty
+   * role line or a link to nowhere. Nothing here is written about a person
+   * from outside the client's own material.
+   */
+  role?: string;
   /** Shown on hover and on keyboard focus. 8X's own words, from their site. */
-  bio: string;
-  linkedin: string;
+  bio?: string;
+  linkedin?: string;
   /**
    * The long-form biography, one string per paragraph, for the member's own
    * page. The frame sets three paragraphs; only Chirag's is written that way
@@ -32,9 +54,10 @@ export type Person = {
    * client's "8x Existing Content" doc. The rest are that sample's pattern,
    * `firstname.lastname@8xventures.co`, applied to the roster at the client's
    * instruction; 8X publish no per-person address on their own site, where the
-   * only one is the shared `pitch@8xventures.co`. Treat the eight derived
+   * only one is the shared `pitch@8xventures.co`. Treat the six derived
    * entries as needing confirmation before this goes public — a wrong address
-   * bounces, or reaches the wrong person.
+   * bounces, or reaches the wrong person. The four who arrived from Drive have
+   * no address here at all, derived or otherwise.
    */
   email?: string;
 };
@@ -111,16 +134,15 @@ export const teamGroup = {
   line1: "Operators. Investors.",
   line2: "Technologists.",
   body: "The people who work with founders every day.",
+  /**
+   * The three the site already carried and Drive still lists, then the four
+   * Drive added. Saurabh Gunwant and Vikeesh Kesavan are gone: the client's
+   * folder is the roster of record and neither is in it.
+   *
+   * The order is deliberate — the people we have a role and a biography for
+   * come first, so the row does not open on a run of bare cards.
+   */
   people: [
-    {
-      id: "saurabh-gunwant",
-      email: "saurabh.gunwant@8xventures.co",
-      name: "Saurabh Gunwant",
-      role: "Associate Principal",
-      image: "/images/team/saurabh-gunwant.png",
-      bio: "A Computer Application graduate and an MBA (Finance) from IMT Ghaziabad, interested in what emerging technologies do to the future of computing.",
-      linkedin: "https://www.linkedin.com/in/saurabhgunwant/",
-    },
     {
       id: "shreya-kothari",
   /* Attested in the client's content doc. */
@@ -132,19 +154,13 @@ export const teamGroup = {
       linkedin: "https://www.linkedin.com/in/shreyabagri/",
     },
     {
-      id: "vikeesh-kesavan",
-      email: "vikeesh.kesavan@8xventures.co",
-      name: "Vikeesh Kesavan",
-      role: "Associate",
-      image: "/images/team/vikeesh-kesavan.png",
-      bio: "An engineer evaluating frontier technology, a graduate of Anna University (CEG) who led its Entrepreneurship Club, with experience at Larsen & Toubro.",
-      linkedin: "https://www.linkedin.com/in/vikeesh-kesavan-5257ab19b/",
-    },
-    {
       id: "kirthivasan-suresh",
       email: "kirthivasan.suresh@8xventures.co",
       name: "Kirthivasan Suresh",
       role: "Analyst",
+      /* Drive has a newer photograph of him, taken on a rooftop against a
+         city skyline. It cannot be keyed and the cut-out already on file is
+         the better card, so this one stays until a cut-out arrives. */
       image: "/images/team/kirthivasan-suresh.png",
       bio: "A Mechanical Engineering graduate from the College of Engineering Guindy, with research internships at CSIR-NAL and Karpagam Engineers.",
       linkedin: "https://www.linkedin.com/in/kirthivasan-suresh-747aa0202/",
@@ -157,6 +173,28 @@ export const teamGroup = {
       image: "/images/team/rashi-jain.png",
       bio: "A qualified Chartered Accountant working across taxation, regulatory compliance and statutory reporting.",
       linkedin: "https://www.linkedin.com/in/ca-rashi-jain13/",
+    },
+    {
+      id: "priya-sathish",
+      name: "Priya Sathish",
+      image: "/images/team/priya-sathish.png",
+    },
+    {
+      id: "madhukar-kota",
+      name: "Madhukar Kota",
+      image: "/images/team/madhukar-kota.png",
+    },
+    {
+      id: "akash-patel",
+      name: "Akash Patel",
+      image: "/images/team/akash-patel.jpg",
+      portrait: "plate",
+    },
+    {
+      id: "twinkal-janbandhu",
+      name: "Twinkal Janbandhu",
+      image: "/images/team/twinkal-janbandhu.jpg",
+      portrait: "plate",
     },
   ] as Person[],
 } as const;
