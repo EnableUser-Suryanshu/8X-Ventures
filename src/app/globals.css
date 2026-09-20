@@ -2156,12 +2156,17 @@
      156px a card at 1440 and 111px at 1024, which is a thumbnail, not a
      portrait. The quarter is the traced width and it is the one that holds
      the face at a readable size, so the grids keep it and wrap: four, then
-     the rest centred under them. */
+     the rest under them, starting from the left.
+
+     A short last row is aligned to the start, not centred. Four cards fill
+     the row exactly, so this changes nothing about a full row; it only
+     decides where the three underneath begin, and under a left-aligned row
+     they begin on the same edge rather than floating in the middle of it. */
   .tm-pt-grid,
   .tm-gp-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 3.18vw 1.927vw;
   }
   .tm-pt-grid .tm-card,
