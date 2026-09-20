@@ -619,24 +619,19 @@ export const lpDay = {
   line1: "Operators. Investors.",
   line2: "Technologists.",
   body: "LP Day brings together investors, founders, mentors, and ecosystem leaders around India's deep-tech future.",
-  /* `focus` is the `object-position` each still is cropped around. The cards are
-     far wider than the photographs — 788/353 on the media page against a 3:2 and
-     a 16:9 — so a third of the height is cut, and centring that cut is only
-     right when the subject is centred too.
-
-     2026 is a group photographed dead centre on the lawn, so it is left alone.
-     2025 is four people stood full height beside the banner: centring takes the
-     crop off the top of their heads and their feet at once, which is the one
-     framing that serves neither. Pulling it to 12% keeps the heads with room
-     above them and lets the cut fall around the knee, where a crop belongs. */
+  /* `focus` is the `object-position` each still is cropped around. Both
+     plates are now cut to the card's own 16:9 in `public/images/`, so
+     neither is cropped again at render and both sit centred. It stays on the
+     type because the card does still crop when a plate is replaced with one
+     of another shape, and a replacement is the likeliest next change here. */
   editions: [
     {
       year: "2025",
       href: "/media/lp-day-2025",
       image: "/images/lpday-2025.jpg",
-      focus: "50% 12%",
+      focus: "50% 50%",
       imageAlt:
-        "Members of the 8X Ventures team beside the Annual Investors Meet banner at LP Day 2025, IIT Madras Research Park.",
+        "The lamp lit at 8X Ventures' Annual Investors Meet, IIT Madras Research Park, March 2025.",
     },
     {
       year: "2026",
@@ -644,7 +639,7 @@ export const lpDay = {
       image: "/images/lpday-2026.jpg",
       focus: "50% 50%",
       imageAlt:
-        "The full LP Day 2026 gathering — investors, founders and mentors — photographed together on the lawn.",
+        "Delegates gathered under the DeepTech Industry Connect backdrop at IIT Gandhinagar, February 2026.",
     },
   ],
   promo: {
