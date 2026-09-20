@@ -158,7 +158,10 @@ export function TeamPage() {
               </p>
             </Reveal>
 
-            <div className="at-tail tm-pt-grid">
+            <div
+              className="at-tail tm-pt-grid"
+              style={{ "--grid-count": teamPartners.people.length } as React.CSSProperties}
+            >
               {teamPartners.people.map((p, i) => (
                 <PersonCard key={p.id} person={p} variant="partner" index={i} />
               ))}
@@ -191,7 +194,10 @@ export function TeamPage() {
               </p>
             </Reveal>
 
-            <div className="at-tail tm-gp-grid">
+            <div
+              className="at-tail tm-gp-grid"
+              style={{ "--grid-count": teamGroup.people.length } as React.CSSProperties}
+            >
               {teamGroup.people.map((p, i) => (
                 <PersonCard key={p.id} person={p} variant="team" index={i} />
               ))}
