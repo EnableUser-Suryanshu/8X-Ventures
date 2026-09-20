@@ -61,29 +61,39 @@ function PersonCard({
         className="tm-card-hit"
       />
 
-      <div className="tm-card-photo">
+      <div className="tm-card-photo" data-portrait={person.portrait ?? "cutout"}>
         <Image suppressHydrationWarning
           src={person.image}
           alt=""
           fill
           sizes="(max-width: 1024px) 45vw, 21vw"
-          className="object-contain object-bottom"
+          className={cn(
+            person.portrait === "plate"
+              ? "object-cover object-top"
+              : "object-contain object-bottom",
+          )}
         />
       </div>
 
+      {/* Role, biography and LinkedIn are each rendered only where the client
+          has given us one. Four of the team arrived from Drive as a photograph
+          and a name, and a card with an empty line under the name — or a link
+          to `undefined` — reads as a bug rather than as a gap. */}
       <div className="tm-card-overlay">
         <h3 className="tm-card-name">{person.name}</h3>
-        <p className="tm-card-role">{person.role}</p>
-        <p className="tm-card-highlight">{person.bio}</p>
+        {person.role && <p className="tm-card-role">{person.role}</p>}
+        {person.bio && <p className="tm-card-highlight">{person.bio}</p>}
         <div className="tm-card-actions">
           <UnderlineLink href={`/team/${person.id}`} tone="light">
             Know More
             <span className="sr-only-8x">{` about ${person.name}`}</span>
           </UnderlineLink>
-          <UnderlineLink href={person.linkedin} tone="light">
-            LinkedIn
-            <span className="sr-only-8x">{` profile for ${person.name}`}</span>
-          </UnderlineLink>
+          {person.linkedin && (
+            <UnderlineLink href={person.linkedin} tone="light">
+              LinkedIn
+              <span className="sr-only-8x">{` profile for ${person.name}`}</span>
+            </UnderlineLink>
+          )}
         </div>
       </div>
     </Reveal>
@@ -158,7 +168,10 @@ export function TeamPage() {
               </p>
             </Reveal>
 
-            <div className="at-tail tm-pt-grid">
+            <div
+              className="at-tail tm-pt-grid"
+              style={{ "--grid-count": teamPartners.people.length } as React.CSSProperties}
+            >
               {teamPartners.people.map((p, i) => (
                 <PersonCard key={p.id} person={p} variant="partner" index={i} />
               ))}
@@ -191,7 +204,10 @@ export function TeamPage() {
               </p>
             </Reveal>
 
-            <div className="at-tail tm-gp-grid">
+            <div
+              className="at-tail tm-gp-grid"
+              style={{ "--grid-count": teamGroup.people.length } as React.CSSProperties}
+            >
               {teamGroup.people.map((p, i) => (
                 <PersonCard key={p.id} person={p} variant="team" index={i} />
               ))}

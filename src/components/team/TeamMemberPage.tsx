@@ -55,9 +55,11 @@ function splitName(name: string) {
 }
 
 export function TeamMemberPage({ person }: { person: Person }) {
-  /* The frame's three paragraphs where they have been written, and the card's
-     own line where they have not — never an invented biography. */
-  const paragraphs = person.profile ?? [person.bio];
+  /* The frame's three paragraphs where they have been written, the card's own
+     line where they have not, and nothing at all for the four the client sent
+     as a photograph and a name — never an invented biography. */
+  const paragraphs = person.profile ?? (person.bio ? [person.bio] : []);
+  const hasSocial = Boolean(person.linkedin || person.email);
 
   return (
     <section aria-labelledby="member-heading" className="tmm">
@@ -88,12 +90,16 @@ export function TeamMemberPage({ person }: { person: Person }) {
 
       <div className="tmm-body">
         <div className="tmm-copy">
-          <Reveal as="p" className="tmm-role">
-            {person.role}
-          </Reveal>
-
-          {/* The frame's short rule under the role. */}
-          <Reveal aria-hidden="true" className="tmm-rule" />
+          {/* The frame's short rule sits under the role, so it goes where the
+              role does — on its own it is a mark under nothing. */}
+          {person.role && (
+            <>
+              <Reveal as="p" className="tmm-role">
+                {person.role}
+              </Reveal>
+              <Reveal aria-hidden="true" className="tmm-rule" />
+            </>
+          )}
 
           {paragraphs.map((para, i) => (
             <Reveal key={i} as="p" delay={Math.min(i, 3) * 90} className="tmm-para">
@@ -101,31 +107,36 @@ export function TeamMemberPage({ person }: { person: Person }) {
             </Reveal>
           ))}
 
-          <Reveal as="ul" className="tmm-social" aria-label={`Contact ${person.name}`}>
-            <li>
-              <a
-                href={person.linkedin}
-                target="_blank"
-                rel="noreferrer noopener"
-                className="tmm-social-btn"
-              >
-                <LinkedInIcon />
-                <span className="sr-only-8x">
-                  {`${person.name} on LinkedIn (opens in a new tab)`}
-                </span>
-              </a>
-            </li>
-            {/* The frame draws a mail button beside it; it is rendered only
-                where an address is actually on file. */}
-            {person.email && (
-              <li>
-                <a href={`mailto:${person.email}`} className="tmm-social-btn">
-                  <MailIcon />
-                  <span className="sr-only-8x">{`Email ${person.name}`}</span>
-                </a>
-              </li>
-            )}
-          </Reveal>
+          {/* The whole list goes where neither button has anywhere to point. */}
+          {hasSocial && (
+            <Reveal as="ul" className="tmm-social" aria-label={`Contact ${person.name}`}>
+              {person.linkedin && (
+                <li>
+                  <a
+                    href={person.linkedin}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="tmm-social-btn"
+                  >
+                    <LinkedInIcon />
+                    <span className="sr-only-8x">
+                      {`${person.name} on LinkedIn (opens in a new tab)`}
+                    </span>
+                  </a>
+                </li>
+              )}
+              {/* The frame draws a mail button beside it; it is rendered only
+                  where an address is actually on file. */}
+              {person.email && (
+                <li>
+                  <a href={`mailto:${person.email}`} className="tmm-social-btn">
+                    <MailIcon />
+                    <span className="sr-only-8x">{`Email ${person.name}`}</span>
+                  </a>
+                </li>
+              )}
+            </Reveal>
+          )}
         </div>
 
         <Reveal variant="scale" className="tmm-portrait">

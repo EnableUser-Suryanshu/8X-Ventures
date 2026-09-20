@@ -1675,6 +1675,20 @@
   height: 88%;
 }
 
+/* Two of the photographs the client sent cannot be keyed off their ground —
+   one was taken in a cafe, the other against a wall the same value as the face
+   in front of it — and a card with no portrait at all is a blank blue
+   rectangle, because the name lives in the panel that only arrives on hover.
+   So those fill the card instead of standing on it, and a fade along the top
+   hands them back to the card's gradient rather than ending in a hard edge.
+   Everything else about the card is unchanged, including the 4% grow. */
+.tm-card-photo[data-portrait="plate"] {
+  inset: 0;
+  height: 100%;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%);
+}
+
 /* The other half of the card language: the artwork inside the card grows
    very slightly while the card is under the pointer, which is what gives the
    lift something to be a lift *of*. 1.04 over 0.7s, the same figures the home
@@ -2134,7 +2148,17 @@
     --at-tail-gap: 0.99;
   }
 
-  /* the grids: four columns, 37 apart, as the prototype measures */
+  /* The grids: one row, 37 apart, as the prototype measures.
+
+     The prototype draws four across and the width was written as a quarter to
+     match, which is right only while a grid holds exactly four. The team grid
+     holds five, so the fifth dropped to a line of its own and sat centred
+     under the other four — a row and an orphan rather than a row.
+
+     `--grid-count` is the number of cards, published by the component, so the
+     width is a share of however many there are and a grid is always one line.
+     Four still resolves to the traced quarter, so the partners grid is
+     unchanged to the pixel. */
   .tm-pt-grid,
   .tm-gp-grid {
     display: flex;
@@ -2144,7 +2168,9 @@
   }
   .tm-pt-grid .tm-card,
   .tm-gp-grid .tm-card {
-    width: calc((100% - 3 * 1.927vw) / 4);
+    width: calc(
+      (100% - (var(--grid-count, 4) - 1) * 1.927vw) / var(--grid-count, 4)
+    );
   }
 }
 
