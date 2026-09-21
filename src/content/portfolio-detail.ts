@@ -309,8 +309,11 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
 
   neuralzome: {
     descriptor: {
-      text: "Autonomous AI for off-road robotics in complex real-world environments.",
-      highlight: "off-road robotics",
+      /* The other eleven carry their brief's "Website descriptor" line. This
+         one carried the prototype's, because the frame was drawn for
+         Neuralzome and its placeholder was about this company. */
+      text: "Teachable autonomy for agriculture and off-road operations.",
+      highlight: "Teachable autonomy",
     },
     investedAt: "Seed Stage",
     status: "Scaling from product validation to commercial deployment.",
@@ -326,14 +329,20 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     why: {
       line1: "Autonomy will move beyond",
       line2: "controlled environments.",
-      body: "The next generation of robotics will not operate only in warehouses, labs, or predictable factory floors. It will need to work where the ground is uneven, the light is poor and the map runs out.",
-      environments: ["FIELDS", "MINES", "INFRASTRUCTURE SITES", "INDUSTRIAL FACILITIES", "UNSTRUCTURED TERRAIN"],
+      body: "Farm work is short of labour, hard on the people doing it, and unforgiving of imprecision — and it happens on ground that is uneven, poorly lit and rarely mapped. A machine that works there has to be taught the task rather than programmed for it.",
+      /* The Figma frame was drawn for Neuralzome, so this company is the one
+         whose placeholder copy read plausibly enough to survive: mines,
+         infrastructure sites and "defense-adjacent systems" were the
+         prototype's, not the brief's, and the brief is agriculture first —
+         its category is Robotics / AI / AgriTech and every application it
+         names is a farm one. */
+      environments: ["FARMS", "ORCHARDS", "FIELD OPERATIONS", "OFF-ROAD TERRAIN", "MATERIAL MOVEMENT"],
       close: "Neuralzome is building for that world.",
     },
     snapshot: {
-      technologyArea: "Autonomous AI",
-      useCase: "Off-Road And Unstructured Environment Robotics",
-      marketRelevance: "Industrial Automation, Infrastructure, Agriculture, Mobility, Defense-Adjacent Systems",
+      technologyArea: "Teachable Autonomy, Perception And Robotic Control",
+      useCase: "Autonomous Mowing, Weeding, Soil Sensing And Material Movement",
+      marketRelevance: "Agriculture, Field Operations, Off-Road Robotics",
     },
     art: {
       figure: "/images/portfolio-detail/neuralzome/figure.jpg",
