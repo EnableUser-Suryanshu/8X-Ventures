@@ -8,12 +8,17 @@
  *
  * The prose is the client's own, from the twelve briefs in the Drive folder
  * "Portfolio companies' details": `descriptor` is each brief's "Website
- * descriptor" line, `intro` condenses its opening paragraphs, `environments`
- * and `snapshot` are drawn from its "Technology highlights", and `why`
- * restates the brief's market paragraph in the frame's voice. Nothing here is
- * invented about a company; where the frame asks for a line the brief does not
- * carry — the two-line statement, say — it is written from that brief's own
- * sentences rather than from outside knowledge.
+ * descriptor" line, `intro` is its own three paragraphs, `environments` and
+ * `snapshot` are drawn from its "Technology highlights", and `why` restates
+ * the brief's market paragraph in the frame's voice. Nothing here is invented
+ * about a company; where the frame asks for a line the brief does not carry —
+ * the two-line statement, say — it is written from that brief's own sentences
+ * rather than from outside knowledge.
+ *
+ * `intro` used to be a condensed pair, which read as a summary of a summary
+ * and lost whatever each brief said about the company's flagship product:
+ * Pantherun's Pepper platform, Trishul's Harpy-1, Armory's Surge, the Chitti
+ * ATV. It now carries the brief's paragraphs as they are written.
  */
 
 export type CompanyDetail = {
@@ -32,8 +37,14 @@ export type CompanyDetail = {
   /** The centred statement: line one in ink, line two in brand blue. */
   statement: { line1: string; line2: string };
 
-  /** The two centred paragraphs below the statement. */
-  intro: readonly [string, string];
+  /**
+   * The centred paragraphs below the statement: each brief's own prose,
+   * which runs to three. The frame draws two, and two is what this used to
+   * carry — a condensed pair that dropped whatever the brief said about the
+   * company's flagship product. The band maps over whatever it is given, so
+   * carrying all three is a longer read in the same type at the same stagger.
+   */
+  intro: readonly string[];
 
   /** The dark "Why we invested" band. */
   why: {
@@ -110,8 +121,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "the data it protects.",
     },
     intro: [
-      "Pantherun builds high-performance encryption and data-protection systems for data-intensive, security-critical environments, combining hardware and software to secure data in real time.",
-      "The company sits at the intersection of cryptography, chip design and networked infrastructure.",
+      "Pantherun Technologies is a cybersecurity company building high-performance encryption and data-protection solutions for data-intensive and security-critical environments. Its approach combines hardware and software to secure data in real time, with a focus on high throughput and compatibility with existing infrastructure.",
+      "The company’s technology is designed for organisations that cannot compromise on performance or security, including applications across defence, aerospace, telecommunications, smart-city infrastructure, industrial systems and IoT. Pantherun positions its products around AES-based encryption, real-time operation and minimal disruption to data formats and workflows.",
+      "A core part of Pantherun’s product strategy is chip-based security. Its Pepper chip-and-software ecosystem is designed for high-speed encryption and embedded and edge deployments, making the company relevant to customers protecting sensitive data while retaining the speed connected systems require.",
     ],
     why: {
       line1: "Security will stop being",
@@ -142,8 +154,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "is assumed to plug into.",
     },
     intro: [
-      "TIEA Connectors designs and manufactures electrical and electronic connectors, cable assemblies and interconnect solutions for applications that demand signal integrity and mechanical reliability under load.",
-      "The company sits at the intersection of precision manufacturing, electrification and domestic component capability.",
+      "TIEA Connectors designs and manufactures electrical and electronic connectors, cable assemblies and related interconnect solutions. The company serves applications that require dependable signal integrity, mechanical reliability and consistent performance under demanding operating conditions.",
+      "Its products are relevant across automotive, electric mobility, industrial electronics, aerospace and other equipment-intensive sectors. By focusing on locally engineered, high-quality interconnect products, TIEA is building domestic capability in a component category that is foundational to India’s manufacturing and electrification ambitions.",
+      "The company supports OEMs and system integrators with connector solutions tailored to performance requirements, operating environments and production needs, and holds ISO 9001 and IATF 16949 certification.",
     ],
     why: {
       line1: "Electrification runs on parts",
@@ -174,8 +187,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "nobody can reach.",
     },
     intro: [
-      "Solinas Integrity is an IIT Madras-incubated deep-tech company transforming water, sewer and underground infrastructure through robotics, AI and digital intelligence.",
-      "The company sits at the intersection of robotics, data-led diagnostics and public infrastructure.",
+      "Solinas Integrity is an IIT Madras-incubated deep-tech company transforming water, sewer and underground infrastructure through robotics, AI and digital intelligence. The company develops solutions to inspect, clean, monitor and manage critical water and sanitation assets more safely, efficiently and proactively.",
+      "Its technology addresses difficult, hazardous and often invisible infrastructure challenges: pipeline inspection, sewer and septic-system operations, cleaning, compliance and preventive maintenance. By combining robotics with data-led diagnostics, Solinas helps municipal bodies, industrial customers and utility operators improve operational visibility and reduce reliance on manual intervention.",
+      "Solinas is helping infrastructure operators move from reactive response to predictive, technology-enabled maintenance. Its work is especially relevant to India’s need for reliable urban water, wastewater and sanitation systems.",
     ],
     why: {
       line1: "Maintenance will move from",
@@ -206,8 +220,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "sensors cannot survive.",
     },
     intro: [
-      "XYMA Analytics combines waveguide ultrasonic sensors, process models and analytics on a secure Industrial IoT platform, delivering continuous high-precision monitoring of critical assets.",
-      "The company sits at the intersection of sensor physics, process engineering and industrial software.",
+      "XYMA Analytics is a deep-tech sensing company that combines waveguide ultrasonic sensors, process models and data analytics on a secure Industrial IoT platform. Its technology is designed to deliver continuous, high-precision monitoring of critical industrial processes and assets, including those operating at extreme temperatures or in difficult-to-access environments.",
+      "The company’s sensing platform enables plant operators to measure multiple process parameters and use actionable data to improve visibility, reliability and decision-making. XYMA is relevant where conventional sensing technologies struggle because of heat, safety constraints, location or process complexity.",
+      "By combining proprietary sensor hardware, analytics and connected software, XYMA is building a complete industrial-monitoring stack for predictive maintenance, process optimisation and improved operational control.",
     ],
     why: {
       line1: "Plants will be run on",
@@ -238,8 +253,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "copper ever will.",
     },
     intro: [
-      "LightSpeed Photonics builds next-generation optical interconnect technology that moves data into and around computing chips at very high bandwidth, with far less power than electrical links.",
-      "The company sits at the intersection of photonics, chip packaging and AI infrastructure.",
+      "LightSpeed Photonics is building next-generation optical interconnect technology for high-performance computing, data centres and AI infrastructure. The company focuses on moving data into and around computing chips at very high bandwidth while reducing the power and physical constraints associated with conventional electrical interconnects.",
+      "As AI workloads and data-centre architectures become increasingly compute- and bandwidth-intensive, data movement between processors, memory and systems has become a major performance bottleneck. LightSpeed Photonics addresses this through compact, energy-efficient optical solutions designed for near-chip integration and scalable compute architectures.",
+      "The company’s technology is relevant to cloud computing, AI clusters, high-performance computing and modular data-centre design — areas where throughput, latency, energy efficiency and system density are critical.",
     ],
     why: {
       line1: "Compute is no longer",
@@ -270,8 +286,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "than capital.",
     },
     intro: [
-      "SanchiConnect is a deep-tech enablement network that connects emerging technology companies with investors, mentors, corporates, government bodies, labs and universities.",
-      "The company sits at the intersection of ecosystem building, capital access and technical infrastructure.",
+      "SanchiConnect is a deep-tech enablement network that helps emerging technology companies access the ecosystem required to build and scale. It connects startups with investors, mentors, corporates, government bodies, deep-tech labs, universities and other strategic partners.",
+      "The platform operates across accelerator programmes, startup enablement, corporate innovation, fundraising support, ecosystem building and advisory services. Its model recognises that deep-tech companies need more than capital: they need access to specialised talent, testbeds, early customers, technical institutions and long-term strategic relationships.",
+      "SanchiConnect makes these connections more structured and scalable, supporting early-growth-stage companies building hardware and software products with core intellectual property.",
     ],
     why: {
       line1: "Ecosystems are built,",
@@ -302,8 +319,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "that move through the real world.",
     },
     intro: [
-      "Neuralzome is building autonomous AI systems for off-road robotics, designed for environments where conventional automation is not enough.",
-      "The company sits at the intersection of robotics, perception, autonomy and industrial application.",
+      "Neuralzome Cybernetics develops AI-driven robotics and a teachable-autonomy platform for farm operations and other real-world, off-road use cases. Its systems are intended to enable machines to understand their environment, adapt to tasks and operate with increasing autonomy.",
+      "The company addresses persistent agricultural challenges including labour availability, safety, operating efficiency and the need for more precise, scalable farm operations. Neuralzome combines autonomous hardware, perception, software and simulation to create practical robotic tools for field environments.",
+      "Its technology includes autonomous platforms for mowing, weeding, soil sensing, agricultural operations and material movement. The Chitti autonomous ATV illustrates this flexible platform approach across varied off-road tasks.",
     ],
     why: {
       line1: "Autonomy will move beyond",
@@ -338,8 +356,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "the space stack.",
     },
     intro: [
-      "Trishul Space develops liquid rocket propulsion systems for next-generation launch vehicles — lightweight, ready-to-integrate engines that simplify launch-vehicle development.",
-      "The company sits at the intersection of propulsion engineering, materials and commercial space.",
+      "Trishul Space is a space-tech company developing liquid rocket propulsion systems for next-generation launch vehicles. The company is focused on creating lightweight, ready-to-integrate propulsion solutions that can simplify launch-vehicle development and support more efficient access to space.",
+      "Rocket propulsion is one of the most technically demanding layers of the space ecosystem. Trishul Space is developing indigenous, high-performance engine designs, including cryogenic and liquid-propulsion concepts, to address performance, reliability, cost and integration challenges for launch providers.",
+      "Its flagship Harpy-1 programme is a high-performance liquid rocket engine. The company’s approach is relevant to an expanding commercial-space ecosystem, where satellite deployments, launch cadence and domestic propulsion capability are increasingly important.",
     ],
     why: {
       line1: "Access to space depends",
@@ -370,8 +389,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "decarbonisation gets hard.",
     },
     intro: [
-      "Enerzi Microwave Systems develops industrial microwave-heating and microwave-plasma technologies for cleaner, more efficient manufacturing — high-temperature processing, drying and material transformation.",
-      "The company sits at the intersection of electromagnetic engineering, process heat and clean manufacturing.",
+      "Enerzi Microwave Systems develops industrial microwave-heating and microwave-plasma technologies for cleaner, more efficient manufacturing processes. The company applies advanced electromagnetic engineering to industrial thermal applications, including high-temperature processing, drying and material transformation.",
+      "Its technology platform is relevant to decarbonisation because industrial heat and chemical processes are often energy-intensive and difficult to electrify efficiently. Enerzi is developing systems that use microwave and plasma techniques for applications such as clean-hydrogen production, advanced carbon materials and more sustainable industrial processing.",
+      "Alongside emerging climate applications, Enerzi has industrial experience in microwave machinery for process-heating and drying requirements. This mix of deployed equipment and next-generation plasma technology positions the company to address current industrial needs and longer-term clean-manufacturing transitions.",
     ],
     why: {
       line1: "Heavy industry will have",
@@ -402,8 +422,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "temperature and pressure.",
     },
     intro: [
-      "Kcat Enzymatic is a protein and enzyme engineering company developing optimised biocatalysts, applying scientific and computational methods to discover, design and improve enzymes for industry.",
-      "The company sits at the intersection of biology, computation and chemical manufacturing.",
+      "Kcat Enzymatic is a protein and enzyme engineering company developing optimised biocatalysts for industrial applications. The company applies scientific and computational approaches to discover, design and improve enzymes that can make chemical production faster, more selective and more resource-efficient.",
+      "Enzymes are biological catalysts that can enable manufacturing at lower temperatures and pressures, reduce waste and improve process precision. Kcat’s work is relevant across chemical, pharmaceutical, food, materials and other sectors requiring higher-yield and lower-impact production processes.",
+      "The company combines customised enzyme development with an application-led focus: creating biocatalysts suited to a customer’s specific substrate, process condition and performance requirement. Its platform can help industrial users improve conversion, selectivity, productivity and sustainability.",
     ],
     why: {
       line1: "Biocatalysis will reshape",
@@ -434,8 +455,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "The defence has to keep up.",
     },
     intro: [
-      "Armory builds counter-unmanned aircraft systems that detect, identify, track and neutralise unauthorised drones across military and civilian environments.",
-      "The company sits at the intersection of radar, electronic warfare and layered air defence.",
+      "Armory is a defence-technology company building counter-unmanned aircraft system solutions to protect military and civilian assets against the growing threat of rogue drones. The company develops systems intended to detect, identify, track and neutralise unauthorised drones across a range of operational environments.",
+      "As drones become cheaper, more autonomous and more widely available, they pose a growing challenge to borders, critical infrastructure, public events and sensitive installations. Armory’s product strategy uses a layered defence approach that combines detection, electronic countermeasures and hard-kill capabilities.",
+      "Its portfolio includes Surge, a handheld or vehicle-mounted smart detection-and-jamming system; radar for detecting difficult targets, including stealth and encrypted-communication drones; and hard-kill concepts such as software-defined ammunition, interceptor drones and laser-based systems.",
     ],
     why: {
       line1: "Drones changed what",
@@ -466,8 +488,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "becomes a watt of heat.",
     },
     intro: [
-      "Thermistance Technologies designs, develops and manufactures advanced passive thermal-management solutions, moving heat away from critical components without the energy, noise or maintenance of active cooling.",
-      "The company sits at the intersection of thermal physics, precision manufacturing and product integration.",
+      "Thermistance Technologies designs, develops and manufactures advanced passive thermal-management solutions for industrial and commercial applications. The company focuses on moving heat away from critical components efficiently and reliably, without the energy use, noise or maintenance burden associated with active cooling systems.",
+      "Its technology is particularly relevant as power density rises in electronics, EV systems, satellites, computing hardware and industrial equipment. Thermistance develops and integrates passive thermal IP into customer products through heat pipes, thermosyphons, vapour chambers and loop heat pipes.",
+      "The company provides end-to-end development, from thermal design to embedded product integration, enabling OEMs to manage heat within compact, high-performance systems where conventional cooling approaches may be insufficient or impractical.",
     ],
     why: {
       line1: "Power density is rising",
