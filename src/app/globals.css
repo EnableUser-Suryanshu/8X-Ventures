@@ -947,7 +947,90 @@
    two sizes, so it is one implementation, and the `cqw` type inside it does
    the adapting. */
 
+/* --- the mentors, under the team ----------------------------------------
+   The advisory board, on the site's own card: `.tm-card` with
+   `.tm-card-overlay`, so it reveals, lifts, grows its artwork and turns over
+   exactly as the cards above and on /team do. Only the artwork inside it is
+   the mentors' own, and only because of what the client sent — see
+   `MentorStrip.tsx`. This band is not in the artboard, so it is an ordinary
+   stage in flow rather than a traced box. */
+.mn-stage {
+  position: relative;
+  padding: 3.5rem var(--spacing-gutter) 4rem;
+  max-width: 120rem;
+  margin-inline: auto;
+}
+
+.mn-heading {
+  margin-top: clamp(0.5rem, 1.7vw, 2.25rem);
+}
+
+.mn-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: clamp(2rem, 3.2vw, 3.5rem);
+}
+
+/* The card carries an aspect ratio and no width of its own, so in a flex row
+   it collapses to nothing unless the row says how wide it is — the same trap
+   the person cards on /team are sized out of. One up, then two, three, four. */
+.mn-card {
+  width: 100%;
+}
+
+@media (width >= 30rem) {
+  .mn-card {
+    width: calc((100% - 1.5rem) / 2);
+  }
+}
+
+/* The disc sits in the card rather than filling it, so the card's blue is
+   still the card: a portrait placed on it, not a hole punched in it.
+   Qualified by `.tm-card-photo` because that rule is a plate pinned to the
+   foot of the card at 88% of its height, and it is declared further down the
+   sheet — one class each and it would win on order alone. */
+.tm-card-photo.mn-card-disc {
+  inset: 13% 10% auto;
+  height: auto;
+  aspect-ratio: 1;
+  /* The disc is feathered into nothing at its rim, so there is no edge for
+     the plate to clip and nothing for `overflow` to do. */
+  overflow: visible;
+}
+
+.mn-card-disc img {
+  width: 100%;
+  height: auto;
+}
+
+@media (width >= 48rem) {
+  .mn-grid {
+    gap: 1.927vw;
+  }
+  .mn-card {
+    width: calc((100% - 2 * 1.927vw) / 3);
+  }
+}
+
 @media (width >= 64rem) {
+  .mn-stage {
+    /* The stage above ends a little under its own CTA, so this one only
+       needs enough air to read as a band of its own. A share of the width,
+       like every traced band, capped where the stage itself is. */
+    padding: min(4.5%, 5.4rem) 0 min(6.5%, 7.8rem);
+  }
+  /* Four across on the traced quarter, as every other card grid on the site,
+     with the last two under them on the same left edge. */
+  .mn-grid {
+    justify-content: flex-start;
+    margin-inline: 6.25%;
+  }
+  .mn-card {
+    width: calc((100% - 3 * 1.927vw) / 4);
+  }
+
   .team-stage {
     aspect-ratio: 1920 / 1699;
     /* The eyebrow, headline and body were each pinned to their own percentage
@@ -1304,6 +1387,57 @@
    27 / 26 / 66, and they narrow with the headline instead of against it. The
    rem floors hold the two lower gaps apart on phones, where `--ab-display`
    bottoms out at 32.8px and a pure ratio would leave 10px under the headline. */
+/* --- the hero artwork, below the traced layout --------------------------
+   Both hero renders — the head on `/about`, the engine on `/team` — are
+   pinned to the top-right corner of their stage over the copy column. That
+   is right at 1920, where the column is half the width. On a phone the
+   column is the whole width, and the artwork sat across the headline: the
+   head covered the end of "A Venture Firm Built", the engine clipped "A
+   Team Built".
+
+   It is floated there instead of pinned. A float is the one thing that
+   cannot produce this bug: the copy's line boxes shorten beside it and
+   lengthen again below it, at any width, with no arithmetic to get wrong —
+   the worst a bad guess can do is break the headline a line earlier. So
+   the artwork keeps the corner the artboard gives it, still bled past the
+   gutter to the edge of the screen, and the headline sets around it.
+
+   It is also the reason the artwork comes before the copy in the markup on
+   both pages: a float only moves what follows it. On the traced layout it
+   is absolutely positioned, so the order there makes no difference.
+
+   Sized so the second line of each headline clears the float rather than
+   wrapping inside it: at 375 that means about 130px, which is what 34% and
+   the -1.75rem lift come to. */
+@media (width < 64rem) {
+  .ab-hero,
+  .tm-hero {
+    /* Contains the float, so it cannot hang into the band below where the
+       copy runs short. */
+    display: flow-root;
+  }
+
+  /* The 0.5rem on the left is the gutter between the artwork and the type
+     it sets around, and it is tight on purpose: at 375 "for Complexity"
+     comes to 217px against 220 of measure, so a wider one costs a line. */
+  .ab-hero-head,
+  .tm-hero-engine {
+    float: right;
+    margin: -1.75rem calc(var(--spacing-gutter) * -1) 0.5rem 0.5rem;
+  }
+
+  /* Capped as well as proportional: a share of the width is the right rule
+     on a phone and the wrong one on a tablet, where 34% of 900 is a 306px
+     head beside a headline that has stopped growing. */
+  .ab-hero-head {
+    width: min(34%, 13rem);
+  }
+
+  .tm-hero-engine {
+    width: min(38%, 14rem);
+  }
+}
+
 .ab-hero-title {
   margin-top: 0.33em; /* `em` is `--ab-display` here — the title sets it */
 }
@@ -2148,29 +2282,30 @@
     --at-tail-gap: 0.99;
   }
 
-  /* The grids: one row, 37 apart, as the prototype measures.
+  /* The grids: four columns, 37 apart, as the prototype measures.
 
-     The prototype draws four across and the width was written as a quarter to
-     match, which is right only while a grid holds exactly four. The team grid
-     holds five, so the fifth dropped to a line of its own and sat centred
-     under the other four — a row and an orphan rather than a row.
+     A share of the number of cards was tried here, so that a grid of any size
+     came out as one row. It does, but the card is only as wide as the row
+     divided by however many people are in it — seven across put the team at
+     156px a card at 1440 and 111px at 1024, which is a thumbnail, not a
+     portrait. The quarter is the traced width and it is the one that holds
+     the face at a readable size, so the grids keep it and wrap: four, then
+     the rest under them, starting from the left.
 
-     `--grid-count` is the number of cards, published by the component, so the
-     width is a share of however many there are and a grid is always one line.
-     Four still resolves to the traced quarter, so the partners grid is
-     unchanged to the pixel. */
+     A short last row is aligned to the start, not centred. Four cards fill
+     the row exactly, so this changes nothing about a full row; it only
+     decides where the three underneath begin, and under a left-aligned row
+     they begin on the same edge rather than floating in the middle of it. */
   .tm-pt-grid,
   .tm-gp-grid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 3.18vw 1.927vw;
   }
   .tm-pt-grid .tm-card,
   .tm-gp-grid .tm-card {
-    width: calc(
-      (100% - (var(--grid-count, 4) - 1) * 1.927vw) / var(--grid-count, 4)
-    );
+    width: calc((100% - 3 * 1.927vw) / 4);
   }
 }
 

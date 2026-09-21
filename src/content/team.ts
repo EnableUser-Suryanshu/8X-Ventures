@@ -137,10 +137,20 @@ export const teamGroup = {
   /**
    * The three the site already carried and Drive still lists, then the four
    * Drive added. Saurabh Gunwant and Vikeesh Kesavan are gone: the client's
-   * folder is the roster of record and neither is in it.
+   * photo folder is the roster of record and neither is in it.
    *
-   * The order is deliberate — the people we have a role and a biography for
-   * come first, so the row does not open on a run of bare cards.
+   * Every role and every line of biography below is the team page of the
+   * client's "8X Ventures Fund II — India DeepTech Fund" teaser, which
+   * writes up all seven. That deck supersedes what was here for the three
+   * who already had copy: it gives Shreya a portfolio-growth title rather
+   * than a bare one, moves Kirthivasan from Analyst to Associate,
+   * Investments, and has Rashi across investments as well as compliance.
+   *
+   * The deck also lists Saurabh Gunwant, Karan Wadhwani and Vikeesh
+   * Kesavan. They are not in the photo folder, so they are not here.
+   *
+   * The order follows the deck's own, which runs the longest-standing
+   * first.
    */
   people: [
     {
@@ -148,53 +158,61 @@ export const teamGroup = {
   /* Attested in the client's content doc. */
       email: "shreya.kothari@8xventures.co",
       name: "Shreya Kothari",
-      role: "Associate Principal",
+      role: "Associate Principal, Portfolio Growth",
       image: "/images/team/shreya-kothari.png",
-      bio: "Previously an Associate at eClerx Services and at Nimai Management Consultants.",
+      bio: "Five years in financial services, driving portfolio growth and startup deal execution.",
       linkedin: "https://www.linkedin.com/in/shreyabagri/",
     },
     {
       id: "kirthivasan-suresh",
       email: "kirthivasan.suresh@8xventures.co",
       name: "Kirthivasan Suresh",
-      role: "Analyst",
+      role: "Associate, Investments",
       /* Drive has a newer photograph of him, taken on a rooftop against a
          city skyline. It cannot be keyed and the cut-out already on file is
          the better card, so this one stays until a cut-out arrives. */
       image: "/images/team/kirthivasan-suresh.png",
-      bio: "A Mechanical Engineering graduate from the College of Engineering Guindy, with research internships at CSIR-NAL and Karpagam Engineers.",
+      bio: "A Mechanical Engineer with experience at CSIR-National Aerospace Laboratories.",
       linkedin: "https://www.linkedin.com/in/kirthivasan-suresh-747aa0202/",
     },
     {
       id: "rashi-jain",
       email: "rashi.jain@8xventures.co",
       name: "Rashi Jain",
-      role: "Compliance Associate",
+      role: "Investments and Compliance Associate",
       image: "/images/team/rashi-jain.png",
-      bio: "A qualified Chartered Accountant working across taxation, regulatory compliance and statutory reporting.",
+      bio: "A Chartered Accountant specialising in taxation, SEBI regulations, FEMA compliance and audits.",
       linkedin: "https://www.linkedin.com/in/ca-rashi-jain13/",
-    },
-    {
-      id: "priya-sathish",
-      name: "Priya Sathish",
-      image: "/images/team/priya-sathish.png",
-    },
-    {
-      id: "madhukar-kota",
-      name: "Madhukar Kota",
-      image: "/images/team/madhukar-kota.png",
     },
     {
       id: "akash-patel",
       name: "Akash Patel",
+      role: "Associate, Investments",
       image: "/images/team/akash-patel.jpg",
       portrait: "plate",
+      bio: "An IIT Kanpur graduate blending founder-style execution across energy operations and startups, with significant experience at Schlumberger.",
+    },
+    {
+      id: "madhukar-kota",
+      name: "Madhukar Kota",
+      role: "Operations and Compliance Associate",
+      image: "/images/team/madhukar-kota.png",
+      bio: "An MBA with 15+ years across private equity, fund accounting and capital markets.",
     },
     {
       id: "twinkal-janbandhu",
       name: "Twinkal Janbandhu",
+      role: "Analyst, Compliance",
       image: "/images/team/twinkal-janbandhu.jpg",
       portrait: "plate",
+      bio: "A law graduate and company secretary with expertise in governance, compliance and legal frameworks.",
+    },
+    {
+      id: "priya-sathish",
+      name: "Priya Sathish",
+      role: "Analyst",
+      image: "/images/team/priya-sathish.png",
+      bio: "A Biomedical Engineer with industrial experience at LifeCell and Apollo Hospitals.",
     },
   ] as Person[],
 } as const;

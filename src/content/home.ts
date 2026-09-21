@@ -512,6 +512,106 @@ export const team: TeamMember[] = [
   },
 ];
 
+/* --- Mentors ------------------------------------------------------------- */
+
+export type Mentor = {
+  id: string;
+  name: string;
+  /**
+   * The client's Fund II teaser lists all eight of its advisory board as
+   * "External Advisor", which says nothing about any one of them and the same
+   * nothing six times over. So this carries the position the same page states
+   * beside the name, and `bio` carries the rest of what it says. Where the
+   * deck gives no position — Bony Niranjan Dalal — the line it does give
+   * stands. Nothing here is written about a mentor from outside that deck.
+   */
+  role: string;
+  bio: string;
+  image: string;
+};
+
+export const mentorsIntro = {
+  eyebrow: "Our Mentors",
+  line1: "The People Who",
+  line2: "Bring That Expertise",
+} as const;
+
+/**
+ * 8X's advisory board, less the two who already appear above as partners.
+ *
+ * Photographs from the client's "Photos of Mentors" folder on Drive; roles
+ * and biographies from the Advisory Board page of their "8X Ventures Fund
+ * II — India DeepTech Fund" teaser.
+ *
+ * The photographs arrived from six different cameras — a studio headshot, a
+ * conference snap with a microphone in it, a 225px thumbnail, a portrait
+ * taken in an office — and in colour, which is how they are shown. Three
+ * things in `public/images/mentors/` bring them to one set:
+ *
+ *   - one framing. Each is cropped so the head is the same size on the same
+ *     eye line. Scaling to the face rather than to the frame is the thing
+ *     that reads first; the alternative is six photographs at six distances.
+ *   - one exposure and one white balance, both measured across the face
+ *     rather than the whole frame — a white studio card and a warm office
+ *     wall pull the same face two different ways — and both corrected
+ *     towards the median face of the set, so nobody is pushed far from how
+ *     they actually look.
+ *   - one ground. Each keeps its own out to about 58% of the radius and is
+ *     blended into a single pale tint by 93%, so the part of a photograph
+ *     that differs from the others is the part that goes. The two shot on
+ *     location — an office with a picture on the wall, a stage — start
+ *     blending earlier, because in colour those grounds are much louder than
+ *     a studio card.
+ *
+ * Two of the files want replacing, and nothing in the code would change if
+ * they were: Dr. Ashok Jhunjhunwala's is 225px square and Suresh Nanda's
+ * 301px, so both are soft. A plain headshot for each would settle it.
+ */
+export const mentors: Mentor[] = [
+  {
+    id: "ashok-jhunjhunwala",
+    name: "Dr. Ashok Jhunjhunwala",
+    role: "Chairman, ITEL",
+    bio: "Padma Shri, 2002, for distinguished service in science, engineering and telecommunications. Lifetime achievement awards from TiE and from the India Energy Storage Alliance.",
+    image: "/images/mentors/ashok-jhunjhunwala.png",
+  },
+  {
+    id: "suresh-nanda",
+    name: "Suresh Nanda",
+    role: "Former MD, ING Private Bank (Dubai)",
+    bio: "Former Head of International Banking at Bank One, Mauritius, and an Independent Director at Multiples Private Equity. Holds a doctorate from IIM Calcutta and an AMP from The Wharton School.",
+    image: "/images/mentors/suresh-nanda.png",
+  },
+  {
+    id: "deepak-chitnis",
+    name: "Deepak Chitnis",
+    role: "Chief Designer, Lodha Group",
+    bio: "Leads a team of more than 200. Since 2007 he has driven end-to-end design and championed organisational growth by mentoring leaders and building cross-functional collaboration.",
+    image: "/images/mentors/deepak-chitnis.png",
+  },
+  {
+    id: "virendra-somwanshi",
+    name: "Virendra Somwanshi",
+    role: "Group President & Head of Wealth, Federal Bank",
+    bio: "25+ years in retail and private banking, with leadership and board roles across global and Indian financial institutions.",
+    image: "/images/mentors/virendra-somwanshi.png",
+  },
+  {
+    id: "bony-niranjan-dalal",
+    name: "Bony Niranjan Dalal",
+    role: "External Advisor",
+    bio: "An accomplished businessman in Surat whose work spans real estate development and management, asset management and franchising, and an active investor across sectors and stages.",
+    image: "/images/mentors/bony-niranjan-dalal.png",
+  },
+  {
+    id: "ankit-agarwal",
+    name: "Ankit Agarwal",
+    role: "Head of Fund Management, Globe Capital",
+    bio: "A CA and CFA. He oversees PMS, research, institutional advisory and FII services, along with the firm's proprietary investment and arbitrage strategy.",
+    image: "/images/mentors/ankit-agarwal.png",
+  },
+];
+
 /* --- LP Day -------------------------------------------------------------- */
 
 export const lpDay = {
@@ -519,24 +619,19 @@ export const lpDay = {
   line1: "Operators. Investors.",
   line2: "Technologists.",
   body: "LP Day brings together investors, founders, mentors, and ecosystem leaders around India's deep-tech future.",
-  /* `focus` is the `object-position` each still is cropped around. The cards are
-     far wider than the photographs — 788/353 on the media page against a 3:2 and
-     a 16:9 — so a third of the height is cut, and centring that cut is only
-     right when the subject is centred too.
-
-     2026 is a group photographed dead centre on the lawn, so it is left alone.
-     2025 is four people stood full height beside the banner: centring takes the
-     crop off the top of their heads and their feet at once, which is the one
-     framing that serves neither. Pulling it to 12% keeps the heads with room
-     above them and lets the cut fall around the knee, where a crop belongs. */
+  /* `focus` is the `object-position` each still is cropped around. Both
+     plates are now cut to the card's own 16:9 in `public/images/`, so
+     neither is cropped again at render and both sit centred. It stays on the
+     type because the card does still crop when a plate is replaced with one
+     of another shape, and a replacement is the likeliest next change here. */
   editions: [
     {
       year: "2025",
       href: "/media/lp-day-2025",
       image: "/images/lpday-2025.jpg",
-      focus: "50% 12%",
+      focus: "50% 50%",
       imageAlt:
-        "Members of the 8X Ventures team beside the Annual Investors Meet banner at LP Day 2025, IIT Madras Research Park.",
+        "The lamp lit at 8X Ventures' Annual Investors Meet, IIT Madras Research Park, March 2025.",
     },
     {
       year: "2026",
@@ -544,7 +639,7 @@ export const lpDay = {
       image: "/images/lpday-2026.jpg",
       focus: "50% 50%",
       imageAlt:
-        "The full LP Day 2026 gathering — investors, founders and mentors — photographed together on the lawn.",
+        "Delegates gathered under the DeepTech Industry Connect backdrop at IIT Gandhinagar, February 2026.",
     },
   ],
   promo: {

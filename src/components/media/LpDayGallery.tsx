@@ -20,20 +20,71 @@ import { type LpDayEdition } from "@/content/lpday";
  * are part of the band's composition, not something that comes and goes with
  * the window width.
  */
+/** One mark on the track: where the strip stops, and what is on screen there. */
+type Stop = { left: number; from: number; to: number };
+
 export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
   const stripRef = useRef<HTMLUListElement>(null);
   const [index, setIndex] = useState(0);
+  const [stops, setStops] = useState<Stop[]>([{ left: 0, from: 0, to: 0 }]);
 
-  const scrollTo = useCallback((i: number) => {
+  /* Where the strip can actually stop, which is not once per photograph.
+     The track used to draw one segment for each, and four of the eight in an
+     edition were dead: the strip is four wide, so the fifth photograph is
+     the last that can reach the left edge and the arrows ran out three
+     short of the end of the bar. The stops are measured instead — every
+     photograph that can lead, plus the end of the scroll if it lies past the
+     last of them — so every mark on the track goes somewhere, and the last
+     one is the end of the strip. Re-measured on resize, because how many fit
+     is what decides how many stops there are. */
+  useEffect(() => {
     const strip = stripRef.current;
-    const slide = strip?.children[i] as HTMLElement | undefined;
-    if (!strip || !slide) return;
-    strip.scrollTo({ left: slide.offsetLeft - strip.offsetLeft, behavior: "smooth" });
-  }, []);
+    if (!strip) return;
 
-  /* Which slide is nearest the strip's left edge — the one the controls
-     consider current. Read from the scroll rather than stored alongside it,
-     so a swipe and a button press can never disagree. */
+    const measure = () => {
+      const kids = [...strip.children] as HTMLElement[];
+      if (!kids.length) return;
+      const left = (el: HTMLElement) => el.offsetLeft - strip.offsetLeft;
+      const max = strip.scrollWidth - strip.clientWidth;
+
+      const lefts: number[] = [];
+      for (const el of kids) if (left(el) <= max + 1) lefts.push(left(el));
+      if (max - (lefts.at(-1) ?? 0) > 2) lefts.push(max);
+
+      setStops(
+        lefts.map((l) => {
+          /* What a reader sees standing at this stop: the first photograph
+             at or past the left edge, and the last one wholly inside the
+             right. That is what the segment's label promises. */
+          const from = Math.max(0, kids.findIndex((el) => left(el) + 1 >= l));
+          let to = from;
+          for (let i = from; i < kids.length; i++) {
+            if (left(kids[i]) + kids[i].offsetWidth <= l + strip.clientWidth + 1) to = i;
+          }
+          return { left: l, from, to };
+        }),
+      );
+    };
+
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(strip);
+    return () => ro.disconnect();
+  }, [edition.images.length]);
+
+  const scrollTo = useCallback(
+    (i: number) => {
+      const strip = stripRef.current;
+      const stop = stops[i];
+      if (!strip || !stop) return;
+      strip.scrollTo({ left: stop.left, behavior: "smooth" });
+    },
+    [stops],
+  );
+
+  /* Which stop the strip is nearest — the one the controls consider current.
+     Read from the scroll rather than stored alongside it, so a swipe and a
+     button press can never disagree. */
   useEffect(() => {
     const strip = stripRef.current;
     if (!strip) return;
@@ -43,9 +94,8 @@ export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
       frame = 0;
       let nearest = 0;
       let best = Infinity;
-      for (let i = 0; i < strip.children.length; i++) {
-        const el = strip.children[i] as HTMLElement;
-        const d = Math.abs(el.offsetLeft - strip.offsetLeft - strip.scrollLeft);
+      for (const [i, stop] of stops.entries()) {
+        const d = Math.abs(stop.left - strip.scrollLeft);
         if (d < best) {
           best = d;
           nearest = i;
@@ -54,6 +104,7 @@ export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
       setIndex(nearest);
     };
 
+    read();
     const onScroll = () => {
       if (!frame) frame = requestAnimationFrame(read);
     };
@@ -63,9 +114,11 @@ export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
       cancelAnimationFrame(frame);
       strip.removeEventListener("scroll", onScroll);
     };
-  }, []);
+  }, [stops]);
 
-  const labels = edition.images.map((_, i) => `Photograph ${i + 1}`);
+  const labels = stops.map(({ from, to }) =>
+    from === to ? `Photograph ${from + 1}` : `Photographs ${from + 1} to ${to + 1}`,
+  );
 
   /* --- the enlarged view ------------------------------------------------
      A photograph on a strip is small by necessity; opening it is the only way
@@ -147,7 +200,7 @@ export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
         labels={labels}
         index={index}
         onPrev={() => scrollTo(Math.max(0, index - 1))}
-        onNext={() => scrollTo(Math.min(edition.images.length - 1, index + 1))}
+        onNext={() => scrollTo(Math.min(stops.length - 1, index + 1))}
         onSelect={scrollTo}
         subject={`LP Day ${edition.year} photographs`}
         className="lp-controls"

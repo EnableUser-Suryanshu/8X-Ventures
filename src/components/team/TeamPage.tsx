@@ -110,6 +110,23 @@ export function TeamPage() {
         className="tm-hero-section relative overflow-x-clip bg-white"
       >
         <div className="tm-stage tm-hero">
+          {/* Runs on down into the band below, as in the artboard. Below that
+              layout it takes the line above the copy instead — see
+              `.tm-hero-engine` in globals.css. */}
+          <div
+            aria-hidden="true"
+            className="tm-at tm-hero-engine pointer-events-none z-10"
+          >
+            <Image suppressHydrationWarning
+              src="/images/team-engine.png"
+              alt=""
+              width={1500}
+              height={1500}
+              priority
+              sizes="(max-width: 1024px) 52vw, 57vw"
+              className="art-3d animate-float-3d h-auto w-full"
+            />
+          </div>
           <div className="tm-hero-copy at-col">
             <Reveal as="h1" id="team-heading" className={cn("text-ink-950", DISPLAY)}>
               {teamHero.line1} <span className="block text-brand-sky">{teamHero.line2}</span>
@@ -122,21 +139,6 @@ export function TeamPage() {
             </Reveal>
           </div>
 
-          {/* Runs on down into the band below, as in the artboard */}
-          <div
-            aria-hidden="true"
-            className="tm-at tm-hero-engine pointer-events-none z-10 max-lg:absolute max-lg:-top-6 max-lg:right-0 max-lg:w-[52%]"
-          >
-            <Image suppressHydrationWarning
-              src="/images/team-engine.png"
-              alt=""
-              width={1500}
-              height={1500}
-              priority
-              sizes="(max-width: 1024px) 52vw, 57vw"
-              className="art-3d animate-float-3d h-auto w-full"
-            />
-          </div>
         </div>
       </section>
 
@@ -168,10 +170,7 @@ export function TeamPage() {
               </p>
             </Reveal>
 
-            <div
-              className="at-tail tm-pt-grid"
-              style={{ "--grid-count": teamPartners.people.length } as React.CSSProperties}
-            >
+            <div className="at-tail tm-pt-grid">
               {teamPartners.people.map((p, i) => (
                 <PersonCard key={p.id} person={p} variant="partner" index={i} />
               ))}
@@ -204,10 +203,7 @@ export function TeamPage() {
               </p>
             </Reveal>
 
-            <div
-              className="at-tail tm-gp-grid"
-              style={{ "--grid-count": teamGroup.people.length } as React.CSSProperties}
-            >
+            <div className="at-tail tm-gp-grid">
               {teamGroup.people.map((p, i) => (
                 <PersonCard key={p.id} person={p} variant="team" index={i} />
               ))}

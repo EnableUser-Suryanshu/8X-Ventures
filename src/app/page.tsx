@@ -3,6 +3,7 @@ import { FounderJourney } from "@/components/home/FounderJourney";
 import { Hero } from "@/components/home/Hero";
 import { LpDaySection } from "@/components/home/LpDaySection";
 import { ManifestoBanner } from "@/components/home/ManifestoBanner";
+import { MentorStrip } from "@/components/home/MentorStrip";
 import { PortfolioCarousel } from "@/components/home/PortfolioCarousel";
 import { StatsSection } from "@/components/home/StatsSection";
 import { TeamCarousel } from "@/components/home/TeamCarousel";
@@ -18,6 +19,7 @@ export default function HomePage() {
       <PortfolioCarousel />
       <FounderJourney />
       <TeamCarousel />
+      <MentorStrip />
       <LpDaySection />
       <ClosingCta />
     </>
