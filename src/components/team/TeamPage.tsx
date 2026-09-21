@@ -110,18 +110,6 @@ export function TeamPage() {
         className="tm-hero-section relative overflow-x-clip bg-white"
       >
         <div className="tm-stage tm-hero">
-          <div className="tm-hero-copy at-col">
-            <Reveal as="h1" id="team-heading" className={cn("text-ink-950", DISPLAY)}>
-              {teamHero.line1} <span className="block text-brand-sky">{teamHero.line2}</span>
-            </Reveal>
-
-            <Reveal className="at-body">
-              <p className={cn("leading-[1.2] font-light text-pretty text-ink-800", BODY)}>
-                {teamHero.body}
-              </p>
-            </Reveal>
-          </div>
-
           {/* Runs on down into the band below, as in the artboard. Below that
               layout it takes the line above the copy instead — see
               `.tm-hero-engine` in globals.css. */}
@@ -139,6 +127,18 @@ export function TeamPage() {
               className="art-3d animate-float-3d h-auto w-full"
             />
           </div>
+          <div className="tm-hero-copy at-col">
+            <Reveal as="h1" id="team-heading" className={cn("text-ink-950", DISPLAY)}>
+              {teamHero.line1} <span className="block text-brand-sky">{teamHero.line2}</span>
+            </Reveal>
+
+            <Reveal className="at-body">
+              <p className={cn("leading-[1.2] font-light text-pretty text-ink-800", BODY)}>
+                {teamHero.body}
+              </p>
+            </Reveal>
+          </div>
+
         </div>
       </section>
 

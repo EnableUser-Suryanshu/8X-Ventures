@@ -34,6 +34,24 @@ export function AboutPage() {
         className="relative overflow-x-clip bg-white"
       >
         <div className="ab-stage ab-hero">
+          {/* Overflows into the band below, as in the artboard. Where it goes
+              below that layout is `.ab-hero-head` in globals.css: it used to
+              be pinned over the copy on a phone too, where the copy is the
+              whole width, and it sat across the headline. */}
+          <div
+            aria-hidden="true"
+            className="ab-at ab-hero-head pointer-events-none z-10"
+          >
+            <Image suppressHydrationWarning
+              src="/images/about-head.png"
+              alt=""
+              width={1200}
+              height={1200}
+              priority
+              sizes="(max-width: 1024px) 46vw, 55vw"
+              className="art-3d animate-float-3d h-auto w-full"
+            />
+          </div>
           {/* One flow column rather than four separately placed blocks. Placing
               each at its own percentage of the stage made the spacing between
               them a function of the viewport: the stage's height scales with
@@ -72,24 +90,6 @@ export function AboutPage() {
             </Reveal>
           </div>
 
-          {/* Overflows into the band below, as in the artboard. Where it goes
-              below that layout is `.ab-hero-head` in globals.css: it used to
-              be pinned over the copy on a phone too, where the copy is the
-              whole width, and it sat across the headline. */}
-          <div
-            aria-hidden="true"
-            className="ab-at ab-hero-head pointer-events-none z-10"
-          >
-            <Image suppressHydrationWarning
-              src="/images/about-head.png"
-              alt=""
-              width={1200}
-              height={1200}
-              priority
-              sizes="(max-width: 1024px) 46vw, 55vw"
-              className="art-3d animate-float-3d h-auto w-full"
-            />
-          </div>
         </div>
       </section>
 

@@ -1395,37 +1395,46 @@
    head covered the end of "A Venture Firm Built", the engine clipped "A
    Team Built".
 
-   Insetting the headline instead was tried and is worse. At 375 the artwork
-   has to come down to about 135px before "for Deep-Tech" fits beside it,
-   and the arithmetic that makes that work at 375 breaks at 430 — the type
-   and the artwork scale on different curves. So below the traced layout the
-   artwork takes the line above the copy rather than sharing it, still bled
-   past the gutter to the edge of the screen as the artboard bleeds it. */
+   It is floated there instead of pinned. A float is the one thing that
+   cannot produce this bug: the copy's line boxes shorten beside it and
+   lengthen again below it, at any width, with no arithmetic to get wrong —
+   the worst a bad guess can do is break the headline a line earlier. So
+   the artwork keeps the corner the artboard gives it, still bled past the
+   gutter to the edge of the screen, and the headline sets around it.
+
+   It is also the reason the artwork comes before the copy in the markup on
+   both pages: a float only moves what follows it. On the traced layout it
+   is absolutely positioned, so the order there makes no difference.
+
+   Sized so the second line of each headline clears the float rather than
+   wrapping inside it: at 375 that means about 130px, which is what 34% and
+   the -1.75rem lift come to. */
 @media (width < 64rem) {
   .ab-hero,
   .tm-hero {
-    display: flex;
-    flex-direction: column;
+    /* Contains the float, so it cannot hang into the band below where the
+       copy runs short. */
+    display: flow-root;
   }
 
+  /* The 0.5rem on the left is the gutter between the artwork and the type
+     it sets around, and it is tight on purpose: at 375 "for Complexity"
+     comes to 217px against 220 of measure, so a wider one costs a line. */
   .ab-hero-head,
   .tm-hero-engine {
-    order: -1;
-    align-self: flex-end;
-    margin-top: -2rem;
-    margin-right: calc(var(--spacing-gutter) * -1);
-    margin-bottom: clamp(0.5rem, 2vw, 1.5rem);
+    float: right;
+    margin: -1.75rem calc(var(--spacing-gutter) * -1) 0.5rem 0.5rem;
   }
 
   /* Capped as well as proportional: a share of the width is the right rule
-     on a phone and the wrong one on a tablet, where 46% of 900 is a 414px
-     block of artwork standing between the header and the headline. */
+     on a phone and the wrong one on a tablet, where 34% of 900 is a 306px
+     head beside a headline that has stopped growing. */
   .ab-hero-head {
-    width: min(46%, 17rem);
+    width: min(34%, 13rem);
   }
 
   .tm-hero-engine {
-    width: min(52%, 19rem);
+    width: min(38%, 14rem);
   }
 }
 
