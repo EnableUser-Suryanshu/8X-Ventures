@@ -122,10 +122,12 @@ export function TeamPage() {
             </Reveal>
           </div>
 
-          {/* Runs on down into the band below, as in the artboard */}
+          {/* Runs on down into the band below, as in the artboard. Below that
+              layout it takes the line above the copy instead — see
+              `.tm-hero-engine` in globals.css. */}
           <div
             aria-hidden="true"
-            className="tm-at tm-hero-engine pointer-events-none z-10 max-lg:absolute max-lg:-top-6 max-lg:right-0 max-lg:w-[52%]"
+            className="tm-at tm-hero-engine pointer-events-none z-10"
           >
             <Image suppressHydrationWarning
               src="/images/team-engine.png"

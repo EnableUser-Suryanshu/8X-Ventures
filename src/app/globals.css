@@ -1387,6 +1387,48 @@
    27 / 26 / 66, and they narrow with the headline instead of against it. The
    rem floors hold the two lower gaps apart on phones, where `--ab-display`
    bottoms out at 32.8px and a pure ratio would leave 10px under the headline. */
+/* --- the hero artwork, below the traced layout --------------------------
+   Both hero renders — the head on `/about`, the engine on `/team` — are
+   pinned to the top-right corner of their stage over the copy column. That
+   is right at 1920, where the column is half the width. On a phone the
+   column is the whole width, and the artwork sat across the headline: the
+   head covered the end of "A Venture Firm Built", the engine clipped "A
+   Team Built".
+
+   Insetting the headline instead was tried and is worse. At 375 the artwork
+   has to come down to about 135px before "for Deep-Tech" fits beside it,
+   and the arithmetic that makes that work at 375 breaks at 430 — the type
+   and the artwork scale on different curves. So below the traced layout the
+   artwork takes the line above the copy rather than sharing it, still bled
+   past the gutter to the edge of the screen as the artboard bleeds it. */
+@media (width < 64rem) {
+  .ab-hero,
+  .tm-hero {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ab-hero-head,
+  .tm-hero-engine {
+    order: -1;
+    align-self: flex-end;
+    margin-top: -2rem;
+    margin-right: calc(var(--spacing-gutter) * -1);
+    margin-bottom: clamp(0.5rem, 2vw, 1.5rem);
+  }
+
+  /* Capped as well as proportional: a share of the width is the right rule
+     on a phone and the wrong one on a tablet, where 46% of 900 is a 414px
+     block of artwork standing between the header and the headline. */
+  .ab-hero-head {
+    width: min(46%, 17rem);
+  }
+
+  .tm-hero-engine {
+    width: min(52%, 19rem);
+  }
+}
+
 .ab-hero-title {
   margin-top: 0.33em; /* `em` is `--ab-display` here — the title sets it */
 }

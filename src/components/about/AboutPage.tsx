@@ -72,10 +72,13 @@ export function AboutPage() {
             </Reveal>
           </div>
 
-          {/* Overflows into the band below, as in the artboard */}
+          {/* Overflows into the band below, as in the artboard. Where it goes
+              below that layout is `.ab-hero-head` in globals.css: it used to
+              be pinned over the copy on a phone too, where the copy is the
+              whole width, and it sat across the headline. */}
           <div
             aria-hidden="true"
-            className="ab-at ab-hero-head pointer-events-none z-10 max-lg:absolute max-lg:-top-4 max-lg:right-0 max-lg:w-[46%]"
+            className="ab-at ab-hero-head pointer-events-none z-10"
           >
             <Image suppressHydrationWarning
               src="/images/about-head.png"
