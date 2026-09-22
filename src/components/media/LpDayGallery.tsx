@@ -189,6 +189,8 @@ export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
                 alt=""
                 fill
                 sizes="(max-width: 640px) 88vw, (max-width: 1024px) 44vw, 21vw"
+                placeholder="blur"
+                blurDataURL={img.blur}
                 className="lp-slide-img"
               />
             </button>
@@ -229,11 +231,23 @@ export function LpDayGallery({ edition }: { edition: LpDayEdition }) {
 
         {shown && (
           <figure className="lp-lightbox-figure">
+            {/* The photograph is only requested when the dialog opens, and a
+                1400px frame off a cold connection takes long enough that what
+                the reader sees is an empty navy rectangle. `blur` paints the
+                inlined 20px preview immediately instead, so the frame is the
+                photograph from the first tick and only sharpens; `priority`
+                asks for it ahead of anything else still loading on the page.
+                The intrinsic size is the file's, not the frame's old 992 —
+                the same ratio, so nothing moves, but Next sizes its srcset
+                off it. */}
             <Image suppressHydrationWarning
               src={shown.src}
               alt={shown.alt}
-              width={992}
-              height={744}
+              width={1400}
+              height={1050}
+              priority
+              placeholder="blur"
+              blurDataURL={shown.blur}
               sizes="(max-width: 1024px) 92vw, 60rem"
             />
 

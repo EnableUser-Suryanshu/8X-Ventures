@@ -3857,21 +3857,23 @@ html.js-img img[data-img-in="fade"] {
    PARALLAX BAND
 
    On the artboard's own width the band is a window and the picture behind it
-   is held still on screen: the plate stands a screen and a third tall and
-   `--par-fix` — the band's own distance from the top of the viewport, negated,
-   written each frame by `ParallaxBand` — cancels the band's movement out from
-   under it. What travels is the window, so what changes is which part of the
+   is held still on screen: the plate stands a screen and a third tall, and
+   each frame it is moved by the band's own distance from the top of the
+   viewport, negated, which cancels the band's movement out from under it.
+   What travels is the window, so what changes is which part of the
    photograph is showing. Narrower than that the plate stays near the band's
    own size and drifts, for the reason given at the rule.
 
-   `--par` is the band's position relative to the viewport: -1 coming in at the
-   bottom, 0 centred, +1 leaving at the top. It carries the drift — the whole
-   of it on narrow screens, a small one on top of the hold on wide ones.
-   `--par-mid` is how nearly centred the band is — 0 at either end, 1 in the
-   middle — and carries the swell.
+   The transforms are written by `ParallaxBand`, in pixels, straight onto the
+   plate and onto the copy in front of it. They used to be composed here out
+   of three custom properties the component published on the section, which
+   cost a style invalidation across the whole band — heading and copy
+   included — and a percentage to resolve against a box, sixty times a
+   second. What stays here is the geometry they move within.
 
-   Absent — no JavaScript, or reduced motion — the plate is simply the band's
-   own box and the band is exactly what the artboard composes.
+   Absent — no JavaScript, or reduced motion — no transform is written, the
+   plate is simply the band's own box, and the band is exactly what the
+   artboard composes.
    ========================================================================== */
 
 .parallax-plate {
@@ -3893,7 +3895,11 @@ html.js-img img[data-img-in="fade"] {
      band's height against 18% of overhang either side. */
   html.js-reveal .parallax-plate {
     inset: -18% 0;
-    transform: translate3d(0, calc(var(--par, 0) * 12%), 0);
+    /* The transform itself is written by `ParallaxBand`, straight onto the
+       element. It used to be composed here out of custom properties the
+       component published on the section, which made every frame invalidate
+       style for the whole band and re-resolve a percentage against a box.
+       What is left here is the geometry the transform moves within. */
     will-change: transform;
   }
 }
@@ -3904,31 +3910,20 @@ html.js-img img[data-img-in="fade"] {
 @media (prefers-reduced-motion: no-preference) and (width >= 64rem) {
   html.js-reveal .parallax-plate {
     /* Pinned to the band's top edge and given the viewport's height, because
-       that is the box `--par-fix` is written against: the plate's top lands a
+       that is the box the hold is measured against: the plate's top lands a
        tenth of a screen above the viewport, and the rest of the overhang falls
        below it, which is what the drift and the swell move within without ever
        exposing an edge.
 
-       `lvh`, not `svh`: `--par-fix` is written off `innerHeight`, which on a
+       `lvh`, not `svh`: the hold is computed off `innerHeight`, which on a
        phone is whatever the address bar currently leaves — and that is at its
        largest exactly when a small-viewport plate is at its shortest, which is
        the one combination that lifts the plate's foot into view. `lvh` is the
        tallest `innerHeight` can be, so the overhang is never spent. */
     inset: 0 0 auto;
     height: 130lvh;
-    /* Hold, then drift, then swell. The drift runs the picture down the screen
-       as the page comes up it — a twenty-fifth of the plate either side of the
-       hold, which is enough to keep the picture from reading as a photograph
-       glued to the glass without undoing the hold that is the whole effect.
-       The swell runs the other way from `--par-mid`: widest as the band
-       arrives, back to nothing as it centres, so the picture settles onto its
-       framing at the moment it is being looked at. */
-    transform: translate3d(
-        0,
-        calc(var(--par-fix, 0) * 1px + var(--par, 0) * 4%),
-        0
-      )
-      scale(calc(1 + (1 - var(--par-mid, 1)) * 0.05));
+    /* Hold, then drift, then swell — all three written by `ParallaxBand`, in
+       pixels, onto this element. */
     will-change: transform;
   }
 }
@@ -3945,7 +3940,6 @@ html.js-img img[data-img-in="fade"] {
 
 @media (prefers-reduced-motion: no-preference) {
   html.js-reveal .parallax-fore {
-    transform: translate3d(0, calc(var(--par, 0) * -8%), 0);
     will-change: transform;
   }
 }

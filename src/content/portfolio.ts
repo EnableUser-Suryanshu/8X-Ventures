@@ -84,7 +84,9 @@ const DETAILS: Record<string, { founded: string; note: string; status?: string; 
     note: "Waveguide ultrasonic sensors and analytics for monitoring high-temperature industrial assets.",
   },
   "lightspeed-photonics": {
-    founded: "Founded 2021 · Hyderabad",
+    /* The brochure gives this one two homes — "HYD + Singapore" — and only
+       Hyderabad was carried. */
+    founded: "Founded 2021 · Hyderabad and Singapore",
     note: "Near-chip optical interconnects that move data at high bandwidth and far lower power.",
   },
   sanchiconnect: {
@@ -93,12 +95,16 @@ const DETAILS: Record<string, { founded: string; note: string; status?: string; 
   },
   neuralzome: {
     founded: "Founded 2023 · Bengaluru",
-    note: "Autonomous AI for off-road robotics, including the Chitti autonomous ATV for field operations and material movement.",
+    /* "Autonomous AI for off-road robotics" was the Figma prototype's line
+       for this company, not the brief's. The brief is agriculture first. */
+    note: "Teachable autonomy for farm operations — mowing, weeding and soil sensing — including the Chitti autonomous ATV.",
     status: "Scaling from product validation to commercial deployment.",
     investedAt: "Seed Stage",
   },
   "trishul-space": {
-    founded: "Founded 2022 · New Delhi",
+    /* The brochure places it at IIT Delhi, where it is incubated, rather
+       than in the city generally. */
+    founded: "Founded 2022 · IIT Delhi",
     note: "Indigenous liquid and cryogenic rocket engines, including the high-performance Harpy-1 programme.",
   },
   enerzi: {
