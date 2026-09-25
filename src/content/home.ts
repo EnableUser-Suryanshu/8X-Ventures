@@ -629,7 +629,7 @@ export const lpDay = {
       image: "/images/lpday-2026.jpg",
       focus: "50% 50%",
       imageAlt:
-        "Delegates gathered under the DeepTech Industry Connect backdrop at IIT Gandhinagar, February 2026.",
+        "The 8X delegation with the Governor of Gujarat in the Planetary Simulation & Immersive Visualization facility at ISRO's Space Applications Centre, February 2026.",
     },
   ],
   promo: {
