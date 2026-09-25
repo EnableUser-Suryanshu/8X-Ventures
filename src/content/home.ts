@@ -546,10 +546,13 @@ export const mentorsIntro = {
  *
  * The files in `public/images/mentors/` are cut out and set on the card's
  * own 588 × 784 canvas so that every mentor card is the team card: the
- * subject keyed from a plain studio ground where there was one, and cut
- * with macOS Vision's subject mask where there was not (Virendra
- * Somwanshi's wood-panelled wall; a hand-traced outline there left the
- * jaw and hair angular), the head at half the
+ * subject cut with macOS Vision's subject mask (Ashok Jhunjhunwala, Deepak
+ * Chitnis, Virendra Somwanshi) — a colour key read Dr. Jhunjhunwala's white
+ * shirt stripes and Mr. Chitnis's pale collar as ground, and a hand-traced
+ * outline left Mr. Somwanshi's jaw angular — or keyed from a plain studio
+ * ground where that was clean, or the client's own cut-out (Bony Niranjan
+ * Dalal); where a photograph stops short of the card, its clothes are
+ * carried out to the edge along the fall of the shoulder; the head at half the
  * card's height with the eyes at 37.5% — the framing of the strip above —
  * and the shoulders running off the foot of the card. Levels are set from
  * the photograph and the face brought to one brightness across the set.
