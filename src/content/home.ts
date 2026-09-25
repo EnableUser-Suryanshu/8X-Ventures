@@ -528,13 +528,17 @@ export const mentorsIntro = {
  * thumbnails, too soft to fill a card; the client asked for better ones
  * found online. Dr. Jhunjhunwala's is the same studio portrait at 900 ×
  * 1200 from the CIKS board-of-trustees page (ciks.org); Suresh Nanda's is
- * the headshot on UV Capital's site (uvcapital.in), 729 × 994. Deepak
- * Chitnis's official Lodha Group portrait is the same 375px file Drive
- * already had, and nothing larger is published; Federal Bank's site refuses
- * automated fetches of Virendra Somwanshi's official photograph, so his is
- * still Drive's; Bony Niranjan Dalal has no photograph online at all, so his
- * is still Drive's conference close-up, which stops at the shoulders. None
- * of these photographs is the client's own and none is licensed to 8X;
+ * the headshot on UV Capital's site (uvcapital.in), 729 × 994; Ankit
+ * Agarwal's is his portrait on Globe Capital's own site (globecapital.com),
+ * 388 × 486, arms folded, which is the only size it is published at;
+ * Virendra Somwanshi's is the Equalifi IWTS 2023 speaker photograph
+ * (equalifi.org), 800 × 601 — Federal Bank's site refuses automated fetches
+ * of his official one, and the press photograph Drive had is the same
+ * picture every outlet ran. Deepak Chitnis's official Lodha Group portrait
+ * is the same 375px file Drive already had, and nothing larger is
+ * published. Bony Niranjan Dalal has no photograph online at all, so his is
+ * still Drive's conference close-up, which stops at the shoulders. None of
+ * these photographs is the client's own and none is licensed to 8X;
  * publishing them needs the subjects' or the publishers' say-so.
  *
  * The files in `public/images/mentors/` are cut out and set on the card's
