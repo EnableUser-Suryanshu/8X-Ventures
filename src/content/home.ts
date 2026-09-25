@@ -537,9 +537,11 @@ export const mentorsIntro = {
  * picture every outlet ran. Deepak Chitnis's official Lodha Group portrait
  * is the same 375px file Drive already had, and nothing larger is
  * published. Bony Niranjan Dalal has no photograph online at all, so his is
- * still Drive's conference close-up, which stops at the shoulders. None of
- * these photographs is the client's own and none is licensed to 8X;
- * publishing them needs the subjects' or the publishers' say-so.
+ * still Drive's conference close-up — which arrived already cut out, and is
+ * used with its own alpha, microphone and all, since cropping the
+ * microphone away leaves a head with nothing under it. None of these
+ * photographs is the client's own and none is licensed to 8X; publishing
+ * them needs the subjects' or the publishers' say-so.
  *
  * The files in `public/images/mentors/` are cut out and set on the card's
  * own 588 × 784 canvas so that every mentor card is the team card: the
