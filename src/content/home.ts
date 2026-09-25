@@ -546,8 +546,10 @@ export const mentorsIntro = {
  *
  * The files in `public/images/mentors/` are cut out and set on the card's
  * own 588 × 784 canvas so that every mentor card is the team card: the
- * subject keyed from a plain studio ground where there was one, traced by
- * hand where there was not (an office wall, a stage), the head at half the
+ * subject keyed from a plain studio ground where there was one, and cut
+ * with macOS Vision's subject mask where there was not (Virendra
+ * Somwanshi's wood-panelled wall; a hand-traced outline there left the
+ * jaw and hair angular), the head at half the
  * card's height with the eyes at 37.5% — the framing of the strip above —
  * and the shoulders running off the foot of the card. Levels are set from
  * the photograph and the face brought to one brightness across the set.
