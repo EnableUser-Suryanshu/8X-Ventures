@@ -155,6 +155,10 @@ export const lpDayGallery = {
  * own website copy deck, verbatim. They replace three the frame invented,
  * which read plausibly and came from nowhere. 8X publish them unattributed,
  * so they are unattributed here too.
+ *
+ * The plate is the SAC auditorium on the second day of DeepTech Industry
+ * Connect 2026 — the "01 IMG_8665 - IMG_8667" panorama from the LP Day
+ * highlights folder, cut to the band's widest shape.
  */
 export const lpDayQuotes = {
   heading: "What the ecosystem says.",
