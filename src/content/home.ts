@@ -531,10 +531,11 @@ export const mentorsIntro = {
  * the headshot on UV Capital's site (uvcapital.in), 729 × 994; Ankit
  * Agarwal's is his portrait on Globe Capital's own site (globecapital.com),
  * 388 × 486, arms folded, which is the only size it is published at;
- * Virendra Somwanshi's is the Equalifi IWTS 2023 speaker photograph
- * (equalifi.org), 800 × 601 — Federal Bank's site refuses automated fetches
- * of his official one, and the press photograph Drive had is the same
- * picture every outlet ran. Deepak Chitnis's official Lodha Group portrait
+ * Virendra Somwanshi's is the press photograph Google lists first for him
+ * (ET BrandEquity, and every other outlet, ran it), which is also the file
+ * Drive holds at 1452 × 1218 — the largest copy of the only portrait of him
+ * published anywhere; Federal Bank's site refuses automated fetches of his
+ * official one. Deepak Chitnis's official Lodha Group portrait
  * is the same 375px file Drive already had, and nothing larger is
  * published. Bony Niranjan Dalal has no photograph online at all, so his is
  * still Drive's conference close-up — which arrived already cut out, and is
