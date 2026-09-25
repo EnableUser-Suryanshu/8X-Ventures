@@ -3,6 +3,8 @@
  * "8x Website v5.0" design.
  */
 
+import { teamGroup, teamPartners } from "@/content/team";
+
 /* --- Hero ---------------------------------------------------------------- */
 
 export const hero = {
@@ -456,9 +458,10 @@ export type TeamMember = {
   name: string;
   role: string;
   image: string;
-  /** Shown on hover / focus. Condensed from the profile pages on 8xventures.co. */
+  /** Shown on hover / focus. */
   bio: string;
-  linkedin: string;
+  /** Four of the team have none on file; the panel leaves the link out. */
+  linkedin?: string;
 };
 
 export const teamIntro = {
@@ -469,48 +472,25 @@ export const teamIntro = {
   cta: { label: "Meet the Team", href: "/team" },
 } as const;
 
-export const team: TeamMember[] = [
-  {
-    id: "vinod-agarwal",
-    name: "Vinod Agarwal",
-    role: "Partner & Board Advisor",
-    image: "/images/team-1.png",
-    bio: "20+ years across multiple entrepreneurial ventures, with success in the polymer and steel industries, and an active investor worldwide in public and private markets.",
-    linkedin: "https://www.linkedin.com/in/vinod-agarwal-aba3231b3/",
-  },
-  {
-    id: "shreya-kothari",
-    name: "Shreya Kothari",
-    role: "Associate Principal",
-    image: "/images/team-2.png",
-    bio: "Previously an Associate at eClerx Services and Nimai Management Consultants. Holds an MBA from the Institute of Management Technology, Nagpur.",
-    linkedin: "https://www.linkedin.com/in/shreyabagri",
-  },
-  {
-    id: "ajay-singh-rajput",
-    name: "Ajay Singh Rajput",
-    role: "Partner & Board Advisor",
-    image: "/images/team-3.png",
-    bio: "25+ years across white goods, plastic processing and petrochemicals. Has invested in startups across the Middle East, Asia and Europe.",
-    linkedin: "https://www.linkedin.com/in/ajaysingh-rajput-6406146/",
-  },
-  {
-    id: "esha-arya",
-    name: "Esha Arya",
-    role: "Partner & Board Advisor",
-    image: "/images/team-4.png",
-    bio: "Vice-Chairman of JBM Group, a $2.7bn conglomerate operating across 10 countries. Mentors early-stage deep-tech startups and sits on advisory boards in the USA, India, UK and Singapore.",
-    linkedin: "https://www.linkedin.com/in/eshaarya/",
-  },
-  {
-    id: "rashi-jain",
-    name: "Rashi Jain",
-    role: "Compliance Associate",
-    image: "/images/team-5.png",
-    bio: "A qualified Chartered Accountant specialising in taxation, regulatory compliance and statutory reporting, with a focus on accuracy and transparency.",
-    linkedin: "https://www.linkedin.com/in/ca-rashi-jain13/",
-  },
-];
+/**
+ * The whole roster, partners first — read from `content/team.ts`, which is
+ * where it is kept, rather than held as a second list here. This used to be
+ * five people with their own copies of the copy; the two lists had already
+ * drifted on Rashi's title and the strip was missing the six who joined.
+ *
+ * The strip opens on Chirag — see `TeamCarousel` — and shows the featured
+ * card in colour, so each person's `colour` cut-out is preferred where one
+ * exists. The role and biography are the team page's, from the client's
+ * Fund II teaser.
+ */
+export const team: TeamMember[] = [...teamPartners.people, ...teamGroup.people].map((p) => ({
+  id: p.id,
+  name: p.name,
+  role: p.role ?? "",
+  image: p.colour ?? p.image,
+  bio: p.bio ?? "",
+  linkedin: p.linkedin,
+}));
 
 /* --- Mentors ------------------------------------------------------------- */
 

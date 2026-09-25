@@ -11,13 +11,11 @@ import { mentors, mentorsIntro } from "@/content/home";
  * wear, so it rises in on scroll, lifts under the pointer, grows its artwork
  * by 4% and turns over to its written side exactly as they do.
  *
- * What differs is what the card holds, and only because of what the client
- * sent. The team's portraits are cut out and stand on the card's blue; two of
- * the six mentor photographs have a ground that will not key — a stage behind
- * one, an office wall behind another — and a plate of the other four would be
- * a white rectangle with the card nowhere in sight. So all six are the disc
- * treatment described in `content/home.ts`, which neutralises whatever was
- * behind the person and leaves six portraits that match each other.
+ * The portraits are cut out in colour and stand on the card's blue, as the
+ * team's do in the strip above. Each file is already the card's shape with
+ * the head placed on it — see `content/home.ts` for how six photographs from
+ * six different cameras were brought to one framing, and which two had to be
+ * cut by hand.
  *
  * No links: mentors have no page of their own, so the panel is what it has —
  * a name, a position and a line — and nothing that goes nowhere.
@@ -52,13 +50,16 @@ export function MentorStrip() {
               delay={Math.min(i, 5) * 90}
               className="tm-card tm-card-sm mn-card"
             >
-              <div className="tm-card-photo mn-card-disc">
+              {/* The same card the team strip above wears: a colour cut-out
+                  filling the plate, cut and set on the card's own canvas in
+                  `public/images/mentors/`. */}
+              <div className="tm-card-photo mn-card-photo">
                 <Image suppressHydrationWarning
                   src={m.image}
                   alt=""
-                  width={480}
-                  height={480}
-                  sizes="(max-width: 64rem) 45vw, 21vw"
+                  fill
+                  sizes="(max-width: 48rem) 90vw, (max-width: 64rem) 32vw, 21vw"
+                  className="object-cover object-top"
                 />
               </div>
 

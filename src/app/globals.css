@@ -986,23 +986,15 @@
   }
 }
 
-/* The disc sits in the card rather than filling it, so the card's blue is
-   still the card: a portrait placed on it, not a hole punched in it.
-   Qualified by `.tm-card-photo` because that rule is a plate pinned to the
-   foot of the card at 88% of its height, and it is declared further down the
-   sheet — one class each and it would win on order alone. */
-.tm-card-photo.mn-card-disc {
-  inset: 13% 10% auto;
-  height: auto;
-  aspect-ratio: 1;
-  /* The disc is feathered into nothing at its rim, so there is no edge for
-     the plate to clip and nothing for `overflow` to do. */
-  overflow: visible;
-}
-
-.mn-card-disc img {
-  width: 100%;
-  height: auto;
+/* The portrait is cut out on a canvas that is already the card's shape, with
+   every head at the same size on the same eye line, so the plate is the
+   whole card and the picture fills it — the team strip's own arrangement.
+   Qualified by `.tm-card-photo` because that rule pins the plate to the foot
+   of the card at 88% of its height and is declared further down the sheet:
+   one class each and it would win on source order. */
+.tm-card-photo.mn-card-photo {
+  inset: 0;
+  height: 100%;
 }
 
 @media (width >= 48rem) {

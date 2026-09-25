@@ -17,12 +17,16 @@ const SLOT_LEFT = [6.406, 23.021, 39.74, 61.562, 78.385];
  *  since every card is laid out at that box and scaled down from it. */
 const CARD_WIDTH = 20.208;
 
+/** Who the strip opens on: the Managing Partner, in the featured slot. Found
+ *  by id rather than assumed to be first, so reordering the roster in
+ *  `content/team.ts` cannot quietly open the page on someone else. */
+const OPENS_ON = "chirag-gupta";
+
 export function TeamCarousel() {
-  const centre = Math.floor(team.length / 2);
-  /* Opens on the member the artboard features in the centre slot. */
+  const centre = Math.floor(SLOT_LEFT.length / 2);
   const { index, goTo, next, prev, onKeyDown, offsetOf } = useCarousel({
     length: team.length,
-    initialIndex: centre,
+    initialIndex: Math.max(0, team.findIndex((m) => m.id === OPENS_ON)),
   });
   const active = team[index];
 
@@ -124,10 +128,12 @@ export function TeamCarousel() {
                         Know More
                         <span className="sr-only-8x">{` about ${member.name}`}</span>
                       </UnderlineLink>
-                      <UnderlineLink href={member.linkedin} tone="light">
-                        LinkedIn
-                        <span className="sr-only-8x">{` profile for ${member.name}`}</span>
-                      </UnderlineLink>
+                      {member.linkedin && (
+                        <UnderlineLink href={member.linkedin} tone="light">
+                          LinkedIn
+                          <span className="sr-only-8x">{` profile for ${member.name}`}</span>
+                        </UnderlineLink>
+                      )}
                     </div>
                   </div>
                 )}
