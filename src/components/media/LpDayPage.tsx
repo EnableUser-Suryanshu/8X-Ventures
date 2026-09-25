@@ -163,7 +163,7 @@ export function LpDayPage() {
 
           <ul role="list" className="lp-quotes-grid">
             {lpDayQuotes.items.map((quote, i) => (
-              <Reveal as="li" key={quote} delay={Math.min(i, 3) * 120} className="lp-quote">
+              <Reveal as="li" key={quote} delay={(i % 3) * 120 + Math.floor(i / 3) * 80} className="lp-quote">
                 <blockquote className="lp-quote-text">{`“${quote}”`}</blockquote>
               </Reveal>
             ))}
