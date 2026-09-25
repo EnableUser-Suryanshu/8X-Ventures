@@ -519,33 +519,31 @@ export const mentorsIntro = {
 /**
  * 8X's advisory board, less the two who already appear above as partners.
  *
- * Photographs from the client's "Photos of Mentors" folder on Drive; roles
- * and biographies from the Advisory Board page of their "8X Ventures Fund
- * II — India DeepTech Fund" teaser.
+ * Roles and biographies from the Advisory Board page of the client's "8X
+ * Ventures Fund II — India DeepTech Fund" teaser.
  *
- * The photographs arrived from six different cameras — a studio headshot, a
- * conference snap with a microphone in it, a 225px thumbnail, a portrait
- * taken in an office — and in colour, which is how they are shown. Three
- * things in `public/images/mentors/` bring them to one set:
+ * The photographs are the client's "Photos of Mentors" folder on Drive
+ * where that folder had a usable one, and the web where it did not. The
+ * Drive copies of Dr. Jhunjhunwala (225px) and Suresh Nanda (301px) were
+ * thumbnails, too soft to fill a card; the client asked for better ones
+ * found online. Dr. Jhunjhunwala's is the same studio portrait at 900 ×
+ * 1200 from the CIKS board-of-trustees page (ciks.org); Suresh Nanda's is
+ * the headshot on UV Capital's site (uvcapital.in), 729 × 994. Deepak
+ * Chitnis's official Lodha Group portrait is the same 375px file Drive
+ * already had, and nothing larger is published; Federal Bank's site refuses
+ * automated fetches of Virendra Somwanshi's official photograph, so his is
+ * still Drive's; Bony Niranjan Dalal has no photograph online at all, so his
+ * is still Drive's conference close-up, which stops at the shoulders. None
+ * of these photographs is the client's own and none is licensed to 8X;
+ * publishing them needs the subjects' or the publishers' say-so.
  *
- *   - one framing. Each is cropped so the head is the same size on the same
- *     eye line. Scaling to the face rather than to the frame is the thing
- *     that reads first; the alternative is six photographs at six distances.
- *   - one exposure and one white balance, both measured across the face
- *     rather than the whole frame — a white studio card and a warm office
- *     wall pull the same face two different ways — and both corrected
- *     towards the median face of the set, so nobody is pushed far from how
- *     they actually look.
- *   - one ground. Each keeps its own out to about 58% of the radius and is
- *     blended into a single pale tint by 93%, so the part of a photograph
- *     that differs from the others is the part that goes. The two shot on
- *     location — an office with a picture on the wall, a stage — start
- *     blending earlier, because in colour those grounds are much louder than
- *     a studio card.
- *
- * Two of the files want replacing, and nothing in the code would change if
- * they were: Dr. Ashok Jhunjhunwala's is 225px square and Suresh Nanda's
- * 301px, so both are soft. A plain headshot for each would settle it.
+ * The files in `public/images/mentors/` are cut out and set on the card's
+ * own 588 × 784 canvas so that every mentor card is the team card: the
+ * subject keyed from a plain studio ground where there was one, traced by
+ * hand where there was not (an office wall, a stage), the head at half the
+ * card's height with the eyes at 37.5% — the framing of the strip above —
+ * and the shoulders running off the foot of the card. Levels are set from
+ * the photograph and the face brought to one brightness across the set.
  */
 export const mentors: Mentor[] = [
   {
