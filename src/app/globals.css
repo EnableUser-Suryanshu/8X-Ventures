@@ -6020,14 +6020,11 @@ html.js-img img[data-img-in="fade"] {
 }
 
 /* 154 under the heading, and 156 between columns — the frame sets the three
-   quotes well apart so each reads as its own voice rather than as a row.
-   Six now run as two rows of three; the rows sit closer than the columns so
-   the pair reads as one field of voices rather than two separate bands. */
+   quotes well apart so each reads as its own voice rather than as a row. */
 .lp-quotes-grid {
   display: grid;
-  column-gap: clamp(2rem, 8.125vw, 9.75rem);
-  row-gap: clamp(2rem, 4.2vw, 5rem);
-  margin-top: clamp(2.5rem, 6vw, 7.25rem);
+  gap: clamp(2rem, 8.125vw, 9.75rem);
+  margin-top: clamp(2.5rem, 8.02vw, 9.625rem);
 }
 
 .lp-quote-text {

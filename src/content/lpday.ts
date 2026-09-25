@@ -151,14 +151,10 @@ export const lpDayGallery = {
 } as const;
 
 /**
- * Six from the client's "8X Ventures Website Copy" deck, verbatim: the three
- * it publishes under "What our ecosystem says" (investors and mentors), then
- * the three under "Founder Quotes", so the band hears from both sides of the
- * ecosystem. 8X publish them unattributed, so they are unattributed here too.
- *
- * The plate is the SAC auditorium on the second day of DeepTech Industry
- * Connect 2026 — the "01 IMG_8665 - IMG_8667" panorama from the LP Day
- * highlights folder, cut to the band's widest shape.
+ * The three the client publishes under "What our ecosystem says" in their
+ * own website copy deck, verbatim. They replace three the frame invented,
+ * which read plausibly and came from nowhere. 8X publish them unattributed,
+ * so they are unattributed here too.
  */
 export const lpDayQuotes = {
   heading: "What the ecosystem says.",
@@ -166,9 +162,6 @@ export const lpDayQuotes = {
     "8X is building a serious platform for India's deep-tech opportunity.",
     "They combine founder empathy with institutional discipline.",
     "Deep-tech needs long-term capital. 8X understands that.",
-    "8X opened doors that changed our trajectory.",
-    "Deep-tech needs patient capital. 8X brought conviction.",
-    "They understood the technology before the market did.",
   ],
   image: "/images/lpday/quotes.jpg",
 } as const;
