@@ -28,6 +28,13 @@ export type Person = {
    */
   portrait?: "cutout" | "plate";
   /**
+   * The same cut-out in colour, for the home page's strip, where the
+   * featured card is shown in colour and only the cards behind it are
+   * greyed. The team page bakes its portraits grey, so those files cannot
+   * serve both. Absent, the strip falls back to `image`.
+   */
+  colour?: string;
+  /**
    * Everything below is optional, and four people are missing all of it. Drive
    * supplied them as a photograph and a name and nothing else; the card and
    * the member page leave out what is not there rather than render an empty
@@ -160,6 +167,7 @@ export const teamGroup = {
       name: "Shreya Kothari",
       role: "Associate Principal, Portfolio Growth",
       image: "/images/team/shreya-kothari.png",
+      colour: "/images/team/colour/shreya-kothari.png",
       bio: "Five years in financial services, driving portfolio growth and startup deal execution.",
       linkedin: "https://www.linkedin.com/in/shreyabagri/",
     },
@@ -181,6 +189,7 @@ export const teamGroup = {
       name: "Rashi Jain",
       role: "Investments and Compliance Associate",
       image: "/images/team/rashi-jain.png",
+      colour: "/images/team/colour/rashi-jain.png",
       bio: "A Chartered Accountant specialising in taxation, SEBI regulations, FEMA compliance and audits.",
       linkedin: "https://www.linkedin.com/in/ca-rashi-jain13/",
     },
@@ -197,6 +206,7 @@ export const teamGroup = {
       name: "Madhukar Kota",
       role: "Operations and Compliance Associate",
       image: "/images/team/madhukar-kota.png",
+      colour: "/images/team/colour/madhukar-kota.png",
       bio: "An MBA with 15+ years across private equity, fund accounting and capital markets.",
     },
     {
@@ -212,6 +222,7 @@ export const teamGroup = {
       name: "Priya Sathish",
       role: "Analyst",
       image: "/images/team/priya-sathish.png",
+      colour: "/images/team/colour/priya-sathish.png",
       bio: "A Biomedical Engineer with industrial experience at LifeCell and Apollo Hospitals.",
     },
   ] as Person[],

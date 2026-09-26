@@ -123,6 +123,11 @@ const DETAILS: Record<string, { founded: string; note: string; status?: string; 
     founded: "Founded 2020 · Pune",
     note: "Heat pipes, vapour chambers and loop heat pipes for EVs, satellites, data centres and defence.",
   },
+  "anuna-labs": {
+    /* Its brief places it in Bengaluru and gives no founding year. */
+    founded: "Bengaluru",
+    note: "Copper nanopowder, conductive ink and paste that replace silver in solar, PCB, flexible-electronics and semiconductor manufacturing.",
+  },
 };
 
 export const portfolioCards: readonly PortfolioCard[] = portfolio.map((company) => {

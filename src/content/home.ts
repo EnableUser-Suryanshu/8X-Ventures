@@ -3,6 +3,8 @@
  * "8x Website v5.0" design.
  */
 
+import { teamGroup, teamPartners } from "@/content/team";
+
 /* --- Hero ---------------------------------------------------------------- */
 
 export const hero = {
@@ -161,11 +163,12 @@ export const stats: Stat[] = [
   { value: 70, suffix: "+", label: "Patents across portfolio companies" },
   { value: 2000, prefix: "₹", suffix: "+Cr", label: "Portfolio order book" },
   /* Not from the copy deck's "Proof" figures like the three above — it is the
-     length of `portfolio` below, which is the same twelve companies the
-     carousel and the portfolio grid are built from. Kept as a literal because
-     the panel publishes a figure and a figure should not quietly change when
-     a company is added: adding the thirteenth means saying so here. */
-  { value: 12, label: "Deep-tech companies backed" },
+     length of `portfolio` below, which is the same thirteen companies the
+     carousel and the portfolio grid are built from, and the thirteen the
+     Fund II teaser counts ("Investments in 13 startups"). Kept as a literal
+     because the panel publishes a figure and a figure should not quietly
+     change when a company is added. */
+  { value: 13, label: "Deep-tech companies backed" },
 ];
 
 /* --- Portfolio ----------------------------------------------------------- */
@@ -200,7 +203,7 @@ export type PortfolioCompany = {
 export const portfolioHeadline = { lead: "Founders at", accent: "the Frontier" } as const;
 
 /**
- * 8X's portfolio — all twelve companies, from the per-company briefs in the
+ * 8X's portfolio — all thirteen companies, from the per-company briefs in the
  * client's Drive ("Portfolio companies' details") and their own portfolio
  * brochure. Each `description` is the brief's own "Website descriptor"; each
  * `metric`, and the founding line in `content/portfolio.ts`, is the
@@ -371,6 +374,23 @@ export const portfolio: PortfolioCompany[] = [
     image: "/images/portfolio/thermistance.png",
     imageAlt: "Thermistance Technologies logo.",
   },
+  {
+    /* The thirteenth brief in "Portfolio companies' details". The Fund II
+       teaser lists it last among the Fund I investments, as "Name Redacted";
+       its stage is not stated anywhere, so the card carries what the brief
+       does say — paid pilots are running. */
+    id: "anuna-labs",
+    name: "Anuna Labs",
+    sector: "Advanced Materials",
+    vehicle: "Fund I",
+    vehicles: ["Fund I"],
+    metric: { value: "Pilots", label: "underway" },
+    description:
+      "Air-stable copper nanomaterials replacing silver across solar, electronics and semiconductors.",
+    website: "https://anunalabs.com/",
+    image: "/images/portfolio/anuna.png",
+    imageAlt: "Anuna Labs logo.",
+  },
 ];
 
 /* --- Founder journey ------------------------------------------------------
@@ -456,9 +476,10 @@ export type TeamMember = {
   name: string;
   role: string;
   image: string;
-  /** Shown on hover / focus. Condensed from the profile pages on 8xventures.co. */
+  /** Shown on hover / focus. */
   bio: string;
-  linkedin: string;
+  /** Four of the team have none on file; the panel leaves the link out. */
+  linkedin?: string;
 };
 
 export const teamIntro = {
@@ -469,48 +490,25 @@ export const teamIntro = {
   cta: { label: "Meet the Team", href: "/team" },
 } as const;
 
-export const team: TeamMember[] = [
-  {
-    id: "vinod-agarwal",
-    name: "Vinod Agarwal",
-    role: "Partner & Board Advisor",
-    image: "/images/team-1.png",
-    bio: "20+ years across multiple entrepreneurial ventures, with success in the polymer and steel industries, and an active investor worldwide in public and private markets.",
-    linkedin: "https://www.linkedin.com/in/vinod-agarwal-aba3231b3/",
-  },
-  {
-    id: "shreya-kothari",
-    name: "Shreya Kothari",
-    role: "Associate Principal",
-    image: "/images/team-2.png",
-    bio: "Previously an Associate at eClerx Services and Nimai Management Consultants. Holds an MBA from the Institute of Management Technology, Nagpur.",
-    linkedin: "https://www.linkedin.com/in/shreyabagri",
-  },
-  {
-    id: "ajay-singh-rajput",
-    name: "Ajay Singh Rajput",
-    role: "Partner & Board Advisor",
-    image: "/images/team-3.png",
-    bio: "25+ years across white goods, plastic processing and petrochemicals. Has invested in startups across the Middle East, Asia and Europe.",
-    linkedin: "https://www.linkedin.com/in/ajaysingh-rajput-6406146/",
-  },
-  {
-    id: "esha-arya",
-    name: "Esha Arya",
-    role: "Partner & Board Advisor",
-    image: "/images/team-4.png",
-    bio: "Vice-Chairman of JBM Group, a $2.7bn conglomerate operating across 10 countries. Mentors early-stage deep-tech startups and sits on advisory boards in the USA, India, UK and Singapore.",
-    linkedin: "https://www.linkedin.com/in/eshaarya/",
-  },
-  {
-    id: "rashi-jain",
-    name: "Rashi Jain",
-    role: "Compliance Associate",
-    image: "/images/team-5.png",
-    bio: "A qualified Chartered Accountant specialising in taxation, regulatory compliance and statutory reporting, with a focus on accuracy and transparency.",
-    linkedin: "https://www.linkedin.com/in/ca-rashi-jain13/",
-  },
-];
+/**
+ * The whole roster, partners first — read from `content/team.ts`, which is
+ * where it is kept, rather than held as a second list here. This used to be
+ * five people with their own copies of the copy; the two lists had already
+ * drifted on Rashi's title and the strip was missing the six who joined.
+ *
+ * The strip opens on Chirag — see `TeamCarousel` — and shows the featured
+ * card in colour, so each person's `colour` cut-out is preferred where one
+ * exists. The role and biography are the team page's, from the client's
+ * Fund II teaser.
+ */
+export const team: TeamMember[] = [...teamPartners.people, ...teamGroup.people].map((p) => ({
+  id: p.id,
+  name: p.name,
+  role: p.role ?? "",
+  image: p.colour ?? p.image,
+  bio: p.bio ?? "",
+  linkedin: p.linkedin,
+}));
 
 /* --- Mentors ------------------------------------------------------------- */
 
@@ -539,33 +537,43 @@ export const mentorsIntro = {
 /**
  * 8X's advisory board, less the two who already appear above as partners.
  *
- * Photographs from the client's "Photos of Mentors" folder on Drive; roles
- * and biographies from the Advisory Board page of their "8X Ventures Fund
- * II — India DeepTech Fund" teaser.
+ * Roles and biographies from the Advisory Board page of the client's "8X
+ * Ventures Fund II — India DeepTech Fund" teaser.
  *
- * The photographs arrived from six different cameras — a studio headshot, a
- * conference snap with a microphone in it, a 225px thumbnail, a portrait
- * taken in an office — and in colour, which is how they are shown. Three
- * things in `public/images/mentors/` bring them to one set:
+ * The photographs are the client's "Photos of Mentors" folder on Drive
+ * where that folder had a usable one, and the web where it did not. The
+ * Drive copies of Dr. Jhunjhunwala (225px) and Suresh Nanda (301px) were
+ * thumbnails, too soft to fill a card; the client asked for better ones
+ * found online. Dr. Jhunjhunwala's is the same studio portrait at 900 ×
+ * 1200 from the CIKS board-of-trustees page (ciks.org); Suresh Nanda's is
+ * the headshot on UV Capital's site (uvcapital.in), 729 × 994; Ankit
+ * Agarwal's is his portrait on Globe Capital's own site (globecapital.com),
+ * 388 × 486, arms folded, which is the only size it is published at;
+ * Virendra Somwanshi's is the press photograph Google lists first for him
+ * (ET BrandEquity, and every other outlet, ran it), which is also the file
+ * Drive holds at 1452 × 1218 — the largest copy of the only portrait of him
+ * published anywhere; Federal Bank's site refuses automated fetches of his
+ * official one. Deepak Chitnis's official Lodha Group portrait
+ * is the same 375px file Drive already had, and nothing larger is
+ * published. Bony Niranjan Dalal has no photograph online at all, so his is
+ * still Drive's conference close-up — which arrived already cut out, and is
+ * used with its own alpha, microphone and all, since cropping the
+ * microphone away leaves a head with nothing under it. None of these
+ * photographs is the client's own and none is licensed to 8X; publishing
+ * them needs the subjects' or the publishers' say-so.
  *
- *   - one framing. Each is cropped so the head is the same size on the same
- *     eye line. Scaling to the face rather than to the frame is the thing
- *     that reads first; the alternative is six photographs at six distances.
- *   - one exposure and one white balance, both measured across the face
- *     rather than the whole frame — a white studio card and a warm office
- *     wall pull the same face two different ways — and both corrected
- *     towards the median face of the set, so nobody is pushed far from how
- *     they actually look.
- *   - one ground. Each keeps its own out to about 58% of the radius and is
- *     blended into a single pale tint by 93%, so the part of a photograph
- *     that differs from the others is the part that goes. The two shot on
- *     location — an office with a picture on the wall, a stage — start
- *     blending earlier, because in colour those grounds are much louder than
- *     a studio card.
- *
- * Two of the files want replacing, and nothing in the code would change if
- * they were: Dr. Ashok Jhunjhunwala's is 225px square and Suresh Nanda's
- * 301px, so both are soft. A plain headshot for each would settle it.
+ * The files in `public/images/mentors/` are cut out and set on the card's
+ * own 588 × 784 canvas so that every mentor card is the team card: the
+ * subject cut with macOS Vision's subject mask (Ashok Jhunjhunwala, Deepak
+ * Chitnis, Virendra Somwanshi) — a colour key read Dr. Jhunjhunwala's white
+ * shirt stripes and Mr. Chitnis's pale collar as ground, and a hand-traced
+ * outline left Mr. Somwanshi's jaw angular — or keyed from a plain studio
+ * ground where that was clean, or the client's own cut-out (Bony Niranjan
+ * Dalal); where a photograph stops short of the card, its clothes are
+ * carried out to the edge along the fall of the shoulder; the head at half the
+ * card's height with the eyes at 37.5% — the framing of the strip above —
+ * and the shoulders running off the foot of the card. Levels are set from
+ * the photograph and the face brought to one brightness across the set.
  */
 export const mentors: Mentor[] = [
   {
@@ -639,7 +647,7 @@ export const lpDay = {
       image: "/images/lpday-2026.jpg",
       focus: "50% 50%",
       imageAlt:
-        "Delegates gathered under the DeepTech Industry Connect backdrop at IIT Gandhinagar, February 2026.",
+        "The 8X delegation with the Governor of Gujarat in the Planetary Simulation & Immersive Visualization facility at ISRO's Space Applications Centre, February 2026.",
     },
   ],
   promo: {
