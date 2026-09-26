@@ -163,11 +163,12 @@ export const stats: Stat[] = [
   { value: 70, suffix: "+", label: "Patents across portfolio companies" },
   { value: 2000, prefix: "₹", suffix: "+Cr", label: "Portfolio order book" },
   /* Not from the copy deck's "Proof" figures like the three above — it is the
-     length of `portfolio` below, which is the same twelve companies the
-     carousel and the portfolio grid are built from. Kept as a literal because
-     the panel publishes a figure and a figure should not quietly change when
-     a company is added: adding the thirteenth means saying so here. */
-  { value: 12, label: "Deep-tech companies backed" },
+     length of `portfolio` below, which is the same thirteen companies the
+     carousel and the portfolio grid are built from, and the thirteen the
+     Fund II teaser counts ("Investments in 13 startups"). Kept as a literal
+     because the panel publishes a figure and a figure should not quietly
+     change when a company is added. */
+  { value: 13, label: "Deep-tech companies backed" },
 ];
 
 /* --- Portfolio ----------------------------------------------------------- */
@@ -202,7 +203,7 @@ export type PortfolioCompany = {
 export const portfolioHeadline = { lead: "Founders at", accent: "the Frontier" } as const;
 
 /**
- * 8X's portfolio — all twelve companies, from the per-company briefs in the
+ * 8X's portfolio — all thirteen companies, from the per-company briefs in the
  * client's Drive ("Portfolio companies' details") and their own portfolio
  * brochure. Each `description` is the brief's own "Website descriptor"; each
  * `metric`, and the founding line in `content/portfolio.ts`, is the
@@ -372,6 +373,23 @@ export const portfolio: PortfolioCompany[] = [
     website: "https://thermistance.com/",
     image: "/images/portfolio/thermistance.png",
     imageAlt: "Thermistance Technologies logo.",
+  },
+  {
+    /* The thirteenth brief in "Portfolio companies' details". The Fund II
+       teaser lists it last among the Fund I investments, as "Name Redacted";
+       its stage is not stated anywhere, so the card carries what the brief
+       does say — paid pilots are running. */
+    id: "anuna-labs",
+    name: "Anuna Labs",
+    sector: "Advanced Materials",
+    vehicle: "Fund I",
+    vehicles: ["Fund I"],
+    metric: { value: "Pilots", label: "underway" },
+    description:
+      "Air-stable copper nanomaterials replacing silver across solar, electronics and semiconductors.",
+    website: "https://anunalabs.com/",
+    image: "/images/portfolio/anuna.png",
+    imageAlt: "Anuna Labs logo.",
   },
 ];
 

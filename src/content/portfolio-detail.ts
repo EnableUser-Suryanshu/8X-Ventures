@@ -2,30 +2,44 @@
  * The per-company detail page, traced from the Figma prototype's
  * `Portfolio / Company` frame (node 302-213, drawn for Neuralzome).
  *
- * The frame is one template applied to all twelve companies, so everything it
- * sets per company lives here and everything it sets once — the 8X View band
- * and the closing panel — lives at the bottom of the file.
+ * The frame is one template applied to every company, so everything it sets
+ * per company lives here and everything it sets once — the 8X View band and
+ * the closing panel — lives at the bottom of the file.
  *
- * The prose is the client's own, from the twelve briefs in the Drive folder
- * "Portfolio companies' details": `descriptor` is each brief's "Website
- * descriptor" line, `intro` is its own three paragraphs, `environments` and
- * `snapshot` are drawn from its "Technology highlights", and `why` restates
- * the brief's market paragraph in the frame's voice. Nothing here is invented
- * about a company; where the frame asks for a line the brief does not carry —
- * the two-line statement, say — it is written from that brief's own sentences
- * rather than from outside knowledge.
+ * Each company's copy follows its brief in the Drive folder "Portfolio
+ * companies' details", which all share one layout: a website descriptor, a
+ * category, the founders with their roles, three paragraphs, and five
+ * technology highlights (SanchiConnect's are "service highlights"). The page
+ * carries that layout as written — `descriptor` is the descriptor line,
+ * `intro` the three paragraphs verbatim, and `profile` the category, founders
+ * and highlights, which the "Company snapshot" panel lists in the brief's own
+ * order. Only `statement` and `why` are the frame's voice rather than the
+ * brief's, and both are written from the brief's own sentences rather than
+ * from outside knowledge.
  *
- * `intro` used to be a condensed pair, which read as a summary of a summary
- * and lost whatever each brief said about the company's flagship product:
- * Pantherun's Pepper platform, Trishul's Harpy-1, Armory's Surge, the Chitti
- * ATV. It now carries the brief's paragraphs as they are written.
+ * `gallery` is three photographs per company: the founders first, then two of
+ * what the company makes or does. Most come from the photographs embedded in
+ * the briefs; where a brief had no product shot, from the company's own
+ * website (Pantherun's boards, XYMA's sensors, Neuralzome's robot, Trishul's
+ * hot-fire test and engine). Anuna Labs has no founder photograph anywhere —
+ * not in its brief, not on its site — so its three are its products.
  */
+
+export type Founder = { name: string; role: string };
+
+export type GalleryPhoto = {
+  src: string;
+  /** The small label over the caption: "Founders", "What they build"… */
+  label: string;
+  caption: string;
+  alt: string;
+};
 
 export type CompanyDetail = {
   /**
-   * The hero's standfirst. `highlight` is the run the frame sets in brand
-   * blue inside it ("off-road robotics" in the prototype); it must appear in
-   * `text` verbatim or it is simply not highlighted.
+   * The hero's standfirst: the brief's "Website descriptor". `highlight` is
+   * the run the frame sets in brand blue inside it; it must appear in `text`
+   * verbatim or it is simply not highlighted.
    */
   descriptor: { text: string; highlight: string };
 
@@ -37,13 +51,7 @@ export type CompanyDetail = {
   /** The centred statement: line one in ink, line two in brand blue. */
   statement: { line1: string; line2: string };
 
-  /**
-   * The centred paragraphs below the statement: each brief's own prose,
-   * which runs to three. The frame draws two, and two is what this used to
-   * carry — a condensed pair that dropped whatever the brief said about the
-   * company's flagship product. The band maps over whatever it is given, so
-   * carrying all three is a longer read in the same type at the same stagger.
-   */
+  /** The brief's three paragraphs, verbatim. */
   intro: readonly string[];
 
   /** The dark "Why we invested" band. */
@@ -57,25 +65,22 @@ export type CompanyDetail = {
     close: string;
   };
 
-  /** The "Company snapshot" panel's four rows. Sector is read from the record. */
-  snapshot: {
-    technologyArea: string;
-    useCase: string;
-    marketRelevance: string;
+  /** The brief's header block and highlights, for the "Company snapshot". */
+  profile: {
+    category: string;
+    founders: readonly Founder[];
+    highlightsLabel: string;
+    highlights: readonly string[];
   };
 
+  /** Three photographs: the founders, then two of the work. */
+  gallery: readonly GalleryPhoto[];
+
   /**
-   * This company's artwork.
-   *
-   * `figure` every company has — see the note on it below. The other three
-   * are the frame's own fills, lifted from the Figma file, and only
-   * Neuralzome's exist: the frame was drawn for Neuralzome and the other
-   * eleven have never been art-directed to that depth. Anything missing falls
-   * back to the company's mark on the designed bloom, and to the navy field
-   * the environment photograph is graded to — so a page without them is still
-   * the design, just without that photography. Filling them in is a
-   * three-line edit per company; the briefs carry between three and nine
-   * usable photographs each.
+   * The frame's own fills, lifted from the Figma file. Only Neuralzome's
+   * exist — the frame was drawn for it. Anything missing falls back to the
+   * company's mark on the designed bloom, and to the navy field the
+   * environment photograph is graded to.
    */
   art?: {
     /** The product shot beside the name. */
@@ -86,32 +91,21 @@ export type CompanyDetail = {
     why?: string;
     /** The product shot beside the snapshot rows. */
     snapshot?: string;
-    /**
-     * The wide plate under the intro. Unlike the four above, every company
-     * has one: they are the photographs embedded in the briefs themselves —
-     * the company's own people, hardware and sites — and they replace the
-     * stock photograph of strangers in an office that used to stand on all
-     * twelve pages. `detailArt.team` is still the fallback for a company
-     * added without one.
-     */
-    figure?: string;
   };
 };
 
 /**
- * The two plates the frame repeats on every company page rather than varying:
- * the photograph under the statement, and the circuit field behind 8X's own
- * thesis. Both are the Figma file's own fills.
+ * The circuit field behind 8X's own thesis, repeated on every company page.
+ * The Figma file's own fill.
  */
 export const detailArt = {
-  team: "/images/portfolio-detail/team.jpg",
   circuit: "/images/portfolio-detail/circuit.jpg",
 } as const;
 
 export const portfolioDetails: Record<string, CompanyDetail> = {
   pantherun: {
     descriptor: {
-      text: "High-speed data protection and encryption for systems that cannot trade security for throughput.",
+      text: "High-speed data protection and encryption technology.",
       highlight: "encryption",
     },
     investedAt: "Seed Stage",
@@ -123,7 +117,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     intro: [
       "Pantherun Technologies is a cybersecurity company building high-performance encryption and data-protection solutions for data-intensive and security-critical environments. Its approach combines hardware and software to secure data in real time, with a focus on high throughput and compatibility with existing infrastructure.",
       "The company’s technology is designed for organisations that cannot compromise on performance or security, including applications across defence, aerospace, telecommunications, smart-city infrastructure, industrial systems and IoT. Pantherun positions its products around AES-based encryption, real-time operation and minimal disruption to data formats and workflows.",
-      "A core part of Pantherun’s product strategy is chip-based security. Its Pepper chip-and-software ecosystem is designed for high-speed encryption and embedded and edge deployments, making the company relevant to customers protecting sensitive data while retaining the speed connected systems require.",
+      "A core part of Pantherun’s product strategy is chip-based security. Its Pepper chip-and-software ecosystem is designed for high-speed encryption and embedded/edge deployments, making the company relevant to customers protecting sensitive data while retaining the speed required by connected systems.",
     ],
     why: {
       line1: "Security will stop being",
@@ -132,20 +126,32 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["DEFENCE", "AEROSPACE", "TELECOMMUNICATIONS", "INDUSTRIAL SYSTEMS", "SMART-CITY INFRASTRUCTURE"],
       close: "Pantherun is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Real-Time Encryption And Hardware-Assisted Security",
-      useCase: "AES-Based Data Protection For Embedded And Networked Systems",
-      marketRelevance: "Defence, Aerospace, Telecom, Industrial Automation, IoT",
+    profile: {
+      category: "Cybersecurity / Advanced Computing",
+      founders: [
+        { name: "Srinivas Shekar", role: "Co-Founder & CEO" },
+        { name: "Tiffany Chan", role: "Co-Founder & COO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Real-time encryption and data protection",
+        "Hardware-assisted security architecture",
+        "AES-based encryption for enterprise and critical-infrastructure contexts",
+        "Chip and software platform for embedded and networked deployments",
+        "Relevant to defence, aerospace, telecom, industrial automation and IoT",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/pantherun/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/pantherun/g1.jpg", label: "Founders", caption: "Srinivas Shekar and Tiffany Chan", alt: "Portraits of Pantherun co-founders Srinivas Shekar and Tiffany Chan." },
+      { src: "/images/portfolio-detail/pantherun/g2.jpg", label: "What they build", caption: "An encryption board from Pantherun’s hardware line", alt: "A Pantherun encryption circuit board." },
+      { src: "/images/portfolio-detail/pantherun/g3.jpg", label: "What they build", caption: "A rack-mounted Pantherun encryption unit", alt: "A rack-mounted Pantherun encryption appliance." },
+    ],
   },
 
   "tiea-connectors": {
     descriptor: {
       text: "Indigenous electrical and electronic connectors for demanding applications.",
-      highlight: "connectors",
+      highlight: "electrical and electronic connectors",
     },
     investedAt: "Seed Stage",
     status: "Scaling from product validation to commercial deployment.",
@@ -156,7 +162,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     intro: [
       "TIEA Connectors designs and manufactures electrical and electronic connectors, cable assemblies and related interconnect solutions. The company serves applications that require dependable signal integrity, mechanical reliability and consistent performance under demanding operating conditions.",
       "Its products are relevant across automotive, electric mobility, industrial electronics, aerospace and other equipment-intensive sectors. By focusing on locally engineered, high-quality interconnect products, TIEA is building domestic capability in a component category that is foundational to India’s manufacturing and electrification ambitions.",
-      "The company supports OEMs and system integrators with connector solutions tailored to performance requirements, operating environments and production needs, and holds ISO 9001 and IATF 16949 certification.",
+      "The company supports OEMs and system integrators with connector solutions tailored to performance requirements, operating environments and production needs. Its official website presents ISO 9001 and IATF 16949 certifications, reflecting its quality-oriented manufacturing position.",
     ],
     why: {
       line1: "Electrification runs on parts",
@@ -165,20 +171,32 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["AUTOMOTIVE", "ELECTRIC MOBILITY", "AEROSPACE", "DEFENCE PROGRAMMES", "INDUSTRIAL ELECTRONICS"],
       close: "TIEA is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Interconnect Engineering And Precision Manufacturing",
-      useCase: "Connectors, Cable Harnesses And Custom Interconnect Assemblies",
-      marketRelevance: "Automotive, EV, Aerospace, Defence, Industrial Equipment",
+    profile: {
+      category: "Advanced Manufacturing / Electronic Components",
+      founders: [
+        { name: "Ajith Sasidharan", role: "Founder & CEO" },
+        { name: "Punit Shridhar Joshi", role: "Founder & CTO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Electrical and electronic connectors",
+        "Cable harnesses and custom interconnect assemblies",
+        "Automotive and industrial connector systems",
+        "Engineering support for OEM-specific requirements",
+        "High-reliability manufacturing processes",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/tiea-connectors/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/tiea-connectors/g1.jpg", label: "Founders", caption: "Ajith Sasidharan and Punit Shridhar Joshi", alt: "TIEA founders Ajith Sasidharan and Punit Shridhar Joshi." },
+      { src: "/images/portfolio-detail/tiea-connectors/g2.jpg", label: "What they build", caption: "TIEA’s manufacturing floor", alt: "Workstations on TIEA’s connector manufacturing floor." },
+      { src: "/images/portfolio-detail/tiea-connectors/g3.jpg", label: "What they build", caption: "Connectors from TIEA’s range", alt: "Three connectors from TIEA’s product range." },
+    ],
   },
 
   "solinas-integrity": {
     descriptor: {
       text: "Robotics and intelligence for water and sanitation infrastructure.",
-      highlight: "Robotics",
+      highlight: "water and sanitation infrastructure",
     },
     investedAt: "Seed Stage",
     status: "Scaling from product validation to commercial deployment.",
@@ -198,14 +216,26 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["WATER PIPELINES", "SEWER NETWORKS", "SEPTIC SYSTEMS", "MUNICIPAL UTILITIES", "INDUSTRIAL PLANTS"],
       close: "Solinas is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Robotics And AI-Enabled Diagnostics",
-      useCase: "Inspection, Cleaning And Monitoring Of Underground Assets",
-      marketRelevance: "Municipal Utilities, Industrial Operators, Urban Sanitation",
+    profile: {
+      category: "WaterTech / Robotics / AI",
+      founders: [
+        { name: "Divanshu Kumar", role: "Co-Founder & CEO" },
+        { name: "Moinak Banerjee", role: "Co-Founder & CTO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Robotic inspection and cleaning systems",
+        "AI-enabled diagnostics for underground assets",
+        "Solutions for water pipelines, sewers and septic systems",
+        "Monitoring and maintenance support for municipal and industrial users",
+        "Safer alternatives to hazardous manual sanitation work",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/solinas-integrity/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/solinas-integrity/g1.jpg", label: "Founders", caption: "Divanshu Kumar and Moinak Banerjee", alt: "Solinas co-founders Divanshu Kumar and Moinak Banerjee." },
+      { src: "/images/portfolio-detail/solinas-integrity/g2.jpg", label: "What they build", caption: "A Solinas pipe-inspection robot", alt: "A tracked Solinas pipe-inspection robot." },
+      { src: "/images/portfolio-detail/solinas-integrity/g3.jpg", label: "In the field", caption: "Solinas equipment deployed on a sewer line", alt: "A field operator deploying Solinas inspection equipment into a sewer line." },
+    ],
   },
 
   "xyma-analytics": {
@@ -231,14 +261,26 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["HIGH-TEMPERATURE PROCESSES", "REFINERIES", "POWER GENERATION", "METALS AND MATERIALS", "HARSH-ACCESS ASSETS"],
       close: "XYMA is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Waveguide Ultrasonic Sensing And Analytics",
-      useCase: "Multi-Parameter Process And Condition Monitoring",
-      marketRelevance: "Process Industries, Energy, Metals, Industrial IoT",
+    profile: {
+      category: "Industrial IoT / Precision Sensing",
+      founders: [
+        { name: "Dr. Nishanth Raja", role: "Co-Founder & CEO" },
+        { name: "Aswin Kumar Kathirvel", role: "Co-Founder & CTO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Waveguide ultrasonic sensing technology",
+        "Multi-parameter process monitoring",
+        "Industrial IoT platform integrating sensors, process models and analytics",
+        "Monitoring in high-temperature and harsh environments",
+        "Support for condition monitoring and process optimisation",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/xyma-analytics/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/xyma-analytics/g1.jpg", label: "Founders", caption: "Dr. Nishanth Raja and Aswin Kumar Kathirvel", alt: "Portraits of XYMA co-founders Dr. Nishanth Raja and Aswin Kumar Kathirvel." },
+      { src: "/images/portfolio-detail/xyma-analytics/g2.jpg", label: "What they build", caption: "XYMA’s ultrasonic sensing hardware", alt: "XYMA’s ultrasonic sensing units and monitoring console." },
+      { src: "/images/portfolio-detail/xyma-analytics/g3.jpg", label: "In the field", caption: "An XYMA sensor set up for testing", alt: "An engineer setting up an XYMA sensor on industrial test equipment." },
+    ],
   },
 
   "lightspeed-photonics": {
@@ -254,8 +296,8 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     },
     intro: [
       "LightSpeed Photonics is building next-generation optical interconnect technology for high-performance computing, data centres and AI infrastructure. The company focuses on moving data into and around computing chips at very high bandwidth while reducing the power and physical constraints associated with conventional electrical interconnects.",
-      "As AI workloads and data-centre architectures become increasingly compute- and bandwidth-intensive, data movement between processors, memory and systems has become a major performance bottleneck. LightSpeed Photonics addresses this through compact, energy-efficient optical solutions designed for near-chip integration and scalable compute architectures.",
-      "The company’s technology is relevant to cloud computing, AI clusters, high-performance computing and modular data-centre design — areas where throughput, latency, energy efficiency and system density are critical.",
+      "As AI workloads and data-centre architectures become increasingly compute- and bandwidth-intensive, data movement between processors, memory and systems has become a major performance bottleneck. LightSpeed Photonics addresses this challenge through compact, energy-efficient optical solutions designed for near-chip integration and scalable compute architectures.",
+      "The company’s technology is relevant to cloud computing, AI clusters, high-performance computing and modular data-centre design—areas where throughput, latency, energy efficiency and system density are critical.",
     ],
     why: {
       line1: "Compute is no longer",
@@ -264,14 +306,26 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["AI CLUSTERS", "DATA CENTRES", "HIGH-PERFORMANCE COMPUTING", "CLOUD INFRASTRUCTURE", "MODULAR COMPUTE SYSTEMS"],
       close: "LightSpeed is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Silicon Photonics And Optical Interconnects",
-      useCase: "Near-Chip, High-Bandwidth Data Movement",
-      marketRelevance: "AI Compute, HPC, Data Centres, Cloud Infrastructure",
+    profile: {
+      category: "Advanced Computing / Photonics",
+      founders: [
+        { name: "Dr. Rohin Y", role: "Founder & CEO" },
+        { name: "Ramana V Pamidighantam", role: "Co-Founder & CTO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Optical interconnects for high-bandwidth data movement",
+        "Near-chip photonics and laser-enabled communication",
+        "Solutions for AI compute, HPC and data centres",
+        "Compact, low-power architectures for scalable systems",
+        "Addresses electrical interconnect bottlenecks",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/lightspeed-photonics/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/lightspeed-photonics/g1.jpg", label: "Founders", caption: "Dr. Rohin Y and Ramana V Pamidighantam", alt: "LightSpeed Photonics founders Dr. Rohin Y and Ramana V Pamidighantam holding their devices." },
+      { src: "/images/portfolio-detail/lightspeed-photonics/g2.jpg", label: "What they build", caption: "Demonstrating LightSpeed’s optical interconnects", alt: "The LightSpeed Photonics team demonstrating its optical interconnects at an exhibition stand." },
+      { src: "/images/portfolio-detail/lightspeed-photonics/g3.jpg", label: "What they build", caption: "The LightSpeed Photonics stand", alt: "The LightSpeed Photonics exhibition stand with its team." },
+    ],
   },
 
   sanchiconnect: {
@@ -297,14 +351,26 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["ACCELERATOR PROGRAMMES", "INVESTOR NETWORKS", "CORPORATE INNOVATION", "RESEARCH LABS AND UNIVERSITIES", "GOVERNMENT PROGRAMMES"],
       close: "SanchiConnect is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Deep-Tech Enablement Platform",
-      useCase: "Accelerator Programmes, Fundraising And Ecosystem Access",
-      marketRelevance: "Startups, Investors, Corporates, Institutions, Government",
+    profile: {
+      category: "DeepTech Ecosystem / Platform",
+      founders: [
+        { name: "Dr. Sunil K Shekhawat", role: "Co-Founder & CEO" },
+        { name: "Baltej Singh", role: "Co-Founder & CTO" },
+      ],
+      highlightsLabel: "Service highlights",
+      highlights: [
+        "Deep-tech accelerator and startup-enablement programmes",
+        "Investor outreach, fundraising support and mentorship",
+        "Corporate innovation and ecosystem collaboration",
+        "Access to government, lab, university and industry networks",
+        "Community-led programmes for deep-tech founders",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/sanchiconnect/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/sanchiconnect/g1.jpg", label: "Founders", caption: "Dr. Sunil K Shekhawat and Baltej Singh", alt: "Portraits of SanchiConnect co-founders Dr. Sunil K Shekhawat and Baltej Singh." },
+      { src: "/images/portfolio-detail/sanchiconnect/g2.jpg", label: "What they do", caption: "A SanchiConnect working session", alt: "A SanchiConnect team working session around a conference table." },
+      { src: "/images/portfolio-detail/sanchiconnect/g3.jpg", label: "What they do", caption: "The SanchiConnect team", alt: "Members of the SanchiConnect team together." },
+    ],
   },
 
   neuralzome: {
@@ -339,13 +405,27 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["FARMS", "ORCHARDS", "FIELD OPERATIONS", "OFF-ROAD TERRAIN", "MATERIAL MOVEMENT"],
       close: "Neuralzome is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Teachable Autonomy, Perception And Robotic Control",
-      useCase: "Autonomous Mowing, Weeding, Soil Sensing And Material Movement",
-      marketRelevance: "Agriculture, Field Operations, Off-Road Robotics",
+    profile: {
+      category: "Robotics / AI / AgriTech",
+      founders: [
+        { name: "Mohan Sivam", role: "Co-Founder & CEO" },
+        { name: "Aditya Shriwastava", role: "Co-Founder & CTO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Teachable autonomy for real-world machines",
+        "AI, vision, perception and robotic-control systems",
+        "Autonomous agricultural operations including mowing and weeding",
+        "Chitti ATV for soil sensing, agri operations and material movement",
+        "Simulation-enabled development and deployment",
+      ],
     },
+    gallery: [
+      { src: "/images/portfolio-detail/neuralzome/g1.jpg", label: "Founders", caption: "Mohan Sivam and Aditya Shriwastava", alt: "Portraits of Neuralzome co-founders Mohan Sivam and Aditya Shriwastava." },
+      { src: "/images/portfolio-detail/neuralzome/g2.jpg", label: "What they build", caption: "A Neuralzome autonomous robot", alt: "A tracked Neuralzome autonomous robot." },
+      { src: "/images/portfolio-detail/neuralzome/g3.jpg", label: "In the field", caption: "Neuralzome’s robot on a working farm", alt: "A Neuralzome robot among crops on a working farm." },
+    ],
     art: {
-      figure: "/images/portfolio-detail/neuralzome/figure.jpg",
       hero: "/images/portfolio-detail/neuralzome/vehicle.png",
       lockup: "/images/portfolio-detail/neuralzome/lockup.jpg",
       why: "/images/portfolio-detail/neuralzome/why.jpg",
@@ -367,7 +447,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     intro: [
       "Trishul Space is a space-tech company developing liquid rocket propulsion systems for next-generation launch vehicles. The company is focused on creating lightweight, ready-to-integrate propulsion solutions that can simplify launch-vehicle development and support more efficient access to space.",
       "Rocket propulsion is one of the most technically demanding layers of the space ecosystem. Trishul Space is developing indigenous, high-performance engine designs, including cryogenic and liquid-propulsion concepts, to address performance, reliability, cost and integration challenges for launch providers.",
-      "Its flagship Harpy-1 programme is a high-performance liquid rocket engine. The company’s approach is relevant to an expanding commercial-space ecosystem, where satellite deployments, launch cadence and domestic propulsion capability are increasingly important.",
+      "Its flagship Harpy-1 programme is described publicly as a high-performance liquid rocket engine. The company’s approach is relevant to an expanding commercial-space ecosystem, where satellite deployments, launch cadence and domestic propulsion capability are increasingly important.",
     ],
     why: {
       line1: "Access to space depends",
@@ -376,14 +456,27 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["LAUNCH VEHICLES", "SATELLITE DEPLOYMENT", "COMMERCIAL SPACE", "DEFENCE PROGRAMMES", "PROPULSION TEST INFRASTRUCTURE"],
       close: "Trishul Space is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Liquid And Cryogenic Rocket Propulsion",
-      useCase: "Integration-Ready Engines For Launch Vehicles",
-      marketRelevance: "Commercial Space, Satellite Launch, Defence, Aerospace",
+    profile: {
+      category: "SpaceTech / Aerospace Propulsion",
+      founders: [
+        { name: "Aditya Singh", role: "Co-Founder & CEO" },
+        { name: "Divyam Kashyap", role: "Co-Founder" },
+        { name: "Rajat Choudhary", role: "Co-Founder" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Liquid rocket propulsion systems",
+        "Lightweight, integration-ready engine architectures",
+        "High-performance propulsion for launch vehicles",
+        "Indigenous engineering for commercial-space and defence applications",
+        "Harpy-1 liquid rocket engine programme",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/trishul-space/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/trishul-space/g1.jpg", label: "Founders", caption: "Aditya Singh, Divyam Kashyap and Rajat Choudhary", alt: "The Trishul Space founders beside an engine test stand." },
+      { src: "/images/portfolio-detail/trishul-space/g2.jpg", label: "What they build", caption: "A Trishul engine hot-fire test", alt: "A Trishul Space rocket engine firing on a test stand." },
+      { src: "/images/portfolio-detail/trishul-space/g3.jpg", label: "What they build", caption: "Trishul engine hardware", alt: "Trishul Space engine hardware." },
+    ],
   },
 
   enerzi: {
@@ -409,20 +502,32 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["CLEAN HYDROGEN", "ADVANCED CARBON MATERIALS", "PROCESS HEATING", "INDUSTRIAL DRYING", "MATERIAL TRANSFORMATION"],
       close: "Enerzi is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Microwave Heating And Microwave-Plasma Systems",
-      useCase: "High-Temperature Processing, Drying And Clean-Hydrogen Production",
-      marketRelevance: "Industrial Manufacturing, ClimateTech, Advanced Materials, Energy",
+    profile: {
+      category: "ClimateTech / Advanced Manufacturing",
+      founders: [
+        { name: "Kirankumar Hittalmani", role: "Co-Founder & CEO" },
+        { name: "Prakash Mugali", role: "Co-Founder & CSO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Industrial microwave heating systems",
+        "Microwave-plasma reactors and process technologies",
+        "Clean-hydrogen and advanced-material applications",
+        "High-temperature industrial processing and drying",
+        "Patented industrial microwave innovation",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/enerzi/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/enerzi/g1.jpg", label: "Founders", caption: "Kirankumar Hittalmani and Prakash Mugali", alt: "Enerzi co-founders Kirankumar Hittalmani and Prakash Mugali in their lab." },
+      { src: "/images/portfolio-detail/enerzi/g2.jpg", label: "What they build", caption: "Enerzi’s continuous microwave oven", alt: "An Enerzi continuous industrial microwave oven." },
+      { src: "/images/portfolio-detail/enerzi/g3.jpg", label: "What they build", caption: "An Enerzi microwave cooling system", alt: "An Enerzi industrial cooling system." },
+    ],
   },
 
   "kcat-enzymatic": {
     descriptor: {
       text: "AI-enabled enzyme engineering for sustainable chemical manufacturing.",
-      highlight: "enzyme engineering",
+      highlight: "AI-enabled enzyme engineering",
     },
     investedAt: "Seed Stage",
     status: "Scaling from product validation to commercial deployment.",
@@ -442,14 +547,26 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["SPECIALITY CHEMICALS", "PHARMACEUTICALS", "FOOD AND NUTRITION", "MATERIALS", "SUSTAINABLE MANUFACTURING"],
       close: "Kcat is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Protein And Enzyme Engineering",
-      useCase: "Customised Biocatalysts For Industrial Processes",
-      marketRelevance: "Chemicals, Pharmaceuticals, Food, Materials, Sustainability",
+    profile: {
+      category: "Biotech / Industrial Biocatalysis",
+      founders: [
+        { name: "Gladstone Sigamani", role: "Co-Founder & CEO" },
+        { name: "Pravin Kumar", role: "Co-Founder & CSO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Enzyme discovery and protein engineering",
+        "Customised biocatalysts for industrial processes",
+        "Data- and AI-enabled enzyme optimisation",
+        "Higher yield, selective chemistry and process efficiency",
+        "Applications in sustainable chemical manufacturing",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/kcat-enzymatic/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/kcat-enzymatic/g1.jpg", label: "Founders", caption: "Gladstone Sigamani and Pravin Kumar", alt: "Portraits of Kcat co-founders Gladstone Sigamani and Pravin Kumar." },
+      { src: "/images/portfolio-detail/kcat-enzymatic/g2.jpg", label: "What they do", caption: "Kcat’s enzyme-engineering laboratory", alt: "Scientists at work in Kcat’s laboratory." },
+      { src: "/images/portfolio-detail/kcat-enzymatic/g3.jpg", label: "What they do", caption: "The Kcat team in the lab", alt: "The Kcat team together in the laboratory." },
+    ],
   },
 
   armory: {
@@ -464,9 +581,9 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "The defence has to keep up.",
     },
     intro: [
-      "Armory is a defence-technology company building counter-unmanned aircraft system solutions to protect military and civilian assets against the growing threat of rogue drones. The company develops systems intended to detect, identify, track and neutralise unauthorised drones across a range of operational environments.",
+      "Armory is a defence-technology company building counter-unmanned aircraft system (C-UAS) solutions to protect military and civilian assets against the growing threat of rogue drones. The company develops systems intended to detect, identify, track and neutralise unauthorised drones across a range of operational environments.",
       "As drones become cheaper, more autonomous and more widely available, they pose a growing challenge to borders, critical infrastructure, public events and sensitive installations. Armory’s product strategy uses a layered defence approach that combines detection, electronic countermeasures and hard-kill capabilities.",
-      "Its portfolio includes Surge, a handheld or vehicle-mounted smart detection-and-jamming system; radar for detecting difficult targets, including stealth and encrypted-communication drones; and hard-kill concepts such as software-defined ammunition, interceptor drones and laser-based systems.",
+      "Its publicly described portfolio includes Surge, a handheld or vehicle-mounted smart detection-and-jamming system; radar capabilities for detecting difficult targets, including stealth or encrypted-communication drones; and hard-kill concepts such as software-defined ammunition, interceptor drones and laser-based systems.",
     ],
     why: {
       line1: "Drones changed what",
@@ -475,14 +592,25 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["BORDERS", "CRITICAL INFRASTRUCTURE", "MILITARY INSTALLATIONS", "PUBLIC EVENTS", "SENSITIVE SITES"],
       close: "Armory is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Counter-UAS Detection And Response",
-      useCase: "Detection, Jamming And Interception Of Rogue Drones",
-      marketRelevance: "Defence, Homeland Security, Critical Infrastructure, Public Safety",
+    profile: {
+      category: "DefenceTech / Counter-UAS",
+      founders: [
+        { name: "Amardeep Singh", role: "Founder & CEO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Counter-UAS detection and response systems",
+        "Surge: handheld and vehicle-mounted smart detection/jamming",
+        "Radar for challenging drone detection",
+        "Electronic countermeasures and jamming",
+        "Hard-kill concepts including interceptor-drone and laser-based systems",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/armory/figure.jpg",
-    },
+    gallery: [
+      { src: "/images/portfolio-detail/armory/g1.jpg", label: "Founder", caption: "Amardeep Singh", alt: "Armory founder Amardeep Singh beside one of Armory’s systems." },
+      { src: "/images/portfolio-detail/armory/g2.jpg", label: "In the field", caption: "An Armory counter-drone system in the mountains", alt: "An Armory counter-drone system deployed from a vehicle in mountain terrain." },
+      { src: "/images/portfolio-detail/armory/g3.jpg", label: "What they build", caption: "An Armory detection and jamming unit", alt: "An Armory counter-drone detection and jamming unit on a tripod." },
+    ],
   },
 
   thermistance: {
@@ -499,7 +627,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
     intro: [
       "Thermistance Technologies designs, develops and manufactures advanced passive thermal-management solutions for industrial and commercial applications. The company focuses on moving heat away from critical components efficiently and reliably, without the energy use, noise or maintenance burden associated with active cooling systems.",
       "Its technology is particularly relevant as power density rises in electronics, EV systems, satellites, computing hardware and industrial equipment. Thermistance develops and integrates passive thermal IP into customer products through heat pipes, thermosyphons, vapour chambers and loop heat pipes.",
-      "The company provides end-to-end development, from thermal design to embedded product integration, enabling OEMs to manage heat within compact, high-performance systems where conventional cooling approaches may be insufficient or impractical.",
+      "The company provides end-to-end development—from thermal design to embedded product integration—enabling OEMs to manage heat within compact, high-performance systems where conventional cooling approaches may be insufficient or impractical.",
     ],
     why: {
       line1: "Power density is rising",
@@ -508,14 +636,69 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       environments: ["ELECTRIC VEHICLES", "SATELLITES", "DATA CENTRES", "CONSUMER ELECTRONICS", "INDUSTRIAL EQUIPMENT"],
       close: "Thermistance is building for that world.",
     },
-    snapshot: {
-      technologyArea: "Passive Thermal Management",
-      useCase: "Heat Pipes, Thermosyphons, Vapour Chambers And Loop Heat Pipes",
-      marketRelevance: "EVs, Space, Electronics, High-Performance Computing, Industrial OEMs",
+    profile: {
+      category: "Thermal Management / Advanced Manufacturing",
+      founders: [
+        { name: "Bhimashankar Wangaskar", role: "Co-Founder & CEO" },
+        { name: "Dhananjay Kishor Gavas", role: "Co-Founder & COO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Passive thermal-management systems",
+        "Heat pipes, thermosyphons and vapour chambers",
+        "Miniaturised loop heat-pipe technology",
+        "Solutions for EVs, satellites, electronics, gaming and high-performance computing",
+        "End-to-end product development and OEM integration",
+      ],
     },
-    art: {
-      figure: "/images/portfolio-detail/thermistance/figure.jpg",
+    gallery: [
+      { src: "/images/portfolio-detail/thermistance/g1.jpg", label: "The team", caption: "The Thermistance team", alt: "The Thermistance team on stage at an industry event." },
+      { src: "/images/portfolio-detail/thermistance/g2.jpg", label: "What they build", caption: "A Thermistance heat-pipe assembly", alt: "A Thermistance heat-pipe cooling assembly." },
+      { src: "/images/portfolio-detail/thermistance/g3.jpg", label: "What they build", caption: "Loop heat pipes", alt: "A Thermistance loop heat pipe." },
+    ],
+  },
+  "anuna-labs": {
+    descriptor: {
+      text: "Air-stable copper nanomaterials replacing silver across solar, electronics and semiconductors.",
+      highlight: "copper nanomaterials",
     },
+    investedAt: "Seed Stage",
+    status: "Scaling from product validation to commercial deployment.",
+    statement: {
+      line1: "Copper that does",
+      line2: "the job silver does today.",
+    },
+    intro: [
+      "Anuna Labs is a Bengaluru-based advanced materials company that synthesises air-stable, anti-oxidative copper nanoparticles from pure copper and e-waste copper using a proprietary process, converting them into a vertical stack of products positioned as a cost-effective substitute for expensive silver-based materials used by solar PV, PCB, flexible-electronics, EV-battery and semiconductor manufacturers.",
+      "Silver remains the default conductive material across these industries, but its supply is structurally constrained, solar PV alone accounted for roughly a fifth of global silver demand in 2024, and rising module manufacturing is pushing costs higher. Copper is far more abundant and cheaper, but conventional copper inks oxidise in air and typically need nitrogen atmospheres, cold-chain packaging or high-temperature sintering, hardware most manufacturers cannot easily adopt.",
+      "Anuna's proprietary ink sinters at just 80°C in open air on standard screen-printing equipment, requiring no nitrogen atmosphere, no cold chain and no specialised hardware. Engineered as a drop-in replacement for silver paste, it lets OEMs capture copper's raw-material cost advantage without re-tooling existing production lines, while its low sintering temperature also unlocks heat-sensitive flexible substrates that high-temperature copper and silver inks cannot serve. The company's product portfolio spans copper nanopowder, copper conductive ink and paste, and copper foils/membranes, with early paid pilots running across printed electronics, solar, PCB manufacturing, semiconductors and automotive glass.",
+    ],
+    why: {
+      line1: "Silver is running short.",
+      line2: "Copper has to take its place.",
+      body: "Silver is the default conductor across solar, PCBs and semiconductors, and its supply is structurally constrained. Copper is far more abundant and cheaper, but conventional copper inks oxidise in air and need hardware most manufacturers cannot easily adopt.",
+      environments: ["SOLAR PV", "PCB MANUFACTURING", "PRINTED ELECTRONICS", "SEMICONDUCTORS", "AUTOMOTIVE GLASS"],
+      close: "Anuna is building for that world.",
+    },
+    profile: {
+      category: "Advanced Materials / Nanotechnology platform",
+      founders: [
+        { name: "Raghav Khandelwal", role: "Co-Founder & CEO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Proprietary air-stable, anti-oxidative copper nanoparticle synthesis from pure and e-waste copper",
+        "Copper conductive ink that sinters at 80°C in open air, no nitrogen atmosphere or cold chain required",
+        "Full-stack vertical value chain from e-waste feedstock to finished conductive ink",
+        "Product range spanning copper nanopowder, conductive ink, conductive paste and copper foils/membranes",
+        "Applications across solar PV metallization, PCB manufacturing, printed/flexible electronics, semiconductor die-attach and automotive glass busbars",
+      ],
+    },
+    gallery: [
+      { src: "/images/portfolio-detail/anuna-labs/g1.jpg", label: "What they make", caption: "Air-stable copper nanopowder", alt: "Anuna Labs copper nanopowder in a glass dish." },
+      { src: "/images/portfolio-detail/anuna-labs/g2.jpg", label: "What they make", caption: "Copper conductive ink", alt: "Anuna Labs copper conductive ink." },
+      { src: "/images/portfolio-detail/anuna-labs/g3.jpg", label: "Under the microscope", caption: "An SEM image of Anuna’s copper nanoparticles", alt: "A scanning electron microscope image of Anuna Labs copper nanoparticles." },
+    ],
   },
 };
 

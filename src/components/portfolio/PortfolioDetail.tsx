@@ -205,20 +205,33 @@ export function PortfolioDetail({ id }: { id: string }) {
         ))}
       </section>
 
-      {/* ======================================================== FIGURE
-          The company's own photograph, out of its brief — its people, its
-          hardware, its site. `detailArt.team` is the fallback for a company
-          added without one, and is a stock shot of strangers in an office,
-          so it should stay a fallback. */}
-      <Reveal as="figure" variant="scale" className="pd-band pd-figure">
-        <Image suppressHydrationWarning
-          src={detail.art?.figure ?? detailArt.team}
-          alt=""
-          fill
-          sizes="(max-width: 1024px) 92vw, 60vw"
-          className="pd-figure-img"
-        />
-      </Reveal>
+      {/* ======================================================= GALLERY
+          Three photographs where the frame set one: the founders, then two
+          of what the company makes or does. The cards rise in one after
+          another, as the portfolio grid's do. */}
+      <section aria-label={`${company.name} in pictures`} className="pd-band pd-gallery">
+        <ul role="list" className="pd-gallery-grid">
+          {detail.gallery.map((photo, i) => (
+            <Reveal as="li" key={photo.src} variant="card" delay={i * 110}>
+              <figure className="pd-gallery-card">
+                <div className="pd-gallery-frame">
+                  <Image suppressHydrationWarning
+                    src={photo.src}
+                    alt={photo.alt}
+                    fill
+                    sizes="(max-width: 48rem) 92vw, 30vw"
+                    className="pd-gallery-img"
+                  />
+                </div>
+                <figcaption className="pd-gallery-caption">
+                  <span className="pd-gallery-label">{photo.label}</span>
+                  <span className="pd-gallery-text">{photo.caption}</span>
+                </figcaption>
+              </figure>
+            </Reveal>
+          ))}
+        </ul>
+      </section>
 
       {/* ================================================ WHY WE INVESTED */}
       {/* Held while its five environments are read, the same way the philosophy
@@ -303,17 +316,34 @@ export function PortfolioDetail({ id }: { id: string }) {
             <span className="pd-snapshot-head-2">{detailLabels.snapshot.accent}</span>
           </Reveal>
 
-          {[
-            { label: "Sector", value: company.sector },
-            { label: "Technology area", value: detail.snapshot.technologyArea },
-            { label: "Use case", value: detail.snapshot.useCase },
-            { label: "Market relevance", value: detail.snapshot.marketRelevance },
-          ].map((row, i) => (
-            <Reveal key={row.label} delay={Math.min(i, 3) * 90} className="pd-snapshot-row">
-              <p className="pd-snapshot-label">{row.label}</p>
-              <p className="pd-snapshot-value">{row.value}</p>
-            </Reveal>
-          ))}
+          {/* The brief's own header block, in its order: category, founders
+              with their roles, then its highlights. */}
+          <Reveal className="pd-snapshot-row">
+            <p className="pd-snapshot-label">Category</p>
+            <p className="pd-snapshot-value">{detail.profile.category}</p>
+          </Reveal>
+
+          <Reveal delay={90} className="pd-snapshot-row">
+            <p className="pd-snapshot-label">
+              {detail.profile.founders.length > 1 ? "Founders" : "Founder"}
+            </p>
+            <ul role="list" className="pd-snapshot-founders">
+              {detail.profile.founders.map((f) => (
+                <li key={f.name} className="pd-snapshot-value">
+                  {f.name} <span className="pd-snapshot-role">{f.role}</span>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          <Reveal delay={180} className="pd-snapshot-row">
+            <p className="pd-snapshot-label">{detail.profile.highlightsLabel}</p>
+            <ul role="list" className="pd-snapshot-highlights">
+              {detail.profile.highlights.map((h) => (
+                <li key={h}>{h}</li>
+              ))}
+            </ul>
+          </Reveal>
         </div>
       </section>
 
