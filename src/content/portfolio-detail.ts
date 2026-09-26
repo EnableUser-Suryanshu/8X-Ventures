@@ -322,7 +322,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       ],
     },
     gallery: [
-      { src: "/images/portfolio-detail/lightspeed-photonics/g1.jpg", label: "Founders", caption: "Dr. Rohin Y and Ramana V Pamidighantam", alt: "LightSpeed Photonics founders Dr. Rohin Y and Ramana V Pamidighantam holding their devices." },
+      { src: "/images/portfolio-detail/lightspeed-photonics/g1.jpg", label: "Founders", caption: "Dr. Rohin Y and Ramana V Pamidighantam", alt: "Portraits of LightSpeed Photonics founders Dr. Rohin Y and Ramana V Pamidighantam." },
       { src: "/images/portfolio-detail/lightspeed-photonics/g2.jpg", label: "What they build", caption: "Demonstrating LightSpeed’s optical interconnects", alt: "The LightSpeed Photonics team demonstrating its optical interconnects at an exhibition stand." },
       { src: "/images/portfolio-detail/lightspeed-photonics/g3.jpg", label: "What they build", caption: "The LightSpeed Photonics stand", alt: "The LightSpeed Photonics exhibition stand with its team." },
     ],
