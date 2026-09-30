@@ -93,10 +93,12 @@ export function PortfolioGrid() {
 
               <h3 className="pf-card-name">{card.name}</h3>
 
-              <p className="pf-card-raised">
-                <strong>{card.metric.value}</strong>
-                <span> {card.metric.label}</span>
-              </p>
+              {card.metric && (
+                <p className="pf-card-raised">
+                  <strong>{card.metric.value}</strong>
+                  <span> {card.metric.label}</span>
+                </p>
+              )}
 
               <p className="pf-card-summary">{card.summary}</p>
 

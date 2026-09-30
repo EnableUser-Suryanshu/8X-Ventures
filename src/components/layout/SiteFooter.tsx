@@ -3,7 +3,9 @@ import Link from "next/link";
 import {
   footerBlurb,
   footerColumns,
+  footerDisclaimer,
   footerRegistration,
+  sebiLine,
   siteConfig,
   socialLinks,
 } from "@/content/site";
@@ -210,6 +212,17 @@ export function SiteFooter() {
         >
           © Copyright {siteConfig.name}
         </Reveal>
+      </div>
+
+      {/* The disclaimer and the SEBI registration, below the traced footer
+          rather than inside it, so the artboard's fixed-height stage is left
+          as drawn. */}
+      <div className="footer-legal">
+        <p className="footer-legal-sebi">{sebiLine}</p>
+        <p className="footer-legal-text">
+          <span className="font-bold">Disclaimer: </span>
+          {footerDisclaimer}
+        </p>
       </div>
     </footer>
   );

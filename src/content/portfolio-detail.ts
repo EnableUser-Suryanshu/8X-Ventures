@@ -700,6 +700,182 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       { src: "/images/portfolio-detail/anuna-labs/g3.jpg", label: "Under the microscope", caption: "An SEM image of Anuna’s copper nanoparticles", alt: "A scanning electron microscope image of Anuna Labs copper nanoparticles." },
     ],
   },
+  "zenpulsar": {
+    descriptor: {
+      text: "Analyzing social media data from multiple platforms in real-time.",
+      highlight: "social media data",
+    },
+    investedAt: "Seed Stage",
+    status: "Scaling from product validation to commercial deployment.",
+    statement: {
+      line1: "Real-time signal",
+      line2: "from social data.",
+    },
+    intro: [
+      "ZENPULSAR is an AI data company that analyses social media data from multiple platforms in real time, delivered as a SaaS social-media-listening solution. Its platform is built to provide real-time assistance for financial decision-making by analysing social media data and public information.",
+      "The company was created in response to the GameStop short squeeze controversy, which highlighted the need for real-time monitoring and analysis of social media data and public information.",
+      "Building on its social-media analytics, ZENPULSAR has launched a RAG- and LLM-based product for quantamental investment funds.",
+    ],
+    why: {
+      line1: "Markets now move",
+      line2: "at the speed of social media.",
+      body: "The GameStop short squeeze showed that social media and public information can move markets before conventional data does. Funds need that signal analysed in real time, not after the fact.",
+      environments: ["FINANCIAL DECISION-MAKING", "QUANTAMENTAL FUNDS", "SOCIAL MEDIA DATA", "PUBLIC INFORMATION", "REAL-TIME MONITORING"],
+      close: "Zenpulsar is building for that world.",
+    },
+    profile: {
+      category: "SaaS Social Media Listening / AI Data",
+      founders: [
+        { name: "Paul Wang", role: "Co-Founder" },
+        { name: "Charles Peley", role: "Co-Founder" },
+        { name: "Julien Artero", role: "Co-Founder" },
+        { name: "Pavel Dudko", role: "Co-Founder" },
+        { name: "Alexander Pisemskiy", role: "Co-Founder" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Real-time analysis of social media data across multiple platforms",
+        "Monitoring of public information alongside social media data",
+        "SaaS social-media-listening platform",
+        "Real-time assistance for financial decision-making",
+        "RAG- and LLM-based product for quantamental investment funds",
+      ],
+    },
+    gallery: [
+      { src: "/images/portfolio-detail/zenpulsar/g1.jpg", label: "What they build", caption: "Zenpulsar’s commodities-intelligence platform", alt: "The Zenpulsar platform’s commodities-intelligence landing screen." },
+    ],
+  },
+  "oditly": {
+    descriptor: {
+      text: "Conduct audits and inspections, and automate checklist-based process workflows.",
+      highlight: "audits and inspections",
+    },
+    investedAt: "Seed Stage",
+    status: "Scaling from product validation to commercial deployment.",
+    statement: {
+      line1: "Audits and inspections,",
+      line2: "run as one digital system.",
+    },
+    intro: [
+      "Oditly Technologies develops a digital platform for conducting audits and inspections and automating checklist-based process workflows. It is positioned as a QHSSE Ops SaaS solution that helps organisations achieve superior safety and quality.",
+      "As businesses adopt digital approaches, Oditly focuses on easing the difficulties involved in conducting audits and inspections and automating checklist-based workflows. Organisations can use its solution to institute a digital management system and automate process workflows within the organisation.",
+      "Oditly has continued to develop its product based on customer feedback, releasing a beta of an upgraded version in 2024, and is positioned to expand its footprint in international markets.",
+    ],
+    why: {
+      line1: "Quality and safety",
+      line2: "need a system, not paperwork.",
+      body: "Audits, inspections and checklist-based workflows still run on paper and spreadsheets in many organisations. A digital management system lets them conduct audits, automate the workflows that follow, and hold safety and quality to one standard.",
+      environments: ["QUALITY", "HEALTH AND SAFETY", "SECURITY", "ENVIRONMENT", "OPERATIONS"],
+      close: "Oditly is building for that world.",
+    },
+    profile: {
+      category: "Enterprise SaaS",
+      founders: [
+        { name: "Jasmeet Singh", role: "Co-Founder" },
+        { name: "Robert Hugh Weir", role: "Co-Founder" },
+        { name: "Gaurav Pachuri", role: "Co-Founder" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Digital platform for conducting audits and inspections",
+        "Automation of checklist-based process workflows",
+        "Digital management system for safety and quality",
+        "SaaS delivery for QHSSE operations",
+      ],
+    },
+    gallery: [
+      { src: "/images/portfolio-detail/oditly/g1.jpg", label: "What they build", caption: "The Oditly dashboard and mobile app", alt: "The Oditly web dashboard alongside its mobile app." },
+      { src: "/images/portfolio-detail/oditly/g2.jpg", label: "What they build", caption: "Inspections and audits on the Oditly app", alt: "The Oditly mobile app showing a schedule of inspections." },
+    ],
+  },
+  "d-nome": {
+    descriptor: {
+      text: "Deviceless, room-temperature molecular diagnostics for affordable point-of-care testing.",
+      highlight: "molecular diagnostics",
+    },
+    investedAt: "Seed Stage",
+    status: "Scaling from product validation to commercial deployment.",
+    statement: {
+      line1: "Molecular testing,",
+      line2: "without the machine.",
+    },
+    intro: [
+      "D-NOME is a Hyderabad-based synthetic biology and molecular diagnostics company developing deviceless, room-temperature nucleic-acid amplification technology. Its proprietary D-LAMP platform is designed to make molecular testing simpler, faster and more affordable than conventional PCR.",
+      "Its technology platform is relevant to healthcare access because molecular tests such as RT-PCR are accurate but usually depend on costly instruments and trained personnel, limiting their use outside well-equipped laboratories. D-NOME is developing a one-reagent, one-step approach that removes the need for thermal-cycler hardware, for applications such as infectious-disease detection, antimicrobial-resistance screening and genome-sequencing workflows.",
+      "Alongside its diagnostic reagents, D-NOME offers a genome-sequencing reagent that compresses a multi-step protocol into a simpler workflow, and is developing D-ISO NAAT, a point-of-care molecular platform for TB screening at primary health centres. This mix of reagent products and point-of-care platform development positions the company to serve laboratories today and decentralised testing over time.",
+    ],
+    why: {
+      line1: "Accurate diagnosis cannot",
+      line2: "stay inside the laboratory.",
+      body: "Molecular tests such as RT-PCR are accurate, but they depend on costly instruments and trained personnel, which keeps them out of most clinics. A one-reagent, one-step test at room temperature changes where diagnosis can happen.",
+      environments: ["INFECTIOUS DISEASE", "ANTIMICROBIAL RESISTANCE", "TB SCREENING", "GENOME SEQUENCING", "PRIMARY HEALTH CENTRES"],
+      close: "D-NOME is building for that world.",
+    },
+    profile: {
+      category: "BioTech / Molecular Diagnostics",
+      founders: [
+        { name: "Divya Sriram", role: "Co-Founder & CEO" },
+        { name: "Sujoy Deb", role: "Co-Founder & CTO" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Room-temperature, deviceless D-LAMP nucleic-acid amplification",
+        "One-reagent, one-step molecular testing without RT-PCR machines",
+        "D-LAMP PCR enzyme mix and genome-sequencing reagent",
+        "D-ISO NAAT point-of-care platform for TB screening",
+        "Patent-pending reagent composition for diagnostics and genomics applications",
+      ],
+    },
+    gallery: [
+      { src: "/images/portfolio-detail/d-nome/g1.jpg", label: "Founders", caption: "Divya Sriram and Sujoy Deb", alt: "D-NOME co-founders Divya Sriram and Sujoy Deb." },
+      { src: "/images/portfolio-detail/d-nome/g2.jpg", label: "In the field", caption: "D-NOME’s diagnostic kits at an institutional event", alt: "D-NOME’s diagnostic kits being presented at an institutional event." },
+      { src: "/images/portfolio-detail/d-nome/g3.jpg", label: "In the ecosystem", caption: "D-NOME at exhibitions and industry events", alt: "A collage of D-NOME at exhibitions and industry events." },
+    ],
+  },
+  "acquafront": {
+    descriptor: {
+      text: "Modular floating infrastructure for water, energy, ports and defence.",
+      highlight: "Modular floating infrastructure",
+    },
+    investedAt: "Seed Stage",
+    status: "Scaling from product validation to commercial deployment.",
+    statement: {
+      line1: "Floating infrastructure,",
+      line2: "delivered by road.",
+    },
+    intro: [
+      "Acquafront Infrastructure (AIPL) is an IIT Kanpur-incubated company that designs and manufactures modular floating infrastructure. Its products are pre-fabricated, road-transportable modules assembled on site, so projects don't need dry-dock capacity or water-only delivery. This suits reservoirs, rivers, mine pits and other water bodies that conventional shipyard-built barges can't easily reach.",
+      "The company's core is the Steel Integrated Floating Jetty (SIFJ) system and glass-fibre-reinforced-concrete (GFRC) floatable beams. Together they support floating pump stations for drinking water and industrial intake, modular cargo barges, floating solar platforms, construction and dredging pontoons, and tourism and event platforms. Its reference deployments include India's first floating CNG station at Namo Ghat, Varanasi, for GAIL/MECON, and a floating pump station for Oil India. Industrial and PSU customers include NPCIL and PHED state water departments.",
+      "Acquafront is extending the platform into higher-value segments. These include a methanol bunkering barge for green maritime fuelling and two defence products still at NC-NC trial stage, a hydraulically expandable mobile command centre and a counter-drone shelter. As India expands waterways, ports and floating solar, the company is positioned as a domestic, certified alternative to imported floating systems.",
+    ],
+    why: {
+      line1: "India’s waterways need",
+      line2: "infrastructure built at home.",
+      body: "Shipyard-built barges cannot easily reach reservoirs, rivers and mine pits, and floating systems are often imported. Modular, road-transportable platforms assembled on site bring water, energy and port infrastructure to those water bodies.",
+      environments: ["WATER SUPPLY", "FLOATING SOLAR", "PORTS AND WATERWAYS", "ENERGY STATIONS", "DEFENCE"],
+      close: "Acquafront is building for that world.",
+    },
+    profile: {
+      category: "Infrastructure / Advanced Manufacturing",
+      founders: [
+        { name: "Ankit Patel", role: "Co-Founder & Managing Director" },
+        { name: "Achin Agrawal", role: "Co-Founder & Director, Technical" },
+      ],
+      highlightsLabel: "Technology highlights",
+      highlights: [
+        "Modular floating platforms (SIFJ) that adapt to variable water levels",
+        "GFRC floatable beams, corrosion-proof and free of microplastic release",
+        "Acqua Flow floating pump pontoons for water supply and industrial intake",
+        "Floating energy stations (CNG, methanol bunkering, solar) on modular barges",
+        "Granted Indian patents on water-level adaptation and GFRC manufacturing",
+      ],
+    },
+    gallery: [
+      { src: "/images/portfolio-detail/acquafront/g1.jpg", label: "The team", caption: "Acquafront at the NRDC National Meritorious Innovation Awards", alt: "The Acquafront team holding awards at the NRDC National Meritorious Innovation Awards." },
+      { src: "/images/portfolio-detail/acquafront/g2.jpg", label: "What they build", caption: "A modular floating jetty", alt: "An Acquafront modular floating jetty in a port." },
+      { src: "/images/portfolio-detail/acquafront/g3.jpg", label: "In the field", caption: "A floating pump station", alt: "An Acquafront floating pump station on a river." },
+    ],
+  },
 };
 
 /**

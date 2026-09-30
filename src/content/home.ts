@@ -145,12 +145,12 @@ export const stats: Stat[] = [
   { value: 70, suffix: "+", label: "Patents across portfolio companies" },
   { value: 2000, prefix: "₹", suffix: "+Cr", label: "Portfolio order book" },
   /* Not from the copy deck's "Proof" figures like the three above — it is the
-     length of `portfolio` below, which is the same thirteen companies the
-     carousel and the portfolio grid are built from, and the thirteen the
-     Fund II teaser counts ("Investments in 13 startups"). Kept as a literal
-     because the panel publishes a figure and a figure should not quietly
-     change when a company is added. */
-  { value: 13, label: "DeepTech companies backed" },
+     length of `portfolio` below, which the carousel and the portfolio grid
+     are built from: the thirteen Fund I companies the Fund II teaser counts,
+     Acquafront, and the three SPV-only investments (Zenpulsar, Oditly,
+     D-NOME). Kept as a literal because the panel publishes a figure and a
+     figure should not quietly change when a company is added. */
+  { value: 17, label: "DeepTech companies backed" },
 ];
 
 /* --- Portfolio ----------------------------------------------------------- */
@@ -170,7 +170,7 @@ export type PortfolioCompany = {
    * amount per company, so this carries the company's current stage, which
    * their own portfolio brochure states.
    */
-  metric: { value: string; label: string };
+  metric?: { value: string; label: string };
   /** 8X's own one-line website descriptor for the company. */
   description: string;
   /** Optional pull quote. None are set — see the note above `portfolio`. */
@@ -215,7 +215,7 @@ export const portfolio: PortfolioCompany[] = [
     name: "Pantherun Technologies",
     sector: "Cybersecurity",
     vehicle: "Fund I",
-    vehicles: ["Fund I"],
+    vehicles: ["Fund I", "SPV Portfolio"],
     metric: { value: "Series A", label: "stage" },
     description: "High-speed data protection and encryption technology.",
     website: "https://pantherun.com/",
@@ -373,6 +373,54 @@ export const portfolio: PortfolioCompany[] = [
     image: "/images/portfolio/anuna.png",
     imageAlt: "Anuna Labs logo.",
   },
+  {
+    id: "zenpulsar",
+    name: "Zenpulsar",
+    sector: "AI Data",
+    vehicle: "SPV Portfolio",
+    vehicles: ["SPV Portfolio"],
+    description:
+      "Analyzing social media data from multiple platforms in real-time.",
+    website: "https://zenpulsar.com/",
+    image: "/images/portfolio/zenpulsar.png",
+    imageAlt: "Zenpulsar logo.",
+  },
+  {
+    id: "oditly",
+    name: "Oditly",
+    sector: "Enterprise SaaS",
+    vehicle: "SPV Portfolio",
+    vehicles: ["SPV Portfolio"],
+    description:
+      "Conduct audits and inspections, and automate checklist-based process workflows.",
+    website: "https://www.oditly.com/",
+    image: "/images/portfolio/oditly.png",
+    imageAlt: "Oditly logo.",
+  },
+  {
+    id: "d-nome",
+    name: "D-NOME",
+    sector: "BioTech",
+    vehicle: "SPV Portfolio",
+    vehicles: ["SPV Portfolio"],
+    description:
+      "Deviceless, room-temperature molecular diagnostics for affordable point-of-care testing.",
+    website: "https://www.dnome.in/",
+    image: "/images/portfolio/dnome.png",
+    imageAlt: "D-NOME logo.",
+  },
+  {
+    id: "acquafront",
+    name: "Acquafront",
+    sector: "Infrastructure",
+    vehicle: "Fund I",
+    vehicles: ["Fund I"],
+    description:
+      "Modular floating infrastructure for water, energy, ports and defence.",
+    website: "https://acquainfra.com/",
+    image: "/images/portfolio/acquafront.png",
+    imageAlt: "Acquafront logo.",
+  },
 ];
 
 /* --- Founder journey ------------------------------------------------------
@@ -516,7 +564,7 @@ export type Mentor = {
 };
 
 export const mentorsIntro = {
-  eyebrow: "Our Mentors",
+  eyebrow: "Our Leadership Board and Mentors",
   line1: "The People Who",
   line2: "Bring That Expertise",
 } as const;
@@ -605,6 +653,23 @@ export const mentors: Mentor[] = [
     bio: "A CA and CFA. He oversees PMS, research, institutional advisory and FII services, along with the firm's proprietary investment and arbitrage strategy.",
     image: "/images/mentors/ankit-agarwal.png",
   },
+];
+
+/**
+ * The home page's leadership board and mentors: the Managing Partner and the
+ * three partners and board advisors first, in the team page's order, then the
+ * advisory board. The partners' roles and biographies are the team page's;
+ * their portraits are the team cut-outs set on the mentor cards' framing.
+ */
+export const leadershipAndMentors: Mentor[] = [
+  ...teamPartners.people.map((p) => ({
+    id: p.id,
+    name: p.name,
+    role: p.role ?? "",
+    bio: p.bio ?? "",
+    image: `/images/mentors/${p.id}.png`,
+  })),
+  ...mentors,
 ];
 
 /* --- LP Day -------------------------------------------------------------- */

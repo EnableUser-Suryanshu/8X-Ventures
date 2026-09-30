@@ -126,6 +126,17 @@ export const socialLinks = [
   },
 ] as const;
 
+/**
+ * The copy deck's "Footer Disclaimer", verbatim, shown under the footer on
+ * every page with the fund's SEBI registration number, and in full on
+ * `/disclaimer`.
+ */
+export const footerDisclaimer =
+  "The information on this website is for general informational purposes only. It should not be construed as investment advice, an offer, or a solicitation. Any investment-related communication, if applicable, will be made in accordance with applicable laws and regulations.";
+
+export const sebiLine =
+  "8X Ventures Fund I · SEBI-registered AIF Category II · Registration No. IN/AIF2/23-24/1480 · Investment Manager: 8X Technology Management Private Limited";
+
 export const footerBlurb =
   "8X Ventures backs DeepTech founders building the technological foundations of the next economy.";
 

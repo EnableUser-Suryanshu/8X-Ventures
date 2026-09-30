@@ -162,14 +162,16 @@ export function PortfolioCarousel() {
                           {company.name}
                         </h3>
 
-                        <p className="mt-1 text-[clamp(0.9rem,1.15vw,1rem)]">
-                          <span className="font-bold">
-                            {company.metric.value}
-                          </span>{" "}
-                          <span className="font-normal">
-                            {company.metric.label}
-                          </span>
-                        </p>
+                        {company.metric && (
+                          <p className="mt-1 text-[clamp(0.9rem,1.15vw,1rem)]">
+                            <span className="font-bold">
+                              {company.metric.value}
+                            </span>{" "}
+                            <span className="font-normal">
+                              {company.metric.label}
+                            </span>
+                          </p>
+                        )}
 
                         {company.quote && (
                           <blockquote className="mt-3 text-[clamp(0.775rem,0.9vw,0.8125rem)] leading-relaxed">
