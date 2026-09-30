@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   footerBlurb,
   footerColumns,
+  footerRegistration,
   siteConfig,
   socialLinks,
 } from "@/content/site";
@@ -14,12 +15,6 @@ const socialIcons: Record<string, React.ReactNode> = {
   X: (
     <path d="M17.3 3.75h2.82l-6.16 7.04L21.2 20.4h-5.66l-4.44-5.8-5.07 5.8H3.2l6.59-7.53L3 3.75h5.8l4.01 5.3zm-.99 14.97h1.56L7.75 5.34H6.08z" />
   ),
-  Facebook: (
-    <path d="M22 12.06C22 6.5 17.52 2 12 2S2 6.5 2 12.06c0 5.02 3.66 9.18 8.44 9.94v-7.03H7.9v-2.91h2.54V9.85c0-2.52 1.5-3.91 3.77-3.91 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.78-1.63 1.57v1.89h2.78l-.45 2.91h-2.33V22c4.78-.76 8.44-4.92 8.44-9.94" />
-  ),
-  Instagram: (
-    <path d="M12 2c-2.72 0-3.06.01-4.12.06-1.07.05-1.8.22-2.43.47a4.9 4.9 0 0 0-1.78 1.16A4.9 4.9 0 0 0 2.53 5.45c-.25.63-.42 1.36-.47 2.43C2.01 8.94 2 9.28 2 12s.01 3.06.06 4.12c.05 1.07.22 1.8.47 2.43a4.9 4.9 0 0 0 1.16 1.78 4.9 4.9 0 0 0 1.78 1.16c.63.25 1.36.42 2.43.47 1.06.05 1.4.06 4.12.06s3.06-.01 4.12-.06c1.07-.05 1.8-.22 2.43-.47a5.11 5.11 0 0 0 2.94-2.94c.25-.63.42-1.36.47-2.43.05-1.06.06-1.4.06-4.12s-.01-3.06-.06-4.12c-.05-1.07-.22-1.8-.47-2.43a4.9 4.9 0 0 0-1.16-1.78 4.9 4.9 0 0 0-1.78-1.16c-.63-.25-1.36-.42-2.43-.47C15.06 2.01 14.72 2 12 2m0 1.8c2.67 0 2.99.01 4.04.06.98.04 1.5.2 1.86.34.46.18.8.4 1.15.75s.57.69.75 1.15c.14.36.3.88.34 1.86.05 1.05.06 1.37.06 4.04s-.01 2.99-.06 4.04c-.04.98-.2 1.5-.34 1.86-.18.46-.4.8-.75 1.15s-.69.57-1.15.75c-.36.14-.88.3-1.86.34-1.05.05-1.37.06-4.04.06s-2.99-.01-4.04-.06c-.98-.04-1.5-.2-1.86-.34-.46-.18-.8-.4-1.15-.75s-.57-.69-.75-1.15c-.14-.36-.3-.88-.34-1.86-.05-1.05-.06-1.37-.06-4.04s.01-2.99.06-4.04c.04-.98.2-1.5.34-1.86.18-.46.4-.8.75-1.15s.69-.57 1.15-.75c.36-.14.88-.3 1.86-.34C9.01 3.81 9.33 3.8 12 3.8m0 3.06a5.14 5.14 0 1 0 0 10.28 5.14 5.14 0 0 0 0-10.28m0 8.47a3.34 3.34 0 1 1 0-6.67 3.34 3.34 0 0 1 0 6.67m6.54-8.67a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0" />
-  ),
   LinkedIn: (
     <path d="M6.94 8.5H4.06V20h2.88zM5.5 3.6a1.67 1.67 0 1 0 0 3.34 1.67 1.67 0 0 0 0-3.34M20 13.44c0-2.9-1.55-4.25-3.62-4.25a3.12 3.12 0 0 0-2.84 1.56h-.04V8.5H10.7V20h2.88v-5.69c0-1.5.29-2.95 2.15-2.95 1.83 0 1.86 1.71 1.86 3.05V20H20z" />
   ),
@@ -28,8 +23,10 @@ const socialIcons: Record<string, React.ReactNode> = {
   ),
 };
 
-/** Column x positions are traced; see `FOOTER` in globals.css. */
-const COL_CLASS = ["footer-col-1", "footer-col-2", "footer-col-3"];
+/** Column x positions are traced; see `FOOTER` in globals.css. Explore keeps
+ *  the first slot and Offices the third; the registration details take the
+ *  middle one, where the Legal links were. */
+const COL_CLASS = ["footer-col-1", "footer-col-3"];
 
 /* 25px at 1920, the artboard's size for the headings, links and blurb. */
 const BODY_SIZE = "text-[length:clamp(0.9375rem,1.302vw,1.5625rem)]";
@@ -169,6 +166,35 @@ export function SiteFooter() {
             </ul>
           </Reveal>
         ))}
+
+        {/* --- Registration details --- */}
+        <Reveal
+          as="section"
+          aria-labelledby="footer-registration"
+          delay={290}
+          className="footer-col footer-col-2 footer-reg max-lg:mt-12"
+        >
+          <h2
+            id="footer-registration"
+            className={cn(
+              "leading-[1.2] font-bold tracking-[0.06em] text-brand uppercase",
+              BODY_SIZE,
+            )}
+          >
+            {footerRegistration.heading}
+          </h2>
+          <ul role="list" className="footer-reg-lines max-lg:mt-5">
+            {footerRegistration.lines.map((line) => (
+              <li key={line}>{line}</li>
+            ))}
+          </ul>
+          <Link
+            href={footerRegistration.link.href}
+            className="footer-reg-link group inline-flex items-center font-light text-ink-700 transition-colors duration-300 hover:text-brand-deep"
+          >
+            <span className="u-line">{footerRegistration.link.label}</span>
+          </Link>
+        </Reveal>
 
         <Reveal className="footer-rule h-px bg-[#A5D7FA] max-lg:mt-16" />
 

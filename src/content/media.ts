@@ -9,7 +9,7 @@
 
 export const mediaHero = {
   line1: "Signals From The",
-  line2: "Deep-Tech Frontier",
+  line2: "DeepTech Frontier",
   body: "Our perspective on the technologies, markets, and policies shaping the next generation of companies.",
   art: {
     src: "/images/media-hero-infinity.png",
@@ -23,12 +23,12 @@ export const mediaBook = {
     src: "/images/media-book.png",
     width: 495,
     height: 780,
-    alt: "Moonshots and Marathons — a practical guidebook to building and scaling deep-tech startups in India, by Chirag Gupta, Govind Kedia and Dr Sunil Shekhawat.",
+    alt: "Moonshots and Marathons — a practical guidebook to building and scaling DeepTech startups in India, by Chirag Gupta, Govind Kedia and Dr Sunil Shekhawat.",
   },
   line1: "Moonshots",
   line2: "and Marathons",
   paragraphs: [
-    "Deep-tech companies are both moonshots and marathons, audacious in ambition, patient in execution. This book captures what it takes to build them in India.",
+    "DeepTech companies are both moonshots and marathons, audacious in ambition, patient in execution. This book captures what it takes to build them in India.",
     "A perspective shaped by the founders, mentors, and investors of the 8X ecosystem.",
   ],
   cta: { label: "Get the Book", href: "/media/moonshots-and-marathons" },
@@ -53,7 +53,7 @@ export const mediaInsights: {
   eyebrow: "Insights",
   line1: "Coverage, Commentary,",
   line2: "Conversations.",
-  body: "8X in the media and the gatherings shaping India’s deep-tech ecosystem.",
+  body: "8X in the media and the gatherings shaping India’s DeepTech ecosystem.",
   /* The frame sets these three as flat plates with a play button rather than
      stills, so no artwork is named. Add `image` to a row when a real still
      exists and the plate steps aside for it.
@@ -71,12 +71,12 @@ export const mediaInsights: {
       /* video: "https://www.youtube.com/watch?v=…", */
     },
     {
-      title: "What does deep-tech investing look like in India?",
+      title: "What does DeepTech investing look like in India?",
       kicker: "Interview",
       /* video: "https://www.youtube.com/watch?v=…", */
     },
     {
-      title: "Funding Deeptech in India",
+      title: "Funding DeepTech in India",
       kicker: "Panel Discussion",
       /* video: "https://www.youtube.com/watch?v=…", */
     },

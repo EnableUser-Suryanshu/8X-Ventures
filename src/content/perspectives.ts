@@ -2,7 +2,7 @@
  * Perspectives — the article pages behind `/media/[slug]`.
  *
  * Traced from the Figma prototype's perspective frame (node 317-759), which is
- * drawn for "Deep-Tech Commercialisation Is Not a Straight Line". That piece's
+ * drawn for "DeepTech Commercialisation Is Not a Straight Line". That piece's
  * body is the frame's own copy, verbatim; its hero and the three related
  * cards' artwork are the frame's own image fills.
  *
@@ -43,22 +43,22 @@ export const articles: readonly Article[] = [
     date: "Aug 12, 2026",
     readingTime: "5 min read",
     title: {
-      line1: "Deep-Tech Commercialisation",
+      line1: "DeepTech Commercialisation",
       line2: "Is Not a Straight Line",
     },
-    titlePlain: "Deep-Tech Commercialisation Is Not a Straight Line",
+    titlePlain: "DeepTech Commercialisation Is Not a Straight Line",
     image: "/images/perspectives/deep-tech-commercialisation.jpg",
     imageAlt:
       "Two engineers in cleanroom suits inspecting a semiconductor wafer on a fabrication line.",
     body: [
       {
         kind: "p",
-        text: "Deep-tech companies are not built like conventional startups. The technology cycle is longer, the diligence is deeper, the customer is harder to win and the market may not yet have language for the product. That is what makes the opportunity meaningful.",
+        text: "DeepTech companies are not built like conventional startups. The technology cycle is longer, the diligence is deeper, the customer is harder to win and the market may not yet have language for the product. That is what makes the opportunity meaningful.",
       },
       { kind: "h", text: "The first risk is technical. The second is commercial." },
       {
         kind: "p",
-        text: "Most deep-tech founders begin with a breakthrough. A sensor that can operate in extreme conditions. A diagnostic platform that changes testing economics. A robotics system that works outside controlled environments. A compute architecture that improves performance at the infrastructure layer.",
+        text: "Most DeepTech founders begin with a breakthrough. A sensor that can operate in extreme conditions. A diagnostic platform that changes testing economics. A robotics system that works outside controlled environments. A compute architecture that improves performance at the infrastructure layer.",
       },
       {
         kind: "p",
@@ -67,7 +67,7 @@ export const articles: readonly Article[] = [
       { kind: "h", text: "Customers do not buy science. They buy outcomes." },
       {
         kind: "p",
-        text: "Deep-tech founders must translate complexity into value: lower downtime, higher accuracy, better yield, lower cost, faster deployment, higher resilience, stronger compliance.",
+        text: "DeepTech founders must translate complexity into value: lower downtime, higher accuracy, better yield, lower cost, faster deployment, higher resilience, stronger compliance.",
       },
       {
         kind: "p",
@@ -76,7 +76,7 @@ export const articles: readonly Article[] = [
       { kind: "h", text: "Capital must understand time." },
       {
         kind: "p",
-        text: "Deep-tech companies often need longer timelines than software-first companies. There may be pilots, certifications, hardware cycles, manufacturing constraints, enterprise procurement and regulatory pathways to work through.",
+        text: "DeepTech companies often need longer timelines than software-first companies. There may be pilots, certifications, hardware cycles, manufacturing constraints, enterprise procurement and regulatory pathways to work through.",
       },
       {
         kind: "p",
@@ -88,7 +88,7 @@ export const articles: readonly Article[] = [
         text: "India has engineering talent, research depth, cost advantage, industrial demand and large domestic markets. What the ecosystem needs is focused capital, patient conviction and stronger bridges between research, industry and venture.",
       },
       { kind: "p", text: "That is the work ahead." },
-      { kind: "h", text: "Deep-tech is not a category. It is a foundation." },
+      { kind: "h", text: "DeepTech is not a category. It is a foundation." },
       {
         kind: "p",
         text: "The next generation of Indian companies will not only serve digital markets. They will build the physical layer underneath them.",

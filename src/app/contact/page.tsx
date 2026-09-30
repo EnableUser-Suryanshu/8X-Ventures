@@ -4,7 +4,7 @@ import { ContactPage } from "@/components/contact/ContactPage";
 export const metadata: Metadata = {
   title: "Reach Out",
   description:
-    "For founders, capital partners, media and ecosystem collaborators working around Indian deep-tech.",
+    "For founders, capital partners, media and ecosystem collaborators working around Indian DeepTech.",
 };
 
 export default function Page() {

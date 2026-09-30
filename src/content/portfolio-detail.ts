@@ -205,7 +205,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "nobody can reach.",
     },
     intro: [
-      "Solinas Integrity is an IIT Madras-incubated deep-tech company transforming water, sewer and underground infrastructure through robotics, AI and digital intelligence. The company develops solutions to inspect, clean, monitor and manage critical water and sanitation assets more safely, efficiently and proactively.",
+      "Solinas Integrity is an IIT Madras-incubated DeepTech company transforming water, sewer and underground infrastructure through robotics, AI and digital intelligence. The company develops solutions to inspect, clean, monitor and manage critical water and sanitation assets more safely, efficiently and proactively.",
       "Its technology addresses difficult, hazardous and often invisible infrastructure challenges: pipeline inspection, sewer and septic-system operations, cleaning, compliance and preventive maintenance. By combining robotics with data-led diagnostics, Solinas helps municipal bodies, industrial customers and utility operators improve operational visibility and reduce reliance on manual intervention.",
       "Solinas is helping infrastructure operators move from reactive response to predictive, technology-enabled maintenance. Its work is especially relevant to India’s need for reliable urban water, wastewater and sanitation systems.",
     ],
@@ -250,7 +250,7 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       line2: "sensors cannot survive.",
     },
     intro: [
-      "XYMA Analytics is a deep-tech sensing company that combines waveguide ultrasonic sensors, process models and data analytics on a secure Industrial IoT platform. Its technology is designed to deliver continuous, high-precision monitoring of critical industrial processes and assets, including those operating at extreme temperatures or in difficult-to-access environments.",
+      "XYMA Analytics is a DeepTech sensing company that combines waveguide ultrasonic sensors, process models and data analytics on a secure Industrial IoT platform. Its technology is designed to deliver continuous, high-precision monitoring of critical industrial processes and assets, including those operating at extreme temperatures or in difficult-to-access environments.",
       "The company’s sensing platform enables plant operators to measure multiple process parameters and use actionable data to improve visibility, reliability and decision-making. XYMA is relevant where conventional sensing technologies struggle because of heat, safety constraints, location or process complexity.",
       "By combining proprietary sensor hardware, analytics and connected software, XYMA is building a complete industrial-monitoring stack for predictive maintenance, process optimisation and improved operational control.",
     ],
@@ -330,24 +330,24 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
 
   sanchiconnect: {
     descriptor: {
-      text: "A deep-tech enablement network connecting startups, capital and innovation ecosystems.",
-      highlight: "deep-tech enablement network",
+      text: "A DeepTech enablement network connecting startups, capital and innovation ecosystems.",
+      highlight: "DeepTech enablement network",
     },
     investedAt: "Seed Stage",
     status: "Scaling from product validation to commercial deployment.",
     statement: {
-      line1: "Deep tech needs more",
+      line1: "DeepTech needs more",
       line2: "than capital.",
     },
     intro: [
-      "SanchiConnect is a deep-tech enablement network that helps emerging technology companies access the ecosystem required to build and scale. It connects startups with investors, mentors, corporates, government bodies, deep-tech labs, universities and other strategic partners.",
-      "The platform operates across accelerator programmes, startup enablement, corporate innovation, fundraising support, ecosystem building and advisory services. Its model recognises that deep-tech companies need more than capital: they need access to specialised talent, testbeds, early customers, technical institutions and long-term strategic relationships.",
+      "SanchiConnect is a DeepTech enablement network that helps emerging technology companies access the ecosystem required to build and scale. It connects startups with investors, mentors, corporates, government bodies, DeepTech labs, universities and other strategic partners.",
+      "The platform operates across accelerator programmes, startup enablement, corporate innovation, fundraising support, ecosystem building and advisory services. Its model recognises that DeepTech companies need more than capital: they need access to specialised talent, testbeds, early customers, technical institutions and long-term strategic relationships.",
       "SanchiConnect makes these connections more structured and scalable, supporting early-growth-stage companies building hardware and software products with core intellectual property.",
     ],
     why: {
       line1: "Ecosystems are built,",
       line2: "not waited for.",
-      body: "Deep-tech companies need specialised talent, testbeds, early customers and technical institutions long before they need a term sheet. Making those connections structured and repeatable is what lets hard companies get started at all.",
+      body: "DeepTech companies need specialised talent, testbeds, early customers and technical institutions long before they need a term sheet. Making those connections structured and repeatable is what lets hard companies get started at all.",
       environments: ["ACCELERATOR PROGRAMMES", "INVESTOR NETWORKS", "CORPORATE INNOVATION", "RESEARCH LABS AND UNIVERSITIES", "GOVERNMENT PROGRAMMES"],
       close: "SanchiConnect is building for that world.",
     },
@@ -359,11 +359,11 @@ export const portfolioDetails: Record<string, CompanyDetail> = {
       ],
       highlightsLabel: "Service highlights",
       highlights: [
-        "Deep-tech accelerator and startup-enablement programmes",
+        "DeepTech accelerator and startup-enablement programmes",
         "Investor outreach, fundraising support and mentorship",
         "Corporate innovation and ecosystem collaboration",
         "Access to government, lab, university and industry networks",
-        "Community-led programmes for deep-tech founders",
+        "Community-led programmes for DeepTech founders",
       ],
     },
     gallery: [

@@ -16,24 +16,12 @@ export type Person = {
   name: string;
   image: string;
   /**
-   * How the portrait meets the card.
-   *
-   * "cutout" is the house style and the default: the subject keyed off its
-   * ground, standing on the card's blue. "plate" is for the photographs whose
-   * ground will not key — a cafe behind one, a soft wall the same value as the
-   * face in front of it against another — where the choice is a photograph
-   * filling the card or no portrait at all. See `.tm-card-photo` in
-   * globals.css for the top fade that keeps a plate from reading as a
-   * rectangle dropped on the card.
+   * How the portrait meets the card. Every portrait is now a colour cut-out
+   * on one 784 × 958 framing — the face the same size and on the same line
+   * for everyone — so "cutout" is the only case in use; "plate"
+   * is kept for a photograph that cannot be cut out.
    */
   portrait?: "cutout" | "plate";
-  /**
-   * The same cut-out in colour, for the home page's strip, where the
-   * featured card is shown in colour and only the cards behind it are
-   * greyed. The team page bakes its portraits grey, so those files cannot
-   * serve both. Absent, the strip falls back to `image`.
-   */
-  colour?: string;
   /**
    * Everything below is optional, and four people are missing all of it. Drive
    * supplied them as a photograph and a name and nothing else; the card and
@@ -72,7 +60,7 @@ export type Person = {
 export const teamHero = {
   line1: "A Team Built",
   line2: "for Complexity",
-  body: "Deep-tech needs investors who understand technology, markets, capital, and time.",
+  body: "DeepTech needs investors who understand technology, markets, capital, and time.",
 } as const;
 
 export const teamPartners = {
@@ -97,6 +85,20 @@ export const teamPartners = {
       ],
     },
     {
+      id: "esha-arya",
+      email: "esha.arya@8xventures.co",
+      name: "Esha Arya",
+      role: "Partner & Board Advisor",
+      image: "/images/team/esha-arya.png",
+      bio: "Vice-Chairman of JBM Group, a $2.7bn conglomerate operating in 10 countries, where she is involved in executive decisions across automotive, sustainable technologies, AgriTech and DeepTech.",
+      linkedin: "https://www.linkedin.com/in/eshaarya/",
+      /* From the team detail pages in the client's "8x Existing Content" doc. */
+      profile: [
+        "Esha is the Vice-Chairman of JBM Group, a $2.7bn global conglomerate with operations across 10 countries. At JBM Group she is involved in executive decision-making for the manufacturing and deployment of automotive, sustainable technologies, AgriTech and DeepTech solutions. She led the development and deployment of manufacturing facilities for steel, automotive, textiles and many more industries, and has been a keynote speaker for NASSCOM and led multiple CII Tech discussions.",
+        "She is actively mentoring early-stage DeepTech startups and is part of advisory boards across the USA, India, the UK and Singapore. She holds an MBA from INSEAD and a BBA from Boston University.",
+      ],
+    },
+    {
       id: "vinod-agarwal",
       email: "vinod.agarwal@8xventures.co",
       name: "Vinod Agarwal",
@@ -117,20 +119,6 @@ export const teamPartners = {
       profile: [
         "Ajay has 25+ years of experience across white goods, plastic processing and petrochemicals. He spearheads several polymers and petrochemicals businesses and has invested in startups across the Middle East, Asia and Europe.",
         "He studied engineering at Jawaharlal Nehru Engineering College and holds an MBA from Dr Babasaheb Ambedkar University.",
-      ],
-    },
-    {
-      id: "esha-arya",
-      email: "esha.arya@8xventures.co",
-      name: "Esha Arya",
-      role: "Partner & Board Advisor",
-      image: "/images/team/esha-arya.png",
-      bio: "Vice-Chairman of JBM Group, a $2.7bn conglomerate operating in 10 countries, where she is involved in executive decisions across automotive, sustainable technologies, AgriTech and deep-tech.",
-      linkedin: "https://www.linkedin.com/in/eshaarya/",
-      /* From the team detail pages in the client's "8x Existing Content" doc. */
-      profile: [
-        "Esha is the Vice-Chairman of JBM Group, a $2.7bn global conglomerate with operations across 10 countries. At JBM Group she is involved in executive decision-making for the manufacturing and deployment of automotive, sustainable technologies, AgriTech and DeepTech solutions. She led the development and deployment of manufacturing facilities for steel, automotive, textiles and many more industries, and has been a keynote speaker for NASSCOM and led multiple CII Tech discussions.",
-        "She is actively mentoring early-stage DeepTech startups and is part of advisory boards across the USA, India, the UK and Singapore. She holds an MBA from INSEAD and a BBA from Boston University.",
       ],
     },
   ] as Person[],
@@ -167,7 +155,6 @@ export const teamGroup = {
       name: "Shreya Kothari",
       role: "Associate Principal, Portfolio Growth",
       image: "/images/team/shreya-kothari.png",
-      colour: "/images/team/colour/shreya-kothari.png",
       bio: "Five years in financial services, driving portfolio growth and startup deal execution.",
       linkedin: "https://www.linkedin.com/in/shreyabagri/",
     },
@@ -189,7 +176,6 @@ export const teamGroup = {
       name: "Rashi Jain",
       role: "Investments and Compliance Associate",
       image: "/images/team/rashi-jain.png",
-      colour: "/images/team/colour/rashi-jain.png",
       bio: "A Chartered Accountant specialising in taxation, SEBI regulations, FEMA compliance and audits.",
       linkedin: "https://www.linkedin.com/in/ca-rashi-jain13/",
     },
@@ -197,8 +183,7 @@ export const teamGroup = {
       id: "akash-patel",
       name: "Akash Patel",
       role: "Associate, Investments",
-      image: "/images/team/akash-patel.jpg",
-      portrait: "plate",
+      image: "/images/team/akash-patel.png",
       bio: "An IIT Kanpur graduate blending founder-style execution across energy operations and startups, with significant experience at Schlumberger.",
     },
     {
@@ -206,15 +191,13 @@ export const teamGroup = {
       name: "Madhukar Kota",
       role: "Operations and Compliance Associate",
       image: "/images/team/madhukar-kota.png",
-      colour: "/images/team/colour/madhukar-kota.png",
       bio: "An MBA with 15+ years across private equity, fund accounting and capital markets.",
     },
     {
       id: "twinkal-janbandhu",
       name: "Twinkal Janbandhu",
       role: "Analyst, Compliance",
-      image: "/images/team/twinkal-janbandhu.jpg",
-      portrait: "plate",
+      image: "/images/team/twinkal-janbandhu.png",
       bio: "A law graduate and company secretary with expertise in governance, compliance and legal frameworks.",
     },
     {
@@ -222,7 +205,6 @@ export const teamGroup = {
       name: "Priya Sathish",
       role: "Analyst",
       image: "/images/team/priya-sathish.png",
-      colour: "/images/team/colour/priya-sathish.png",
       bio: "A Biomedical Engineer with industrial experience at LifeCell and Apollo Hospitals.",
     },
   ] as Person[],

@@ -37,7 +37,7 @@ export async function generateMetadata({
     return {
       title: "LP Day | 8X Ventures",
       description:
-        "LP Day is 8X Ventures' annual gathering for India's deep-tech builders, investors, founders, mentors and ecosystem leaders.",
+        "LP Day is 8X Ventures' annual gathering for DeepTech builders, investors, founders, mentors and ecosystem leaders.",
     };
   }
   const article = findArticle(slug);

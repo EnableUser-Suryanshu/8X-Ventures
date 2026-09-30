@@ -1189,15 +1189,32 @@
 .footer-socials {
   display: flex;
   align-items: center;
-  /* Five accounts now, so the row wraps rather than overflowing the gutter
-     on the narrowest phones. */
   flex-wrap: wrap;
+}
+
+/* The fund's registration details, in the column the Legal links used to
+   hold. A step smaller than the link columns so the investment manager's
+   name wraps to two lines rather than four inside the traced column. */
+.footer-reg-lines {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1.25rem;
+  font-size: clamp(0.8125rem, 0.9375vw, 1.125rem); /* 18px at 1920 */
+  font-weight: 300;
+  line-height: 1.4;
+  color: var(--color-ink-700);
+}
+
+.footer-reg-link {
+  margin-top: 1rem;
+  font-size: clamp(0.8125rem, 0.9375vw, 1.125rem);
+  line-height: 1.2;
 }
 
 @media (width >= 64rem) {
   /* The artboard's ratio drives the height, but the link text bottoms out at
      its 15px clamp floor while the stage keeps shrinking with the viewport,
-     so below ~1294px the columns outgrew the box: the last Legal link fell
+     so below ~1294px the columns outgrew the box: the last link fell
      off the stage entirely at 1152px and under. The floor keeps the stage
      tall enough to hold the longest column; above ~1294px the ratio is
      already taller than the floor and the artboard proportions are exact. */
@@ -1260,16 +1277,13 @@
     width: 91.4%;
   }
 
-  /* The artboard traced three 53px circles on a 106px pitch, ending at x 384.
-     Five circles hold that pitch across 477 of 1920 (24.84%), so the span is
-     pinned and distributed instead of gap-driven: below ~1176px the circles
-     hit their 44px floor while a vw gap keeps growing, which walked the row
-     into the Explore column at 35.99%. space-between closes the gaps
-     proportionally instead, and reproduces the artboard's 53px gap at 1920. */
+  /* The artboard's own three 53px circles on a 106px pitch — X, LinkedIn and
+     YouTube, now that Facebook and Instagram are gone. The gap is capped at
+     the artboard's 53px so it cannot outgrow the circles past 1920. */
   .footer-socials {
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-wrap: nowrap;
-    gap: 0;
+    gap: min(2.76vw, 3.3125rem);
   }
 
   .footer-col {
@@ -1293,6 +1307,22 @@
   .footer-links {
     margin-top: 1.5625vw;
     gap: 0.8333vw;
+  }
+
+  /* The registration column ends before the Offices column starts: 57.97% to
+     80.31% of the stage, less a gutter, so the investment manager's name
+     wraps inside it rather than running under the next column. */
+  .footer-reg {
+    width: 19.5%;
+  }
+
+  .footer-reg-lines {
+    margin-top: 1.5625vw;
+    gap: 0.4167vw;
+  }
+
+  .footer-reg-link {
+    margin-top: 0.8333vw;
   }
 
   .footer-rule {

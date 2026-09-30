@@ -12,7 +12,7 @@ import { portfolio, type PortfolioCompany } from "@/content/home";
 export const portfolioHero = {
   /** Three lines, broken as the artboard breaks them. */
   lines: ["A Portfolio", "of Frontier", "Builders"],
-  body: "We back companies creating new capabilities across deep-tech sectors.",
+  body: "We back companies creating new capabilities across DeepTech sectors.",
 } as const;
 
 /**
@@ -144,7 +144,7 @@ export const portfolioCards: readonly PortfolioCard[] = portfolio.map((company) 
 });
 
 export const portfolioCta = {
-  lead: "Building in deep-tech?",
+  lead: "Building in DeepTech?",
   line1: "We would like to understand what",
   line2: "you see before others do.",
   link: { label: "Share Your Vision", href: "/contact" },
