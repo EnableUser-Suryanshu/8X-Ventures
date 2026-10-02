@@ -210,7 +210,13 @@ export function PortfolioDetail({ id }: { id: string }) {
           of what the company makes or does. The cards rise in one after
           another, as the portfolio grid's do. */}
       <section aria-label={`${company.name} in pictures`} className="pd-band pd-gallery">
-        <ul role="list" className="pd-gallery-grid">
+        <ul
+          role="list"
+          className="pd-gallery-grid"
+          /* Fewer than three photographs sit centred at the same card size
+             rather than leaving an empty slot. */
+          style={{ "--pd-gallery-n": detail.gallery.length } as React.CSSProperties}
+        >
           {detail.gallery.map((photo, i) => (
             <Reveal as="li" key={photo.src} variant="card" delay={i * 110}>
               <figure className="pd-gallery-card">

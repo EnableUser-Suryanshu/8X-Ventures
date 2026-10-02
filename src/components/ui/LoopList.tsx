@@ -3,7 +3,7 @@
  * beside it.
  *
  * The design uses this device twice — the team page's mentor bands and LP
- * Day's "deep-tech needs more than capital" — so it lives here rather than in
+ * Day's "DeepTech needs more than capital" — so it lives here rather than in
  * either page. The window is one line per item, so the band keeps the
  * footprint a static list would have.
  *

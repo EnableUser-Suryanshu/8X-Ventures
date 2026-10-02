@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { Reveal } from "@/components/ui/Reveal";
-import { mentors, mentorsIntro } from "@/content/home";
+import { leadershipAndMentors, mentorsIntro } from "@/content/home";
 
 /**
- * The advisory board, under the team strip it belongs with.
+ * The leadership board and the advisory board, under the team strip they
+ * belong with: Chirag, Esha, Vinod and Ajay first, then the mentors.
  *
  * The card is the site's card: `.tm-card` with `.tm-card-overlay`, the same
  * one the person cards on /team and the featured card in the strip above
@@ -17,7 +18,7 @@ import { mentors, mentorsIntro } from "@/content/home";
  * six different cameras were brought to one framing, and which two had to be
  * cut by hand.
  *
- * No links: mentors have no page of their own, so the panel is what it has —
+ * No links: the panel is what the card has —
  * a name, a position and a line — and nothing that goes nowhere.
  */
 export function MentorStrip() {
@@ -42,7 +43,7 @@ export function MentorStrip() {
         </Reveal>
 
         <ul role="list" className="mn-grid">
-          {mentors.map((m, i) => (
+          {leadershipAndMentors.map((m, i) => (
             <Reveal
               as="li"
               key={m.id}

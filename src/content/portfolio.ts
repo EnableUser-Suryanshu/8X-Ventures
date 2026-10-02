@@ -12,7 +12,7 @@ import { portfolio, type PortfolioCompany } from "@/content/home";
 export const portfolioHero = {
   /** Three lines, broken as the artboard breaks them. */
   lines: ["A Portfolio", "of Frontier", "Builders"],
-  body: "We back companies creating new capabilities across deep-tech sectors.",
+  body: "We back companies creating new capabilities across DeepTech sectors.",
 } as const;
 
 /**
@@ -128,6 +128,22 @@ const DETAILS: Record<string, { founded: string; note: string; status?: string; 
     founded: "Bengaluru",
     note: "Copper nanopowder, conductive ink and paste that replace silver in solar, PCB, flexible-electronics and semiconductor manufacturing.",
   },
+  "zenpulsar": {
+    founded: "SaaS · AI data",
+    note: "Real-time analysis of social media and public information for financial decisions, and a RAG and LLM product for quantamental funds.",
+  },
+  "oditly": {
+    founded: "Enterprise SaaS",
+    note: "A digital platform for audits, inspections and checklist-based workflows across quality, health, safety, security and environment.",
+  },
+  "d-nome": {
+    founded: "Based in Hyderabad",
+    note: "Deviceless, room-temperature molecular testing: D-LAMP reagents and the D-ISO NAAT point-of-care platform for TB screening.",
+  },
+  "acquafront": {
+    founded: "IIT Kanpur-incubated",
+    note: "Modular floating jetties, pump stations and energy barges, including India’s first floating CNG station at Varanasi.",
+  },
 };
 
 export const portfolioCards: readonly PortfolioCard[] = portfolio.map((company) => {
@@ -144,7 +160,7 @@ export const portfolioCards: readonly PortfolioCard[] = portfolio.map((company) 
 });
 
 export const portfolioCta = {
-  lead: "Building in deep-tech?",
+  lead: "Building in DeepTech?",
   line1: "We would like to understand what",
   line2: "you see before others do.",
   link: { label: "Share Your Vision", href: "/contact" },

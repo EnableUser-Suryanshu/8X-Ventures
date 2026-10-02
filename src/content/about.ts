@@ -6,7 +6,7 @@
 export const aboutHero = {
   eyebrow: "About 8X Ventures",
   line1: "A Venture Firm Built",
-  line2: "for Deep-Tech",
+  line2: "for DeepTech",
   body: "8X Ventures backs founders building technologies with the power to transform industries, economies, and national capability.",
   links: [
     { label: "Explore Portfolio", href: "/portfolio", accent: false },
@@ -61,8 +61,8 @@ export const aboutJourney = {
     {
       year: "2022",
       kicker: "SPVs - The Thesis",
-      title: "Dedicated capital for deep-tech",
-      body: "India's deep-tech founders need dedicated capital. Early investments begin through SPVs across WASH, computing, biotech, and Industry 4.0.",
+      title: "Dedicated capital for DeepTech",
+      body: "India's DeepTech founders need dedicated capital. Early investments begin through SPVs across WASH, computing, biotech, and Industry 4.0.",
     },
     {
       year: "2023",
@@ -80,7 +80,7 @@ export const aboutJourney = {
 } as const;
 
 export const aboutCta = {
-  lead: "The next industrial companies may begin as deep-tech startups. ",
+  lead: "The next industrial companies may begin as DeepTech startups. ",
   emphasis: "We are here for that journey.",
   links: [
     { label: "Explore Portfolio", href: "/portfolio" },

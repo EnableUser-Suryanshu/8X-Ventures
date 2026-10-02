@@ -16,10 +16,10 @@
  */
 
 export const lpDayHero = {
-  eyebrow: "LP Day · An annual gathering for India's deep-tech builders",
+  eyebrow: "LP Day · An annual gathering for DeepTech builders",
   line1: "Where capital",
   line2: "meets conviction",
-  body: "LP Day is 8X Ventures' annual gathering for India's deep-tech builders, investors, founders, mentors and ecosystem leaders",
+  body: "LP Day is 8X Ventures' annual gathering for DeepTech builders, investors, founders, mentors and ecosystem leaders",
   image: "/images/lpday/hero.jpg",
   imageAlt:
     "The full auditorium at ISRO's Space Applications Centre on the second day of DeepTech Industry Connect 2026.",
@@ -29,13 +29,13 @@ export const lpDayIntro = {
   line1: "Operators. Investors.",
   line2: "Technologists.",
   sub1: "One room. One ecosystem.",
-  sub2: "One conversation around India's deep-tech future.",
+  sub2: "One conversation around India's DeepTech future.",
   body: "LP Day brings together the people backing, building and enabling the next generation of frontier companies from India.",
 } as const;
 
 export const lpDayWhy = {
   eyebrow: "Why LP Day exists",
-  line1: "Deep-tech needs",
+  line1: "DeepTech needs",
   line2: "more than capital",
   /** The frame lights the third and dims the rest — the same device as
    *  `/about`'s philosophy list, so it is built the same way. */
@@ -63,7 +63,7 @@ export const lpDayProgramme = {
   items: [
     {
       title: "Portfolio showcases",
-      body: "Every company takes a stand. Ten of the twelve exhibited at IIT Gandhinagar in 2026, alongside other deep-tech teams and the host campus.",
+      body: "Every company takes a stand. Ten of the twelve exhibited at IIT Gandhinagar in 2026, alongside other DeepTech teams and the host campus.",
     },
     {
       title: "Sessions and panels",
@@ -159,15 +159,15 @@ export const lpDayGallery = {
 export const lpDayQuotes = {
   heading: "What the ecosystem says.",
   items: [
-    "8X is building a serious platform for India's deep-tech opportunity.",
+    "8X is building a serious platform for India's DeepTech opportunity.",
     "They combine founder empathy with institutional discipline.",
-    "Deep-tech needs long-term capital. 8X understands that.",
+    "DeepTech needs long-term capital. 8X understands that.",
   ],
   image: "/images/lpday/quotes.jpg",
 } as const;
 
 export const lpDayCta = {
-  line1: "India's deep-tech story",
+  line1: "India's DeepTech story",
   line2: "is being built now.",
   line3: "Be part of the room.",
   link: { label: "Connect With Us", href: "/contact" },

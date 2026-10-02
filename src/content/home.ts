@@ -49,49 +49,33 @@ export type Sector = {
 
 export const sectors: readonly Sector[] = [
   {
-    name: "Semiconductors",
+    name: "Precision Manufacturing",
     description:
-      "Chip-level security, photonics and interconnects that decide what every other technology can do.",
+      "Connectors, thermal systems and rocket engines built to tolerances India has long imported.",
     x: 17,
     y: 55,
     place: "top",
   },
   {
-    name: "Robotics",
+    name: "Electronics & Communication",
     description:
-      "Machines that see, decide and act — in fields, in pipelines and on factory floors.",
-    x: 27,
-    y: 30,
-    place: "top",
-  },
-  {
-    name: "Powertrains",
-    description:
-      "Clean hydrogen, thermal systems and materials moving industry off fossil fuels.",
+      "Encryption chips, optical interconnects and sensors that move data securely at full speed.",
     x: 36,
     y: 72,
     place: "bottom",
   },
   {
-    name: "Manufacturing",
+    name: "Energy",
     description:
-      "Indigenous components, connectors and processes that India currently has to import.",
-    x: 50,
-    y: 48,
-    place: "bottom",
-  },
-  {
-    name: "Sensors",
-    description:
-      "Instruments that read heat, corrosion and flow where conventional sensing fails.",
+      "Clean hydrogen, microwave plasma and copper nanomaterials taking industry off fossil fuels and silver.",
     x: 68,
     y: 31,
     place: "top",
   },
   {
-    name: "Industrial Systems",
+    name: "Biotech",
     description:
-      "Software and hardware tying plants, assets and supply chains into one system.",
+      "Engineered enzymes that make chemical and pharmaceutical manufacturing cleaner, faster and higher-yielding.",
     x: 78,
     y: 72,
     place: "bottom",
@@ -105,16 +89,14 @@ export const sectors: readonly Sector[] = [
  * lower-cased — the artboard sets the rotating word in running text.
  */
 export const sectorsInline = [
-  "semiconductors",
-  "robotics",
-  "powertrains",
-  "manufacturing",
-  "sensors",
-  "industrial systems",
+  "precision manufacturing",
+  "electronics and communication",
+  "energy",
+  "biotech",
 ] as const;
 
 /** Index the rotation starts on, so first paint matches the artboard. */
-export const sectorsInlineStart = sectorsInline.indexOf("manufacturing");
+export const sectorsInlineStart = sectorsInline.indexOf("precision manufacturing");
 
 export const manifesto = {
   line1: "The future will not be inherited.",
@@ -127,7 +109,7 @@ export const manifesto = {
    * meaning arrives in one reading rather than changing under the user.
    */
   supportScreenReader:
-    "We back founders turning semiconductors, robotics, powertrains, manufacturing, sensors and industrial systems into companies that matter.",
+    "We back founders turning precision manufacturing, electronics and communication, energy and biotech into companies that matter.",
 } as const;
 
 /* --- Vision / By the Year 2047 ------------------------------------------- */
@@ -163,12 +145,12 @@ export const stats: Stat[] = [
   { value: 70, suffix: "+", label: "Patents across portfolio companies" },
   { value: 2000, prefix: "₹", suffix: "+Cr", label: "Portfolio order book" },
   /* Not from the copy deck's "Proof" figures like the three above — it is the
-     length of `portfolio` below, which is the same thirteen companies the
-     carousel and the portfolio grid are built from, and the thirteen the
-     Fund II teaser counts ("Investments in 13 startups"). Kept as a literal
-     because the panel publishes a figure and a figure should not quietly
-     change when a company is added. */
-  { value: 13, label: "Deep-tech companies backed" },
+     length of `portfolio` below, which the carousel and the portfolio grid
+     are built from: the thirteen Fund I companies the Fund II teaser counts,
+     Acquafront, and the three SPV-only investments (Zenpulsar, Oditly,
+     D-NOME). Kept as a literal because the panel publishes a figure and a
+     figure should not quietly change when a company is added. */
+  { value: 17, label: "DeepTech companies backed" },
 ];
 
 /* --- Portfolio ----------------------------------------------------------- */
@@ -188,7 +170,7 @@ export type PortfolioCompany = {
    * amount per company, so this carries the company's current stage, which
    * their own portfolio brochure states.
    */
-  metric: { value: string; label: string };
+  metric?: { value: string; label: string };
   /** 8X's own one-line website descriptor for the company. */
   description: string;
   /** Optional pull quote. None are set — see the note above `portfolio`. */
@@ -233,7 +215,7 @@ export const portfolio: PortfolioCompany[] = [
     name: "Pantherun Technologies",
     sector: "Cybersecurity",
     vehicle: "Fund I",
-    vehicles: ["Fund I"],
+    vehicles: ["Fund I", "SPV Portfolio"],
     metric: { value: "Series A", label: "stage" },
     description: "High-speed data protection and encryption technology.",
     website: "https://pantherun.com/",
@@ -296,7 +278,7 @@ export const portfolio: PortfolioCompany[] = [
     vehicles: ["Fund I"],
     metric: { value: "Pre-Series A", label: "stage" },
     description:
-      "A deep-tech enablement network connecting startups, capital and innovation ecosystems.",
+      "A DeepTech enablement network connecting startups, capital and innovation ecosystems.",
     website: "https://sanchiconnect.com/",
     image: "/images/portfolio/sanchiconnect.png",
     imageAlt: "SanchiConnect logo.",
@@ -390,6 +372,54 @@ export const portfolio: PortfolioCompany[] = [
     website: "https://anunalabs.com/",
     image: "/images/portfolio/anuna.png",
     imageAlt: "Anuna Labs logo.",
+  },
+  {
+    id: "zenpulsar",
+    name: "Zenpulsar",
+    sector: "AI Data",
+    vehicle: "SPV Portfolio",
+    vehicles: ["SPV Portfolio"],
+    description:
+      "Analyzing social media data from multiple platforms in real-time.",
+    website: "https://zenpulsar.com/",
+    image: "/images/portfolio/zenpulsar.png",
+    imageAlt: "Zenpulsar logo.",
+  },
+  {
+    id: "oditly",
+    name: "Oditly",
+    sector: "Enterprise SaaS",
+    vehicle: "SPV Portfolio",
+    vehicles: ["SPV Portfolio"],
+    description:
+      "Conduct audits and inspections, and automate checklist-based process workflows.",
+    website: "https://www.oditly.com/",
+    image: "/images/portfolio/oditly.png",
+    imageAlt: "Oditly logo.",
+  },
+  {
+    id: "d-nome",
+    name: "D-NOME",
+    sector: "BioTech",
+    vehicle: "SPV Portfolio",
+    vehicles: ["SPV Portfolio"],
+    description:
+      "Deviceless, room-temperature molecular diagnostics for affordable point-of-care testing.",
+    website: "https://www.dnome.in/",
+    image: "/images/portfolio/dnome.png",
+    imageAlt: "D-NOME logo.",
+  },
+  {
+    id: "acquafront",
+    name: "Acquafront",
+    sector: "Infrastructure",
+    vehicle: "Fund I",
+    vehicles: ["Fund I"],
+    description:
+      "Modular floating infrastructure for water, energy, ports and defence.",
+    website: "https://acquainfra.com/",
+    image: "/images/portfolio/acquafront.png",
+    imageAlt: "Acquafront logo.",
   },
 ];
 
@@ -496,16 +526,21 @@ export const teamIntro = {
  * five people with their own copies of the copy; the two lists had already
  * drifted on Rashi's title and the strip was missing the six who joined.
  *
- * The strip opens on Chirag — see `TeamCarousel` — and shows the featured
- * card in colour, so each person's `colour` cut-out is preferred where one
- * exists. The role and biography are the team page's, from the client's
+ * The strip opens on Chirag — see `TeamCarousel` — and uses the same
+ * colour cut-outs as the team page. The role and biography are the team page's, from the client's
  * Fund II teaser.
  */
-export const team: TeamMember[] = [...teamPartners.people, ...teamGroup.people].map((p) => ({
+/** The three board advisors appear on the team page only; the home strip is
+ *  the Managing Partner and the team who work with founders day to day. */
+const NOT_ON_HOME = new Set(["vinod-agarwal", "ajay-singh-rajput", "esha-arya"]);
+
+export const team: TeamMember[] = [...teamPartners.people, ...teamGroup.people]
+  .filter((p) => !NOT_ON_HOME.has(p.id))
+  .map((p) => ({
   id: p.id,
   name: p.name,
   role: p.role ?? "",
-  image: p.colour ?? p.image,
+  image: p.image,
   bio: p.bio ?? "",
   linkedin: p.linkedin,
 }));
@@ -529,7 +564,7 @@ export type Mentor = {
 };
 
 export const mentorsIntro = {
-  eyebrow: "Our Mentors",
+  eyebrow: "Our Leadership Board and Mentors",
   line1: "The People Who",
   line2: "Bring That Expertise",
 } as const;
@@ -620,13 +655,30 @@ export const mentors: Mentor[] = [
   },
 ];
 
+/**
+ * The home page's leadership board and mentors: the Managing Partner and the
+ * three partners and board advisors first, in the team page's order, then the
+ * advisory board. The partners' roles and biographies are the team page's;
+ * their portraits are the team cut-outs set on the mentor cards' framing.
+ */
+export const leadershipAndMentors: Mentor[] = [
+  ...teamPartners.people.map((p) => ({
+    id: p.id,
+    name: p.name,
+    role: p.role ?? "",
+    bio: p.bio ?? "",
+    image: `/images/mentors/${p.id}.png`,
+  })),
+  ...mentors,
+];
+
 /* --- LP Day -------------------------------------------------------------- */
 
 export const lpDay = {
-  eyebrow: "LP Day · An annual gathering for India's deep-tech builders",
+  eyebrow: "LP Day · An annual gathering for DeepTech builders",
   line1: "Operators. Investors.",
   line2: "Technologists.",
-  body: "LP Day brings together investors, founders, mentors, and ecosystem leaders around India's deep-tech future.",
+  body: "LP Day brings together investors, founders, mentors, and ecosystem leaders around India's DeepTech future.",
   /* `focus` is the `object-position` each still is cropped around. Both
      plates are now cut to the card's own 16:9 in `public/images/`, so
      neither is cropped again at render and both sit centred. It stays on the
@@ -653,7 +705,7 @@ export const lpDay = {
   promo: {
     eyebrow: "LP Day",
     title: "Where Capital Meets Conviction",
-    body: "An annual gathering for India's deep-tech builders, investors, founders, and mentors in one room.",
+    body: "An annual gathering for DeepTech builders, investors, founders, and mentors in one room.",
     cta: { label: "LP Day Highlights", href: "/media/lp-day" },
   },
 } as const;

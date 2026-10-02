@@ -12,7 +12,7 @@ export const contactHero = {
   eyebrow: "Reach Out",
   line1: "Start the",
   line2: "right conversation",
-  body: "For founders, capital partners, media and ecosystem collaborators working around Indian deep-tech.",
+  body: "For founders, capital partners, media and ecosystem collaborators working around Indian DeepTech.",
 } as const;
 
 export const contactEnquiry = {

@@ -16,7 +16,7 @@ export const siteConfig = {
   /** Used for <title> templates and structured data. */
   tagline: "Backing DeepTech founders before the world catches up.",
   description:
-    "8X Ventures backs deep-tech founders building the technological foundations of the next economy — semiconductors, robotics, powertrains, manufacturing, sensors and industrial systems.",
+    "8X Ventures backs DeepTech founders building the technological foundations of the next economy — precision manufacturing, electronics and communication, energy and biotech.",
   url: "https://www.8xventures.co",
   locale: "en-IN",
   /** Where 8X asks founders to send a deck. */
@@ -34,10 +34,9 @@ export const primaryNav: NavItem[] = [
 ];
 
 /**
- * The legal column carries the six links the launch compliance checklist
- * requires in the footer: About Us, Contact, Disclaimer, Privacy Policy,
- * Terms & Conditions and Refund Policy. About Us sits in `Explore`; the
- * remaining five sit together under `Legal`.
+ * The link columns. The client asked for the Legal column to come out; its
+ * Contact link moves into Explore, and the Disclaimer link sits under the
+ * fund's registration details — see `footerRegistration`.
  */
 export const footerColumns: { heading: string; links: NavItem[] }[] = [
   {
@@ -48,17 +47,7 @@ export const footerColumns: { heading: string; links: NavItem[] }[] = [
       { label: "Portfolio", href: "/portfolio" },
       { label: "Team", href: "/team" },
       { label: "Media", href: "/media" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
       { label: "Contact", href: "/contact" },
-      { label: "Disclaimer", href: "/disclaimer" },
-      { label: "Privacy Policy", href: "/privacy" },
-      { label: "Terms & Conditions", href: "/terms" },
-      { label: "Refund Policy", href: "/refund-policy" },
-      { label: "Disclosures", href: "/disclosures" },
     ],
   },
   {
@@ -70,6 +59,21 @@ export const footerColumns: { heading: string; links: NavItem[] }[] = [
     ],
   },
 ];
+
+/**
+ * The fund's SEBI registration, as the client supplied it, shown in the
+ * footer of every page in the column the Legal links used to occupy.
+ */
+export const footerRegistration = {
+  heading: "Registration Details",
+  lines: [
+    "8X Ventures Fund I",
+    "AIF Category II",
+    "Registration No. IN/AIF2/23-24/1480",
+    "Investment Manager: 8X Technology Management Private Limited",
+  ],
+  link: { label: "Disclaimer", href: "/disclaimer" },
+} as const;
 
 /**
  * 8X's three offices, as their own website copy deck and their live contact
@@ -100,28 +104,15 @@ export const offices = [
 ] as const;
 
 /**
- * The accounts linked from the site footer. X, LinkedIn and YouTube are 8X's
- * live accounts, taken from the footer of 8xventures.co.
- *
- * TODO(8X): confirm the Facebook and Instagram profile URLs below. They are
- * required by the launch compliance checklist; these are best-guess handles
- * and must be replaced with the real profiles before going live.
+ * The accounts linked from the site footer: X, LinkedIn and YouTube, 8X's
+ * live accounts from the footer of 8xventures.co. 8X do not use Facebook or
+ * Instagram, so neither is linked.
  */
 export const socialLinks = [
   {
     label: "8X Ventures on X (Twitter)",
     short: "X",
     href: "https://twitter.com/8xVentures",
-  },
-  {
-    label: "8X Ventures on Facebook",
-    short: "Facebook",
-    href: "https://www.facebook.com/8xventures",
-  },
-  {
-    label: "8X Ventures on Instagram",
-    short: "Instagram",
-    href: "https://www.instagram.com/8xventures",
   },
   {
     label: "8X Ventures on LinkedIn",
@@ -135,7 +126,18 @@ export const socialLinks = [
   },
 ] as const;
 
+/**
+ * The copy deck's "Footer Disclaimer", verbatim, shown under the footer on
+ * every page with the fund's SEBI registration number, and in full on
+ * `/disclaimer`.
+ */
+export const footerDisclaimer =
+  "The information on this website is for general informational purposes only. It should not be construed as investment advice, an offer, or a solicitation. Any investment-related communication, if applicable, will be made in accordance with applicable laws and regulations.";
+
+export const sebiLine =
+  "8X Ventures Fund I · SEBI-registered AIF Category II · Registration No. IN/AIF2/23-24/1480 · Investment Manager: 8X Technology Management Private Limited";
+
 export const footerBlurb =
-  "8X Ventures backs deep-tech founders building the technological foundations of the next economy.";
+  "8X Ventures backs DeepTech founders building the technological foundations of the next economy.";
 
 export const copyrightYear = 2026;
