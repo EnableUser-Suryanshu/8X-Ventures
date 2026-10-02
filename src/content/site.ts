@@ -98,8 +98,8 @@ export const offices = [
     id: "dubai",
     city: "Dubai",
     country: "United Arab Emirates",
-    label: "Business Bay",
-    address: "Vision Tower, Al Khaleej Al Tejari 1st, Business Bay, Dubai",
+    label: "in5 Tech",
+    address: "in5 Tech, Dubai Internet City, Dubai",
   },
 ] as const;
 

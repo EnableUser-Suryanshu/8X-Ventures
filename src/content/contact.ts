@@ -49,21 +49,24 @@ export const contactCompliance =
   "Information submitted through this website does not create any obligation for 8X Ventures to invest, respond, or enter into discussions. Any investment-related communication, if applicable, will be made only in accordance with applicable laws, regulations, eligibility requirements and fund documentation.";
 
 /**
- * The photograph on each office card. The addresses themselves come from
+ * The photograph on each office card — the real places, replacing the
+ * rendered stand-ins that were here. Chennai and Noida are the client's own
+ * (the Noida one is the DeepTech Hub building itself); Dubai is in5's own
+ * photograph of in5 Tech, from infive.ae. The addresses themselves come from
  * `offices` in `content/site.ts`; these are only the plates, keyed by the
  * same ids.
  */
 export const officeImages: Record<string, { src: string; alt: string }> = {
   chennai: {
     src: "/images/contact/office-chennai.jpg",
-    alt: "A low-rise research park building framed by tall palms under a clear sky.",
+    alt: "IIT Madras Research Park, Taramani, Chennai: its research towers above the trees.",
   },
   noida: {
     src: "/images/contact/office-noida.jpg",
-    alt: "An angular dark-glass building at dusk, mirrored in a reflecting pool.",
+    alt: "The DeepTech Hub building in Sector 2, Noida, its glass facade carrying the DeepTech Hub and SanchiConnect signs.",
   },
   dubai: {
     src: "/images/contact/office-dubai.jpg",
-    alt: "Business Bay towers at dusk, reflected in the water below.",
+    alt: "A session in progress inside in5 Tech, Dubai Internet City.",
   },
 };
