@@ -51,8 +51,8 @@ export const contactCompliance =
 /**
  * The photograph on each office card — the real places, replacing the
  * rendered stand-ins that were here. Chennai and Noida are the client's own
- * (the Noida one is the DeepTech Hub building itself); Dubai is in5's own
- * photograph of in5 Tech, from infive.ae. The addresses themselves come from
+ * (the Noida one is the DeepTech Hub building itself); Dubai is the
+ * skyline image the client chose for it. The addresses themselves come from
  * `offices` in `content/site.ts`; these are only the plates, keyed by the
  * same ids.
  */
@@ -67,6 +67,6 @@ export const officeImages: Record<string, { src: string; alt: string }> = {
   },
   dubai: {
     src: "/images/contact/office-dubai.jpg",
-    alt: "A session in progress inside in5 Tech, Dubai Internet City.",
+    alt: "Dubai’s glass towers at dusk, mirrored in a canal lined with palms.",
   },
 };
