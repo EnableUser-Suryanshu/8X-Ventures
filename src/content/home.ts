@@ -47,37 +47,40 @@ export type Sector = {
   place: "top" | "bottom";
 };
 
+/* Placed as an even rectangle on the ribbon: one on the top and one on the
+   bottom of each loop, mirrored about the centre (x 25 / 75, y 27 / 74).
+   Each point stays on the ribbon through every frame of the hero video. */
 export const sectors: readonly Sector[] = [
   {
     name: "Precision Manufacturing",
     description:
       "Connectors, thermal systems and rocket engines built to tolerances India has long imported.",
-    x: 17,
-    y: 55,
+    x: 25,
+    y: 27,
     place: "top",
   },
   {
     name: "Electronics & Communication",
     description:
       "Encryption chips, optical interconnects and sensors that move data securely at full speed.",
-    x: 36,
-    y: 72,
-    place: "bottom",
+    x: 75,
+    y: 27,
+    place: "top",
   },
   {
     name: "Energy",
     description:
       "Clean hydrogen, microwave plasma and copper nanomaterials taking industry off fossil fuels and silver.",
-    x: 68,
-    y: 31,
-    place: "top",
+    x: 25,
+    y: 74,
+    place: "bottom",
   },
   {
     name: "Biotech",
     description:
       "Engineered enzymes that make chemical and pharmaceutical manufacturing cleaner, faster and higher-yielding.",
-    x: 78,
-    y: 72,
+    x: 75,
+    y: 74,
     place: "bottom",
   },
 ];
@@ -576,33 +579,23 @@ export const mentorsIntro = {
  * Ventures Fund II — India DeepTech Fund" teaser.
  *
  * The photographs are the client's "Photos of Mentors" folder on Drive
- * where that folder had a usable one, and the web where it did not. The
- * Drive copies of Dr. Jhunjhunwala (225px) and Suresh Nanda (301px) were
- * thumbnails, too soft to fill a card; the client asked for better ones
- * found online. Dr. Jhunjhunwala's is the same studio portrait at 900 ×
- * 1200 from the CIKS board-of-trustees page (ciks.org); Suresh Nanda's is
- * the headshot on UV Capital's site (uvcapital.in), 729 × 994; Ankit
- * Agarwal's is his portrait on Globe Capital's own site (globecapital.com),
- * 388 × 486, arms folded, which is the only size it is published at;
- * Virendra Somwanshi's is the press photograph Google lists first for him
- * (ET BrandEquity, and every other outlet, ran it), which is also the file
- * Drive holds at 1452 × 1218 — the largest copy of the only portrait of him
- * published anywhere; Federal Bank's site refuses automated fetches of his
- * official one. Deepak Chitnis's official Lodha Group portrait
- * is the same 375px file Drive already had, and nothing larger is
- * published. Bony Niranjan Dalal has no photograph online at all, so his is
- * still Drive's conference close-up — which arrived already cut out, and is
- * used with its own alpha, microphone and all, since cropping the
- * microphone away leaves a head with nothing under it. None of these
- * photographs is the client's own and none is licensed to 8X; publishing
+ * where that folder had a usable one, and the web where it did not. Suresh
+ * Nanda's and Ankit Agarwal's are the updated portraits the client sent
+ * directly (Mr. Nanda's is 632 × 600, so it is enlarged about twice on the
+ * card).
+ * Deepak Chitnis's official Lodha Group portrait is the same 375px file
+ * Drive already had, and nothing larger is published. Bony Niranjan Dalal
+ * has no photograph online at all, so his is still Drive's conference
+ * close-up — which arrived already cut out, and is used with its own alpha,
+ * microphone and all, since cropping the microphone away leaves a head with
+ * nothing under it. None of these photographs is the client's own and none
+ * is licensed to 8X; publishing
  * them needs the subjects' or the publishers' say-so.
  *
  * The files in `public/images/mentors/` are cut out and set on the card's
  * own 588 × 784 canvas so that every mentor card is the team card: the
- * subject cut with macOS Vision's subject mask (Ashok Jhunjhunwala, Deepak
- * Chitnis, Virendra Somwanshi) — a colour key read Dr. Jhunjhunwala's white
- * shirt stripes and Mr. Chitnis's pale collar as ground, and a hand-traced
- * outline left Mr. Somwanshi's jaw angular — or keyed from a plain studio
+ * subject cut with macOS Vision's subject mask (Deepak Chitnis — a colour
+ * key read his pale collar as ground) or keyed from a plain studio
  * ground where that was clean, or the client's own cut-out (Bony Niranjan
  * Dalal); where a photograph stops short of the card, its clothes are
  * carried out to the edge along the fall of the shoulder; the head at half the
@@ -611,13 +604,6 @@ export const mentorsIntro = {
  * the photograph and the face brought to one brightness across the set.
  */
 export const mentors: Mentor[] = [
-  {
-    id: "ashok-jhunjhunwala",
-    name: "Dr. Ashok Jhunjhunwala",
-    role: "Chairman, ITEL",
-    bio: "Padma Shri, 2002, for distinguished service in science, engineering and telecommunications. Lifetime achievement awards from TiE and from the India Energy Storage Alliance.",
-    image: "/images/mentors/ashok-jhunjhunwala.png",
-  },
   {
     id: "suresh-nanda",
     name: "Suresh Nanda",
@@ -631,13 +617,6 @@ export const mentors: Mentor[] = [
     role: "Chief Designer, Lodha Group",
     bio: "Leads a team of more than 200. Since 2007 he has driven end-to-end design and championed organisational growth by mentoring leaders and building cross-functional collaboration.",
     image: "/images/mentors/deepak-chitnis.png",
-  },
-  {
-    id: "virendra-somwanshi",
-    name: "Virendra Somwanshi",
-    role: "Group President & Head of Wealth, Federal Bank",
-    bio: "25+ years in retail and private banking, with leadership and board roles across global and Indian financial institutions.",
-    image: "/images/mentors/virendra-somwanshi.png",
   },
   {
     id: "bony-niranjan-dalal",
