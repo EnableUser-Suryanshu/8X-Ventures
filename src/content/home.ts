@@ -47,37 +47,40 @@ export type Sector = {
   place: "top" | "bottom";
 };
 
+/* Placed as an even rectangle on the ribbon: one on the top and one on the
+   bottom of each loop, mirrored about the centre (x 25 / 75, y 27 / 74).
+   Each point stays on the ribbon through every frame of the hero video. */
 export const sectors: readonly Sector[] = [
   {
     name: "Precision Manufacturing",
     description:
       "Connectors, thermal systems and rocket engines built to tolerances India has long imported.",
-    x: 17,
-    y: 55,
+    x: 25,
+    y: 27,
     place: "top",
   },
   {
     name: "Electronics & Communication",
     description:
       "Encryption chips, optical interconnects and sensors that move data securely at full speed.",
-    x: 36,
-    y: 72,
-    place: "bottom",
+    x: 75,
+    y: 27,
+    place: "top",
   },
   {
     name: "Energy",
     description:
       "Clean hydrogen, microwave plasma and copper nanomaterials taking industry off fossil fuels and silver.",
-    x: 68,
-    y: 31,
-    place: "top",
+    x: 25,
+    y: 74,
+    place: "bottom",
   },
   {
     name: "Biotech",
     description:
       "Engineered enzymes that make chemical and pharmaceutical manufacturing cleaner, faster and higher-yielding.",
-    x: 78,
-    y: 72,
+    x: 75,
+    y: 74,
     place: "bottom",
   },
 ];
