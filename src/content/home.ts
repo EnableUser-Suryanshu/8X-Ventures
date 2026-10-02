@@ -577,10 +577,9 @@ export const mentorsIntro = {
  *
  * The photographs are the client's "Photos of Mentors" folder on Drive
  * where that folder had a usable one, and the web where it did not. Suresh
- * Nanda's Drive copy was a 301px thumbnail, too soft to fill a card; his is
- * the headshot on UV Capital's site (uvcapital.in), 729 × 994. Ankit
- * Agarwal's is his portrait on Globe Capital's own site (globecapital.com),
- * 388 × 486, arms folded, which is the only size it is published at.
+ * Nanda's and Ankit Agarwal's are the updated portraits the client sent
+ * directly (Mr. Nanda's is 632 × 600, so it is enlarged about twice on the
+ * card).
  * Deepak Chitnis's official Lodha Group portrait is the same 375px file
  * Drive already had, and nothing larger is published. Bony Niranjan Dalal
  * has no photograph online at all, so his is still Drive's conference
