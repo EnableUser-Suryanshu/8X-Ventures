@@ -29,7 +29,7 @@ export const lpDayIntro = {
   line1: "Operators. Investors.",
   line2: "Technologists.",
   sub1: "One room. One ecosystem.",
-  sub2: "One conversation around India's DeepTech future.",
+  sub2: "One conversation around the future of DeepTech.",
   body: "LP Day brings together the people backing, building and enabling the next generation of frontier companies from India.",
 } as const;
 
