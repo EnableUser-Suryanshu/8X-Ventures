@@ -657,7 +657,7 @@ export const lpDay = {
   eyebrow: "LP Day · An annual gathering for DeepTech builders",
   line1: "Operators. Investors.",
   line2: "Technologists.",
-  body: "LP Day brings together investors, founders, mentors, and ecosystem leaders around India's DeepTech future.",
+  body: "LP Day brings together investors, founders, mentors, and ecosystem leaders around the future of DeepTech.",
   /* `focus` is the `object-position` each still is cropped around. Both
      plates are now cut to the card's own 16:9 in `public/images/`, so
      neither is cropped again at render and both sit centred. It stays on the
