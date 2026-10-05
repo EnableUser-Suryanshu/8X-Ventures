@@ -156,9 +156,9 @@ export const lpDayGallery = {
  * which read plausibly and came from nowhere. 8X publish them unattributed,
  * so they are unattributed here too.
  *
- * The plate is the ecosystem gathered in a ring at IIT Madras Research Park
- * during the 2025 Annual Investors Meet (DSC_6174, "LP Day highlights /
- * 2025" on Drive); the open floor in the middle is where the copy sits.
+ * The plate is the group on stage under the 8X Ventures backdrop at the
+ * 2025 Annual Investors Meet, IIT Madras Research Park (DSC_6689, "LP Day
+ * highlights / 2025" on Drive), chosen by the client.
  */
 export const lpDayQuotes = {
   heading: "What the ecosystem says.",
