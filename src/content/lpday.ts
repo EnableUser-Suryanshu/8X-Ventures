@@ -155,6 +155,10 @@ export const lpDayGallery = {
  * own website copy deck, verbatim. They replace three the frame invented,
  * which read plausibly and came from nowhere. 8X publish them unattributed,
  * so they are unattributed here too.
+ *
+ * The plate is the ecosystem in conversation: Chirag Gupta with two senior
+ * guests among the portfolio stands at DeepTech Industry Connect 2026, IIT
+ * Gandhinagar (VPS_4460, "LP Day highlights / 2026" on Drive).
  */
 export const lpDayQuotes = {
   heading: "What the ecosystem says.",
