@@ -23,10 +23,9 @@ export type Person = {
    */
   portrait?: "cutout" | "plate";
   /**
-   * Everything below is optional, and four people are missing all of it. Drive
-   * supplied them as a photograph and a name and nothing else; the card and
-   * the member page leave out what is not there rather than render an empty
-   * role line or a link to nowhere. Nothing here is written about a person
+   * Everything below is optional. The card and the member page leave out
+   * what is not there rather than render an empty role line or a link to
+   * nowhere. Nothing here is written about a person
    * from outside the client's own material.
    */
   role?: string;
@@ -185,6 +184,7 @@ export const teamGroup = {
       role: "Associate, Investments",
       image: "/images/team/akash-patel.png",
       bio: "An IIT Kanpur graduate blending founder-style execution across energy operations and startups, with significant experience at Schlumberger.",
+      linkedin: "https://www.linkedin.com/in/akashp4/",
     },
     {
       id: "madhukar-kota",
@@ -192,6 +192,7 @@ export const teamGroup = {
       role: "Operations and Compliance Associate",
       image: "/images/team/madhukar-kota.png",
       bio: "An MBA with 15+ years across private equity, fund accounting and capital markets.",
+      linkedin: "https://www.linkedin.com/in/madhukar-kota-370810348/",
     },
     {
       id: "twinkal-janbandhu",
@@ -199,6 +200,7 @@ export const teamGroup = {
       role: "Analyst, Compliance",
       image: "/images/team/twinkal-janbandhu.png",
       bio: "A law graduate and company secretary with expertise in governance, compliance and legal frameworks.",
+      linkedin: "https://www.linkedin.com/in/twinkle-janbandhu-0b301523a/",
     },
     {
       id: "priya-sathish",
@@ -206,6 +208,7 @@ export const teamGroup = {
       role: "Analyst",
       image: "/images/team/priya-sathish.png",
       bio: "A Biomedical Engineer with industrial experience at LifeCell and Apollo Hospitals.",
+      linkedin: "https://www.linkedin.com/in/priyasathish028/",
     },
   ] as Person[],
 } as const;

@@ -95,8 +95,8 @@ export const offices = [
     city: "Noida",
     country: "India",
     label: "India’s First Private DeepTech Hub",
-    address: "C 44, 2nd Floor, C Block, Sector 2, Noida, Uttar Pradesh 201301",
-    mapUrl: "https://www.google.com/maps/search/?api=1&query=C%2044%2C%20C%20Block%2C%20Sector%202%2C%20Noida%2C%20Uttar%20Pradesh%20201301",
+    address: "1st Floor, B-21, Block B, Noida Sector 3, Noida, Uttar Pradesh 201301",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=DeepTech%20Hub%2C%20B-21%2C%20Block%20B%2C%20Noida%20Sector%203%2C%20Noida%2C%20Uttar%20Pradesh%20201301",
   },
   {
     id: "dubai",

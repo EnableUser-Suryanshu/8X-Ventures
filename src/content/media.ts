@@ -31,7 +31,6 @@ export const mediaBook = {
     "DeepTech companies are both moonshots and marathons, audacious in ambition, patient in execution. This book captures what it takes to build them in India.",
     "A perspective shaped by the founders, mentors, and investors of the 8X ecosystem.",
   ],
-  cta: { label: "Get the Book", href: "/media/moonshots-and-marathons" },
 } as const;
 
 /** One recorded appearance. `video` is the YouTube link — a watch URL, a

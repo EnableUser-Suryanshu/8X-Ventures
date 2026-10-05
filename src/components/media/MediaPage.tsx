@@ -85,9 +85,6 @@ export function MediaPage() {
               </Reveal>
             ))}
 
-            <Reveal delay={240} className="md-book-cta">
-              <UnderlineLink href={mediaBook.cta.href}>{mediaBook.cta.label}</UnderlineLink>
-            </Reveal>
           </div>
         </div>
       </section>
