@@ -263,6 +263,15 @@ export function ContactPage() {
                   <span className="ro-office-foot">
                     <h3 className="ro-office-city">{office.city}</h3>
                     <p className="ro-office-address">{office.address}</p>
+                    <a
+                      href={office.mapUrl}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="ro-office-map"
+                    >
+                      <span className="u-line">View on map</span>
+                      <span className="sr-only-8x">{` for the ${office.city} office (opens in a new tab)`}</span>
+                    </a>
                   </span>
                 </article>
               </Reveal>

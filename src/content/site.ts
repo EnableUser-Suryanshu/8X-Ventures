@@ -77,7 +77,9 @@ export const footerRegistration = {
 
 /**
  * 8X's three offices, as their own website copy deck and their live contact
- * page state them. The footer links point at these anchors.
+ * page state them. The footer links point at these anchors. `mapUrl` opens
+ * each address in Google Maps; Dubai's address is the in5 Tech location the
+ * client sent, on King Salman Bin Abdulaziz Al Saud Street.
  */
 export const offices = [
   {
@@ -86,6 +88,7 @@ export const offices = [
     country: "India",
     label: "IIT Madras Research Park",
     address: "D403, IIT Madras Research Park, Taramani, Chennai",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=IIT%20Madras%20Research%20Park%2C%20Taramani%2C%20Chennai",
   },
   {
     id: "noida",
@@ -93,13 +96,16 @@ export const offices = [
     country: "India",
     label: "India’s First Private DeepTech Hub",
     address: "C 44, 2nd Floor, C Block, Sector 2, Noida, Uttar Pradesh 201301",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=C%2044%2C%20C%20Block%2C%20Sector%202%2C%20Noida%2C%20Uttar%20Pradesh%20201301",
   },
   {
     id: "dubai",
     city: "Dubai",
     country: "United Arab Emirates",
     label: "in5 Tech",
-    address: "in5 Tech, Dubai Internet City, Dubai",
+    address:
+      "in5 Tech, King Salman Bin Abdulaziz Al Saud Street, near Tram Station and Cordoba Residence, Dubai",
+    mapUrl: "https://www.google.com/maps/search/?api=1&query=in5%20Tech%2C%20King%20Salman%20Bin%20Abdulaziz%20Al%20Saud%20Street%2C%20near%20Tram%20Station%20and%20Cordoba%20Residence%2C%20Dubai",
   },
 ] as const;
 

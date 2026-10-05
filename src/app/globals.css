@@ -5725,6 +5725,16 @@ html.js-img img[data-img-in="fade"] {
   color: var(--color-ink-900);
 }
 
+.ro-office-map {
+  display: inline-block;
+  margin-top: 1rem;
+  font-size: var(--pv-body);
+  font-weight: 600;
+  line-height: 1.2;
+  /* `brand-deep` clears 4.5:1 on the card's pale ground (WCAG 1.4.3). */
+  color: var(--color-brand-deep);
+}
+
 .ro-office-address {
   margin-top: 0.75rem;
   font-size: var(--pv-body);
