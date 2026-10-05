@@ -18,6 +18,9 @@ const RETIRED_SLUGS = [
   "8x-ventures-taking-a-giant-leap",
   "deep-tech-investing-in-india",
   "funding-deeptech-in-india",
+  /* The book's "Get the Book" link and its placeholder page were removed at
+     the client's request. */
+  "moonshots-and-marathons",
 ];
 
 export function generateStaticParams() {
