@@ -5291,8 +5291,35 @@ html.js-img img[data-img-in="fade"] {
   color: var(--color-ink-950);
 }
 
-.pv-h + .pv-p {
+.pv-h + .pv-p,
+.pv-h + .pv-list {
   margin-top: 0.85em;
+}
+
+/* An article that opens on a heading starts where a paragraph would. */
+.pv-body > .pv-h:first-child {
+  margin-top: 1.15em;
+}
+
+/* The blog posts' bulleted criteria and steps, set in the paragraph's type
+   with the brand blue on the markers. */
+.pv-list {
+  margin-top: 1.15em;
+  padding-left: 1.25em;
+  list-style: disc;
+  font-size: var(--pv-body);
+  font-weight: 300;
+  line-height: 1.62;
+  text-wrap: pretty;
+  color: var(--color-ink-700);
+}
+
+.pv-list li + li {
+  margin-top: 0.4em;
+}
+
+.pv-list li::marker {
+  color: var(--color-brand);
 }
 
 /* --------------------------------------------------------------- related */

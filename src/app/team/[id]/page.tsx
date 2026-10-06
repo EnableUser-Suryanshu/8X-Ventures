@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 
   if (!person) {
     return {
-      title: "Team Member Not Found | 8X Ventures",
+      title: "Team Member Not Found",
     };
   }
 
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     .join(" — ");
 
   return {
-    title: `${person.name} | 8X Ventures`,
+    title: `${person.name}`,
     description: description || `${person.name} at 8X Ventures.`,
   };
 }
