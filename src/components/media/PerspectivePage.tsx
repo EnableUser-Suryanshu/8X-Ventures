@@ -61,6 +61,12 @@ export function PerspectivePage({ article }: { article: Article }) {
               <Reveal as="h2" key={i} className="pv-h">
                 {block.text}
               </Reveal>
+            ) : block.kind === "list" ? (
+              <Reveal as="ul" key={i} className="pv-list">
+                {block.items.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </Reveal>
             ) : (
               <Reveal as="p" key={i} className="pv-p">
                 {block.text}

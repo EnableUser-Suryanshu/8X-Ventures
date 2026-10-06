@@ -57,27 +57,24 @@ export const mediaInsights: {
      stills, so no artwork is named. Add `image` to a row when a real still
      exists and the plate steps aside for it.
 
-     `video` is where the recording actually lives. Set it to the YouTube watch
-     URL and the card opens it there, in a new tab; leave it out and the card
-     falls back to `href`, the article page. All three are waiting for their
-     URL — every one of those article pages is still the "this piece is being
-     prepared" placeholder, so until the links are filled in these cards lead
-     nowhere the reader wants to go. */
+     `video` is where the recording lives — the YouTube links the old site
+     (8xventures.co) carried for these same three. The card plays it in a
+     dialog on the page. */
   items: [
     {
       title: "8X Ventures - Taking a Giant Leap",
       kicker: "Media Feature",
-      /* video: "https://www.youtube.com/watch?v=…", */
+      video: "https://youtu.be/_xX2cO3_adY",
     },
     {
       title: "What does DeepTech investing look like in India?",
       kicker: "Interview",
-      /* video: "https://www.youtube.com/watch?v=…", */
+      video: "https://www.youtube.com/watch?v=QJJaifYKFnc",
     },
     {
       title: "Funding DeepTech in India",
       kicker: "Panel Discussion",
-      /* video: "https://www.youtube.com/watch?v=…", */
+      video: "https://www.youtube.com/watch?v=78iGT4tEdks",
     },
   ],
 } as const;

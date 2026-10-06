@@ -14,12 +14,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
   if (!company) {
     return {
-      title: "Company Not Found | 8X Ventures",
+      title: "Company Not Found",
     };
   }
 
   return {
-    title: `${company.name} | 8X Ventures`,
+    title: `${company.name}`,
     description: `${company.sector} — ${company.description}`,
   };
 }

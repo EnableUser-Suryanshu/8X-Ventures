@@ -38,17 +38,17 @@ export async function generateMetadata({
   const { slug } = await params;
   if (LP_DAY_SLUGS.includes(slug)) {
     return {
-      title: "LP Day | 8X Ventures",
+      title: "LP Day",
       description:
         "LP Day is 8X Ventures' annual gathering for DeepTech builders, investors, founders, mentors and ecosystem leaders.",
     };
   }
   const article = findArticle(slug);
-  if (!article) return { title: "Perspectives | 8X Ventures" };
+  if (!article) return { title: "Perspectives" };
 
   const lead = article.body.find((b) => b.kind === "p");
   return {
-    title: `${article.titlePlain} | 8X Ventures`,
+    title: `${article.titlePlain}`,
     description: lead?.text.slice(0, 155),
   };
 }
