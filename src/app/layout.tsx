@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { AccessibilityWidget } from "@/components/layout/AccessibilityWidget";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { TiltRoot } from "@/components/ui/TiltRoot";
@@ -148,6 +149,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Delegated pointer depth for every `data-tilt` surface on the page.
             Renders nothing; it only listens. */}
         <TiltRoot />
+
+        <AccessibilityWidget />
       </body>
     </html>
   );
