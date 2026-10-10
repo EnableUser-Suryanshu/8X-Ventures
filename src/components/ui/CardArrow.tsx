@@ -20,7 +20,9 @@
 export function CardArrow({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <span aria-hidden="true" className="card-arrow" data-tone={tone}>
-      <svg viewBox="0 0 24 24" fill="none" focusable="false">
+      {/* Marked on the graphic as well as its wrapper, so a checker that
+          tests the image element itself still sees it as decorative. */}
+      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
         <path
           d="M4 12h15m0 0-5.5-5.5M19 12l-5.5 5.5"
           stroke="currentColor"

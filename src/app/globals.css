@@ -11,20 +11,32 @@
    ========================================================================== */
 
 @theme {
-  /* --- Brand palette — the source artboard's colours, verbatim ----------
-     Sampled from "8x Website v5.0". These are the design's own values and
-     several of them do NOT meet WCAG 1.4.3; the measured ratios are recorded
-     here so the cost is visible, and README lists the compliant swaps.
+  /* --- Brand palette — the artboard's blues, taken down the hue ramp ------
+     Sampled from "8x Website v5.0", where they were #009EFF / #3FA9F5 /
+     #2DB5E5. None of those three reaches 3:1 on white, so no use of them as
+     text passed WCAG 1.4.3 at any size (accessibility scan, Oct 2026: 47
+     contrast failures, every one tracing back to these tokens). Each is now
+     the nearest shade on the same hue that clears AA on every surface the
+     token lands on — measured ratios:
 
-       --brand        #009EFF  2.86:1 on white   (needs 4.5, or 3.0 large)
-       --brand-sky    #3FA9F5  2.56:1 on white
-       --brand-cyan   #2DB5E5  2.37:1 on white
-       --brand-rule   #32B0FE  2.45:1 on white   (non-text, needs 3.0)
-     Named rather than numbered, because the design's accents do not form a
-     monotonic ramp — the "cyan" is lighter than the primary.               */
-  --color-brand: #009eff; /* eyebrows, accent headings, footer headings */
-  --color-brand-sky: #3fa9f5; /* hero line 2, "the Frontier", card fills, arrows */
-  --color-brand-cyan: #2db5e5; /* nav "Reach Out" */
+       --brand        #0077C2  4.75:1 on white, 4.17 on #F0F0F1, 4.32 on
+                               brand-tint — body text and eyebrows pass, and
+                               white type on it passes at 4.75
+       --brand-sky    #1689D4  3.77:1 on white, 3.37 on #E8F4FB, 3.50 on
+                               #F0F7FF — the large-text accent (hero line 2,
+                               section headings, eyebrows ≥ 19px bold)
+       --brand-cyan   #0077C2  the nav's active link, 21px bold
+       --brand-rule   #32B0FE  2.45:1 on white   (decorative underline rule)
+     The three keep their names and their roles; only the values moved. The
+     originals stay recorded here should the client want them back.        */
+  --color-brand: #0077c2; /* eyebrows, accent headings, footer headings, card fills under white type */
+  --color-brand-sky: #1689d4; /* hero line 2, "the Frontier", large headings, arrows — large text only */
+  --color-brand-cyan: #0077c2; /* nav "Reach Out" */
+  /* The artboard's blue itself, kept for the accents that sit on navy or on
+     the dark team photograph: there it is the light colour, and clears 3:1
+     for large text at 4.43:1 on #023363 — where the darkened `brand` above
+     would fall to 2.66. */
+  --color-brand-on-dark: #009eff;
   --color-brand-rule: #32b0fe; /* underline rules beneath text links */
   --color-brand-divider: #49adf5; /* footer divider */
   --color-brand-track: #bae8ff; /* carousel track, inactive */
@@ -50,7 +62,7 @@
   --color-ink-600: #4d4d4d; /*  8.45:1 */
   --color-ink-500: #666666; /*  5.74:1 */
   --color-ink-400: #6e6e6e; /*  5.10:1 */
-  --color-ink-300: #808080; /*  3.95:1 — below AA, design value */
+  --color-ink-300: #737373; /*  4.74:1 — was the artboard's #808080 at 3.95, below AA (1.4.3) */
 
   /* --- Fluid type scale ------------------------------------------------
      Each mid-term keeps a rem component so text still responds to the
@@ -909,7 +921,6 @@
   /* Lets the panel scale with the card, so it stays readable on the small side
      cards and grows on the featured one. */
   container-type: inline-size;
-  cursor: pointer;
   /* Read off `data-offset` below. Defaulted here so a card with no offset —
      the featured one — is simply itself. */
   --team-dim: 1;
@@ -1887,16 +1898,29 @@
   transition: scale 0.7s var(--ease-out-soft);
 }
 
-/* The whole card as a pointer target. Hidden from assistive tech and out of
-   the tab order on purpose: the same destination is already reachable as
-   "Know More" inside the panel, and two links to one place is one more than a
-   screen reader or a keyboard wants to hear about. Under the panel, so the
-   panel's own links take the click where they overlap it. */
-.tm-card-hit {
+/* The whole card as a pointer target, without a second link. "Know More" in
+   the panel carries `tm-card-link`, and this pseudo-element stretches it over
+   the card: anchored to the panel's foot (the card's foot, since the panel
+   sits at `inset: 0`, or at the bottom on touch) and tall enough to reach the
+   top, with the card's own `overflow: hidden` trimming it to the card. It
+   takes the pointer itself, because the panel it sits in does not — so a
+   click on the photograph opens the profile whether or not the panel is up.
+   The panel's other link is lifted above it so it keeps its own clicks. */
+.tm-card-link::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  z-index: 2;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 200cqw;
+  z-index: 0;
+  pointer-events: auto;
   border-radius: inherit;
+}
+
+.tm-card-actions > a + a {
+  position: relative;
+  z-index: 1;
 }
 
 /* --- The panel ----------------------------------------------------------
@@ -2463,7 +2487,9 @@
   border-radius: 9999px;
   font-size: clamp(0.9375rem, 1.302vw, 1.5625rem); /* 25px @1920 */
   line-height: 1.2;
-  color: var(--color-brand-sky);
+  /* Body-size type, so it needs 4.5:1 (WCAG 1.4.3): `brand` clears it at
+     4.75 where the sky border colour would stop at 3.77. */
+  color: var(--color-brand);
   background: transparent;
   transition:
     background-color 0.35s var(--ease-out-soft),
@@ -2491,7 +2517,8 @@
 }
 
 .pf-pill[data-active] {
-  background: var(--color-brand-sky);
+  /* White type on the fill: `brand` gives it 4.75:1 (WCAG 1.4.3). */
+  background: var(--color-brand);
   color: #ffffff;
 }
 
@@ -2539,7 +2566,9 @@
   /* Holds the card's outline where its white logo plate meets the white page.
      Invisible against the blue of the body, which is the rest of the edge. */
   border: 1px solid rgba(0, 40, 90, 0.09);
-  background: var(--color-brand-sky);
+  /* The card carries white body copy, so its fill has to clear 4.5:1 against
+     white (WCAG 1.4.3): `brand` does at 4.75; the sky blue stopped at 3.77. */
+  background: var(--color-brand);
   /* This card had no hover of its own while every other card on the site
      lifts. Same language as the LP Day and media cards, on `translate` so the
      pointer lean can sit on top of it. */
@@ -2808,7 +2837,10 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-brand);
+  /* At 17px bold this is a step under WCAG's large-text threshold, so it
+     needs 4.5:1 — and on the LP Day band's #F0F7FF `brand` reaches only 4.40.
+     `brand-deep` clears it everywhere (5.37 there, 5.79 on white). */
+  color: var(--color-brand-deep);
 }
 
 /* --- hero (band 811; copy top 368, foot 117) ---------------------------- */
@@ -5589,9 +5621,10 @@ html.js-img img[data-img-in="fade"] {
 }
 
 .ro-input::placeholder {
-  /* 4.62:1 on the field — placeholders carry the frame's example text, and
-     the label above already names each field (WCAG 1.4.3, 3.3.2). */
-  color: #6a7683;
+  /* 5.36:1 on the #F2F7FB field (the frame's #6A7683 measured 4.29) —
+     placeholders carry the frame's example text, and the label above already
+     names each field (WCAG 1.4.3, 3.3.2). */
+  color: #5b6773;
 }
 
 .ro-input:hover {
@@ -5642,7 +5675,7 @@ html.js-img img[data-img-in="fade"] {
   font-size: var(--ro-input);
   font-weight: 300;
   line-height: 1.4;
-  color: #6a7683;
+  color: #5b6773; /* 5.36:1 on the #F2F7FB field (WCAG 1.4.3); was #6A7683 at 4.29 */
   overflow-wrap: anywhere;
 }
 

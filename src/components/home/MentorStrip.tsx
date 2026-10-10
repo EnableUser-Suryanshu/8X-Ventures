@@ -38,7 +38,9 @@ export function MentorStrip() {
             className="text-[length:var(--text-display)] leading-[1.16] font-bold text-white"
           >
             {mentorsIntro.line1}{" "}
-            <span className="block text-brand">{mentorsIntro.line2}</span>
+            {/* On navy the brighter artboard blue is the one that passes
+                (4.43:1); the darkened `brand` would fall to 2.66 (WCAG 1.4.3). */}
+            <span className="block text-brand-on-dark">{mentorsIntro.line2}</span>
           </h2>
         </Reveal>
 

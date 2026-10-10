@@ -374,14 +374,21 @@ Accessibility handling:
 
 Target: **WCAG 2.1 Level AA**, with the WCAG 2.2 target-size addition.
 
-**Everything except colour contrast passes.** Colour is a deliberate exception:
-the client asked for the artboard's palette verbatim, and that palette does not
-meet 1.4.3. The failures are inventoried below so the cost is explicit.
+**Everything passes, colour contrast included.** The artboard's three blues
+(`#009EFF`, `#3FA9F5`, `#2DB5E5`) do not meet 1.4.3 as text, and the site
+carried them verbatim at the client's request until an October 2026
+accessibility scan returned 47 contrast failures against them. The tokens in
+`globals.css` now hold the hue-preserving swaps from the table at the end of
+this section (`#0077C2`, `#1689D4`, `#0077C2`; the footer blurb's grey is
+`#737373`), with the artboard's values recorded beside them; the brighter
+`#009EFF` survives as `--color-brand-on-dark`, for the accents that sit on
+navy, where it is the colour that passes. The inventory below is kept as the
+record of what the original palette cost.
 
 | Check | Result |
 |---|---|
 | axe-core, all rules **except** colour-contrast — 6 routes × 4 breakpoints | **0 violations** |
-| 1.4.3 Contrast (minimum) | **fails — see "Colour" below** |
+| 1.4.3 Contrast (minimum) | **passes** since the October 2026 token swap — axe-core, 43 routes, 0 failures (see "Colour" below) |
 | 1.4.10 Reflow @ 320 px | no horizontal scroll |
 | 1.4.4 Resize text @ 200% and 400% | no horizontal scroll |
 | 1.4.12 Text spacing | no clipping, no horizontal scroll |
@@ -397,10 +404,11 @@ Also in place: a skip link, one `h1` with an unbroken heading order, landmark
 regions on every section, `aria-live` slide announcements, `inert` on off-screen
 slides, and a `forced-colors` block.
 
-### Colour — the artboard's palette, and what it costs
+### Colour — the artboard's palette, and what it cost
 
-Restored at the client's request. `#009EFF`, `#3FA9F5` and `#2DB5E5` are all
-below 3:1 on white, so **no** use of them as text passes AA at any size.
+As shipped until October 2026, at the client's request. `#009EFF`, `#3FA9F5`
+and `#2DB5E5` are all below 3:1 on white, so **no** use of them as text passed
+AA at any size. Measured on that palette:
 
 **On solid backgrounds** — 29 elements, 6 pairings (axe-detected):
 
@@ -435,15 +443,20 @@ each text element and photographing the background behind it:
 | LP Day "2026" | 12.91:1 | pass (that photo is dark behind the label) |
 | "By the Year" `#3FA9F5` | 2.56:1 | fail |
 
-**If you want these fixed later**, the hue-preserving swaps that clear AA are:
+**The swaps now in the tokens** — hue-preserving, and chosen against every
+surface the token lands on, not only white:
 
-| Design value | Compliant swap | Ratio on white |
-|---|---|---|
-| `#009EFF` (text) | `#0077C2` | 4.75:1 |
-| `#3FA9F5` (text) | `#1F94E0` | 3.30:1 (large) / `#0077C2` for body |
-| `#2DB5E5` (text) | `#0077C2` | 4.75:1 |
-| `#009EFF` (controls, arrows, tracks) | `#0084D6` | 3.98:1 |
-| `#808080` (footer blurb) | `#737373` | 4.74:1 |
+| Design value | Token value now | Ratio on white | Where it had to hold |
+|---|---|---|---|
+| `#009EFF` (text, card fills under white type) | `#0077C2` | 4.75:1 | 4.17 on `#F0F0F1`, 4.32 on brand-tint — body text passes everywhere; the `/media` eyebrows, a step under large-text size, use `brand-deep` |
+| `#3FA9F5` (large text) | `#1689D4` | 3.77:1 | 3.37 on `#E8F4FB` — `#1F94E0` would have been 2.95 there, which is why it is not the lighter shade |
+| `#2DB5E5` (nav "Reach Out") | `#0077C2` | 4.75:1 | |
+| `#009EFF` on navy / the team photograph | unchanged, as `--color-brand-on-dark` | 4.43:1 on `#023363` | the darkened blue would fall to 2.66 there |
+| `#808080` (footer blurb) | `#737373` | 4.74:1 | |
+| `#6A7683` (contact form placeholders, file label) | `#5B6773` | 5.36:1 on `#F2F7FB` | |
+
+The portfolio cards and the active filter pill, which carry white body copy,
+take their fill from `brand` rather than `brand-sky` for the same reason.
 
 For the white-on-imagery cases the two options are a navy wash over the artwork
 (≈0.72 alpha restores 4.5:1) or inverting the type to navy — on the closing

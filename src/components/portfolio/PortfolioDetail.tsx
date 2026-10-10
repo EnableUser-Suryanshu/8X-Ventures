@@ -17,6 +17,25 @@ import {
 } from "@/content/portfolio-detail";
 
 /**
+ * The gallery's container: a list while there are several photographs, and a
+ * plain block when there is one — a list of one item is not a list
+ * (WCAG 1.3.1), and the grid styling does not depend on the element.
+ */
+function GalleryList({
+  count,
+  children,
+  ...rest
+}: { count: number; children: React.ReactNode } & React.HTMLAttributes<HTMLElement>) {
+  return count > 1 ? (
+    <ul role="list" {...rest}>
+      {children}
+    </ul>
+  ) : (
+    <div {...rest}>{children}</div>
+  );
+}
+
+/**
  * A portfolio company's page, traced from the Figma prototype's
  * `Portfolio / Company` frame (node 302-213).
  *
@@ -210,15 +229,20 @@ export function PortfolioDetail({ id }: { id: string }) {
           of what the company makes or does. The cards rise in one after
           another, as the portfolio grid's do. */}
       <section aria-label={`${company.name} in pictures`} className="pd-band pd-gallery">
-        <ul
-          role="list"
+        <GalleryList
+          count={detail.gallery.length}
           className="pd-gallery-grid"
           /* Fewer than three photographs sit centred at the same card size
              rather than leaving an empty slot. */
           style={{ "--pd-gallery-n": detail.gallery.length } as React.CSSProperties}
         >
           {detail.gallery.map((photo, i) => (
-            <Reveal as="li" key={photo.src} variant="card" delay={i * 110}>
+            <Reveal
+              as={detail.gallery.length > 1 ? "li" : "div"}
+              key={photo.src}
+              variant="card"
+              delay={i * 110}
+            >
               <figure className="pd-gallery-card">
                 <div className="pd-gallery-frame">
                   <Image suppressHydrationWarning
@@ -236,7 +260,7 @@ export function PortfolioDetail({ id }: { id: string }) {
               </figure>
             </Reveal>
           ))}
-        </ul>
+        </GalleryList>
       </section>
 
       {/* ================================================ WHY WE INVESTED */}
@@ -333,13 +357,25 @@ export function PortfolioDetail({ id }: { id: string }) {
             <p className="pd-snapshot-label">
               {detail.profile.founders.length > 1 ? "Founders" : "Founder"}
             </p>
-            <ul role="list" className="pd-snapshot-founders">
-              {detail.profile.founders.map((f) => (
-                <li key={f.name} className="pd-snapshot-value">
-                  {f.name} <span className="pd-snapshot-role">{f.role}</span>
-                </li>
-              ))}
-            </ul>
+            {/* A list only when there is more than one founder to list; a
+                single name is just a name (WCAG 1.3.1). */}
+            {detail.profile.founders.length > 1 ? (
+              <ul role="list" className="pd-snapshot-founders">
+                {detail.profile.founders.map((f) => (
+                  <li key={f.name} className="pd-snapshot-value">
+                    {f.name} <span className="pd-snapshot-role">{f.role}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <div className="pd-snapshot-founders">
+                {detail.profile.founders.map((f) => (
+                  <p key={f.name} className="pd-snapshot-value">
+                    {f.name} <span className="pd-snapshot-role">{f.role}</span>
+                  </p>
+                ))}
+              </div>
+            )}
           </Reveal>
 
           <Reveal delay={180} className="pd-snapshot-row">
