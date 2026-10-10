@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { MentorRail } from "@/components/team/MentorRail";
 import { ScrollPin } from "@/components/ui/ScrollPin";
 import { Reveal } from "@/components/ui/Reveal";
@@ -26,12 +25,13 @@ const DISPLAY = "text-[length:var(--ab-display)] leading-[1.2] font-bold trackin
  * element takes that width instead and the card, which has only an aspect
  * ratio, collapses to nothing.
  *
- * Two links go to the profile and only one of them is real. The card-sized one
- * is there so that clicking anywhere works, and is hidden from assistive tech
- * and taken out of the tab order; "Know More" in the panel is the one a screen
- * reader and a keyboard find. That way the card is wholly clickable without
- * announcing the same destination twice, and without an anchor nested inside
- * another.
+ * One link goes to the profile: "Know More" in the panel. It is stretched over
+ * the whole card with a pseudo-element (`.tm-card-link::after` in globals.css),
+ * so clicking anywhere on the card opens the profile while the page holds
+ * exactly one link to it — nothing hidden from assistive tech, nothing taken
+ * out of the tab order, and no anchor nested inside another. (An earlier
+ * version laid a second, empty, `aria-hidden` link over the card for the
+ * pointer; accessibility checkers read that as an unnamed control.)
  */
 function PersonCard({
   person,
@@ -50,17 +50,6 @@ function PersonCard({
       delay={Math.min(index, 5) * 90}
       className={cn("tm-card", variant === "team" && "tm-card-sm")}
     >
-      {/* The whole card, as a target for the pointer only. See `.tm-card-hit`
-          in globals.css for why it is hidden from assistive tech and out of
-          the tab order: "Know More" below goes to the same place, and is the
-          one a screen reader and a keyboard should find. */}
-      <Link
-        href={`/team/${person.id}`}
-        aria-hidden="true"
-        tabIndex={-1}
-        className="tm-card-hit"
-      />
-
       <div className="tm-card-photo" data-portrait={person.portrait ?? "cutout"}>
         <Image suppressHydrationWarning
           src={person.image}
@@ -84,7 +73,9 @@ function PersonCard({
         {person.role && <p className="tm-card-role">{person.role}</p>}
         {person.bio && <p className="tm-card-highlight">{person.bio}</p>}
         <div className="tm-card-actions">
-          <UnderlineLink href={`/team/${person.id}`} tone="light">
+          {/* `tm-card-link` stretches this one over the whole card — see the
+              note above the component. */}
+          <UnderlineLink href={`/team/${person.id}`} tone="light" className="tm-card-link">
             Know More
             <span className="sr-only-8x">{` about ${person.name}`}</span>
           </UnderlineLink>

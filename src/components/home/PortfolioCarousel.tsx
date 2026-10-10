@@ -136,7 +136,9 @@ export function PortfolioCarousel() {
                         className={cn(
                           "px-5 pt-4 pb-5 lg:px-6 lg:pb-6",
                           active
-                            ? "bg-brand-sky text-white"
+                            ? /* `brand`, not sky: the panel's white copy is
+                                 body-size and needs 4.5:1 (WCAG 1.4.3). */
+                              "bg-brand text-white"
                             : /* Preview only — inert and hidden from assistive tech,
                                so it is exempt from the contrast minimum. */
                               "bg-brand-pale text-brand-sky/45",

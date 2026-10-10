@@ -85,7 +85,7 @@ export function VisionSection() {
           <Reveal className="vision-heading z-10">
             <h2
               id="vision-heading"
-              className="text-[length:clamp(1.25rem,4.094vw,4.9125rem)] leading-none font-bold text-[#3FA9F5]"
+              className="text-brand-sky text-[length:clamp(1.25rem,4.094vw,4.9125rem)] leading-none font-bold"
             >
               {vision.eyebrow} <span className="sr-only-8x">{vision.year}</span>
             </h2>

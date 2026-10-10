@@ -44,6 +44,11 @@ function MailIcon() {
 }
 
 /** The frame sets the given name in ink and the family name in brand blue. */
+/** One contact button's slot: a list item inside the list, nothing on its own. */
+function SocialItem({ list, children }: { list: boolean; children: React.ReactNode }) {
+  return list ? <li>{children}</li> : <>{children}</>;
+}
+
 function splitName(name: string) {
   const [first, ...rest] = name.split(" ");
   if (rest.length === 0) return <span>{first}</span>;
@@ -60,6 +65,7 @@ export function TeamMemberPage({ person }: { person: Person }) {
      as a photograph and a name — never an invented biography. */
   const paragraphs = person.profile ?? (person.bio ? [person.bio] : []);
   const hasSocial = Boolean(person.linkedin || person.email);
+  const socialCount = Number(Boolean(person.linkedin)) + Number(Boolean(person.email));
 
   return (
     <section aria-labelledby="member-heading" className="tmm">
@@ -107,11 +113,17 @@ export function TeamMemberPage({ person }: { person: Person }) {
             </Reveal>
           ))}
 
-          {/* The whole list goes where neither button has anywhere to point. */}
+          {/* The whole block goes where neither button has anywhere to point.
+              It is a list only when both buttons are present — a single
+              LinkedIn button is a link, not a list of one (WCAG 1.3.1). */}
           {hasSocial && (
-            <Reveal as="ul" className="tmm-social" aria-label={`Contact ${person.name}`}>
+            <Reveal
+              as={socialCount > 1 ? "ul" : "div"}
+              className="tmm-social"
+              aria-label={socialCount > 1 ? `Contact ${person.name}` : undefined}
+            >
               {person.linkedin && (
-                <li>
+                <SocialItem list={socialCount > 1}>
                   <a
                     href={person.linkedin}
                     target="_blank"
@@ -123,17 +135,17 @@ export function TeamMemberPage({ person }: { person: Person }) {
                       {`${person.name} on LinkedIn (opens in a new tab)`}
                     </span>
                   </a>
-                </li>
+                </SocialItem>
               )}
               {/* The frame draws a mail button beside it; it is rendered only
                   where an address is actually on file. */}
               {person.email && (
-                <li>
+                <SocialItem list={socialCount > 1}>
                   <a href={`mailto:${person.email}`} className="tmm-social-btn">
                     <MailIcon />
                     <span className="sr-only-8x">{`Email ${person.name}`}</span>
                   </a>
-                </li>
+                </SocialItem>
               )}
             </Reveal>
           )}

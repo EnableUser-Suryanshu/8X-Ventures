@@ -58,7 +58,7 @@ export function UnderlineLink({
     <span className="ul-link" data-tone={tone}>
       <span className="ul-seg">{children}</span>
       <span aria-hidden="true" className="ul-seg ul-arrow" data-icon={glyph}>
-        <svg viewBox="0 0 24 24" fill="none" focusable="false">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
           <path
             d={ARROW_PATH[glyph]}
             stroke="currentColor"
