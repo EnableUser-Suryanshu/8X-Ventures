@@ -28,6 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   return {
     title: `${person.name}`,
     description: description || `${person.name} at 8X Ventures.`,
+    alternates: { canonical: `/team/${person.id}` },
   };
 }
 

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PagePlaceholder } from "@/components/layout/PagePlaceholder";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/refund-policy" },
   title: "Refund Policy",
   description: "8X Ventures' policy on payments, cancellations and refunds.",
 };

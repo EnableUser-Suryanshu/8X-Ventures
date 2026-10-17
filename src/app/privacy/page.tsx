@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PagePlaceholder } from "@/components/layout/PagePlaceholder";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/privacy" },
   title: "Privacy Policy",
   description: "How 8X Ventures collects, uses, and protects your information.",
 };
