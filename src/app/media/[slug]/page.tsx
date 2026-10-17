@@ -39,16 +39,21 @@ export async function generateMetadata({
   if (LP_DAY_SLUGS.includes(slug)) {
     return {
       title: "LP Day",
+      /* One page answers at all three LP Day slugs; this is the one to index. */
+      alternates: { canonical: "/media/lp-day" },
       description:
         "LP Day is 8X Ventures' annual gathering for DeepTech builders, investors, founders, mentors and ecosystem leaders.",
     };
   }
   const article = findArticle(slug);
-  if (!article) return { title: "Perspectives" };
+  /* Any other slug gets the "being prepared" placeholder, which is not a
+     page worth indexing. */
+  if (!article) return { title: "Perspectives", robots: { index: false } };
 
   const lead = article.body.find((b) => b.kind === "p");
   return {
     title: `${article.titlePlain}`,
+    alternates: { canonical: `/media/${article.slug}` },
     description: lead?.text.slice(0, 155),
   };
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ContactPage } from "@/components/contact/ContactPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/contact" },
   title: "Reach Out",
   description:
     "For founders, capital partners, media and ecosystem collaborators working around Indian DeepTech.",

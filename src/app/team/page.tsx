@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { TeamPage } from "@/components/team/TeamPage";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/team" },
   title: "A Team Built for Complexity",
   description:
     "DeepTech needs investors who understand technology, markets, capital, and time.",

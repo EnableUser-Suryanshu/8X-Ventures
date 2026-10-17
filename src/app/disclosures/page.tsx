@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PagePlaceholder } from "@/components/layout/PagePlaceholder";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/disclosures" },
   title: "Disclosures",
   description: "Regulatory disclosures and fund documentation for 8X Ventures.",
 };

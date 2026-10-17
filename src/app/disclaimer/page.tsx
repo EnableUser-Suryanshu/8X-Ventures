@@ -5,6 +5,7 @@ import { UnderlineLink } from "@/components/ui/UnderlineLink";
 import { footerDisclaimer, footerRegistration } from "@/content/site";
 
 export const metadata: Metadata = {
+  alternates: { canonical: "/disclaimer" },
   title: "Disclaimer",
   description:
     "Important notices about the information published on the 8X Ventures website, and the fund's SEBI registration details.",
